@@ -1,0 +1,367 @@
+{% extends '_base.html' %}
+
+{% block title %} Communications {% endblock title %}
+
+{% block head %}
+ <link rel="stylesheet" href="{{ url_for('static', filename='plugins/daterangepicker/daterangepicker.css') }}">
+ <link href="https://unpkg.com/tabulator-tables@4.7.2/dist/css/tabulator_simple.min.css" rel="stylesheet">
+
+ <style>
+
+   #skeleton-container {
+       height: 500px;
+   }
+
+   @keyframes skeletonShimmer{
+       0%{
+           background-position: 100% 0
+       }
+       100%{
+           background-position: -100% 0
+       }
+   }
+
+   #skeleton-animation {
+       animation-duration: 1s;
+       animation-fill-mode: forwards;
+       animation-iteration-count: infinite;
+       animation-name: skeletonShimmer;
+       animation-timing-function: cubic-bezier(.17,.67,.83,.67);
+       background: #f4f4f4;
+       background: linear-gradient(to right, #f4f4f4 0%, #d8d8d8 50%, #f4f4f4 100%);
+       background-size: 200% 100%;
+       left: 0;
+       top: 0;
+       width: 100%;
+       height: 100%;
+       position: absolute;
+   }
+
+ </style>
+
+{% endblock head %}
+
+{% block page_title %} Communications {% endblock page_title %}
+
+{% block breadcrumb %}
+<div class="float-sm-right">
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-header border-0">
+          <div class="row mb-0 mt-2">
+          <div class="col-md-8">
+          <fieldset class="border py-1 px-2 rounded" style="background-color: #F8F8FF;">
+          <legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
+          <div class="row">
+          <div class="col-md-6 pt-1">
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="periode_complete">
+              <label class="custom-control-label" for="periode_complete">Période complète</label>
+            </div>
+            <div class="form-group row mt-4 mb-0">
+            <label for="plage_de_date" class="col-form-label col-md-4"><small>Plage de date : </small></label>
+            <div class="col-md-8">
+              <select class="custom-select custom-select-sm" id="plage_de_date">
+                <option value="0" selected>Libre</option>
+                <option value="1">Aujourd'hui</option>
+                <option value="2">Hier</option>
+                <option value="3">Avant hier</option>
+                <option value="4">Semaine courante</option>
+                <option value="5">Semaine dernière</option>
+                <option value="6">Semaine -2</option>
+                <option value="7">Mois courant</option>
+                <option value="8">Mois dernier</option>
+                <option value="9">Mois -2</option>
+                <option value="10">Trimestre courant</option>
+                <option value="11">Trimestre dernier</option>
+                <option value="12">Trimestre -2</option>
+                <option value="13">Année courante</option>
+                <option value="14">Année dernière</option>
+                <option value="15">Année -2</option>
+              </select>
+              </div>
+              </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label for="date_debut" class="col-form-label col-md-4"><small>Date début : </small></label>
+              <div class="col-md-8">
+                <input id="date_debut" type="date" name="date_debut" max="3000-12-31" 
+                       min="1000-01-01" class="form-control form-control-sm">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="date_fin" class="col-form-label col-md-4"><small>Date fin : </small></label>
+              <div class="col-md-8">
+                <input id="date_fin" type="date" name="date_fin" max="3000-12-31" 
+                       min="2000-01-01" class="form-control form-control-sm">
+              </div>
+            </div>
+          </div>
+          </div>
+          </fieldset>
+          </div>
+
+          <div class="col-md-4 mt-2">
+              <button class="btn btn-block btn-primary"><i class="fas fa-search"></i> <strong>Recherche</strong></button>
+              <button class="btn btn-block btn-outline-secondary"><i class="fas fa-search"></i> <strong>Recherche</strong></button>
+              <button class="btn btn-block btn-primary"><i class="fas fa-search"></i> <strong>Recherche</strong></button>
+          </div>
+
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+
+              <label><small>Numéro</small></label>
+              <input type="text" name="numero" placeholder="Numéro" class="form-control form-control-sm mb-2">
+              <label><small>Coût TTC</small></label>
+              <input type="text" name="cout_ttc" placeholder="Coût TTC" class="form-control form-control-sm mb-2">
+              <label><small>Sonnerie</small></label>
+              <input type="text" name="sonnerie" placeholder="Sonnerie" class="form-control form-control-sm mb-2">
+              <label><small>Durée</small></label>
+              <input type="text" name="duree" placeholder="Durée" class="form-control form-control-sm">
+              
+            </div>
+            <!-- /.col -->
+            <div class="col-md-4">
+              <div class="row mb-2">
+                <div class="col-6">
+                  <label><small>Type d'appels</small></label>
+                  <select class="custom-select custom-select-sm">
+                    <option selected>Tous</option>
+                    <option>Entrants</option>
+                    <option>Sortants</option>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label><small>Etat d'appels</small></label>
+                  <select class="custom-select custom-select-sm">
+                    <option selected>Tous</option>
+                    <option>Aboutis</option>
+                    <option>Non aboutis</option>
+                  </select>
+                </div>
+              </div>
+              <label><small>Service</small></label>
+              <select class="custom-select mb-2 custom-select-sm">
+                <option selected disabled>Choisir Service</option>
+                <option>Expéditions Stock</option>
+                <option>Achats Approvisionnements</option>
+                <option>Commercial</option>
+                <option>Informatique</option>
+                <option>Direction</option>
+                <option>Support technique</option>
+                <option>Compta</option>
+                <option>Chambres</option>
+                <option>Technique</option>
+              </select>
+              <label><small>Poste</small></label>
+              <select class="custom-select custom-select-sm mb-2">
+                <option selected disabled>Choisir Poste</option>
+                <option>520</option>
+                <option>521</option>
+                <option>522</option>
+                <option>523</option>
+                <option>524</option>
+                <option>525</option>
+                <option>526</option>
+                <option>527</option>
+                <option>528</option>
+                <option>529</option>
+                <option>530</option>
+                <option>531</option>
+                <option>532</option>
+                <option>533</option>
+                <option>534</option>
+                <option>535</option>
+                <option>536</option>
+                <option>537</option>
+                <option>538</option>
+                <option>539</option>
+              </select>
+              <label><small>Type direc.</small></label>
+              <select class="custom-select custom-select-sm">
+                <option selected disabled>Choisir Type direc.</option>
+                <option>I</option>
+                <option>M</option>
+                <option>N</option>
+                <option>S</option>
+                <option>X</option>
+              </select>
+            </div>
+            
+            <div class="col-md-4 pt-2 pl-4">
+                <div class="info-box mb-3 shadow-none">
+                  <span class="info-box-icon text-primary"><i class="fas fa-phone-alt"></i></span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Communications</span>
+                    <span class="info-box-number">52641</span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <div class="info-box mb-3 shadow-none">
+                  <span class="info-box-icon text-warning"><i class="fas fa-stopwatch"></i></span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Durée</span>
+                    <span class="info-box-number">65:18:20</span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <div class="info-box mb-3 shadow-none">
+                  <span class="info-box-icon text-success"><i class="fas fa-phone-volume"></i></span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Durée sonnerie</span>
+                    <span class="info-box-number">02:54:32</span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+            </div>
+
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- ./card-body -->
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-sm-3 col-6">
+              <div class="description-block border-right border-danger">
+                <h5 class="description-header">$264.84</h5>
+                <span class="description-text">TOTAL TTC</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3 col-6">
+              <div class="description-block border-right border-danger">
+                <h5 class="description-header">$210.30</h5>
+                <span class="description-text">TOTAL HT</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3 col-6">
+              <div class="description-block border-right border-danger">
+                <h5 class="description-header">$295.16</h5>
+                <span class="description-text">FACTURÉ TTC</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3 col-6">
+              <div class="description-block">
+                <h5 class="description-header">$272.25</h5>
+                <span class="description-text">FACTURÉ HT</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.card-footer -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.col -->
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <div id="example-table" style="border: 1px solid #BBB;" class="rounded">
+            <div id="skeleton-container">
+              <div id="skeleton-animation"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block sidebar %}
+<div class="p-3">
+  <p>Section vide</p>
+</div>
+{% endblock sidebar %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='plugins/moment/moment.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/daterangepicker/daterangepicker.js') }}"></script>
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.7.2/dist/js/tabulator.min.js"></script>
+
+<script>
+
+$(document).ready( function () {
+  $("#nav-link3").addClass("bg-danger");
+  $('#reservation').daterangepicker();
+  
+  $(document).ajaxComplete( function() {
+    $("#skeleton-container").addClass("d-none");
+  });
+
+  $.getJSON("data", function(data) {
+    var table = new Tabulator("#example-table", {
+      data:data,           //load row data from array
+      height:"500px",
+      layout:"fitColumns",      //fit columns to width of table
+      tooltips:true,            //show tool tips on cells
+      addRowPos:"top",          //when adding a new row, add it to the top of the table
+      pagination:"local",       //paginate the data
+      layout:"fitData",
+      paginationSize:25,
+      paginationSizeSelector:[25, 50, 100],
+      langs:{
+          "fr-fr":{ 
+              "pagination":{
+                  "first":"Premier",
+                  "first_title":"Première Page",
+                  "last":"Dernier",
+                  "last_title":"Dernière Page",
+                  "prev":"Précédent",
+                  "prev_title":"Page Précédente",
+                  "next":"Suivant",
+                  "next_title":"Page Suivante",
+                  "all":"Toute",
+                  "page_size": "Nº lignes par page",
+              },
+          },
+      },
+      columns:[                 //define the table columns
+        {title:"Poste", field:"CO_EXT"},
+        {title:"Date", field:"CO_DATE"},
+        {title:"Numéro", field:"CO_MASKNUM"},
+        {title:"Durée", field:"CO_DUR"},
+        {title:"Sonnerie", field:"CO_DRING"},
+        {title:"Appel", field:"CO_CALLTYPE"},
+        {title:"Coût", field:"CO_COUTFACT_TTC"},
+        {title:"Type", field:"CO_TYPE"},
+        {title:"Coût HT", field:"CO_COUT_HT"},
+        // add formatterParams:{crossElement:false} to replace false with empty case
+        {title:"Abouti", field:"CO_ABOUT", formatter:"tickCross"},
+        {title:"Zone", field:"CO_OPZONE"},
+        {title:"Direction", field:"CO_OPDIR"},
+        {title:"Service", field:"SE_NOM"},
+        {title:"Durée appel", field:"CO_DRTOT"},
+        {title:"Type direct", field:"CO_TYPEDIR"},
+      ],
+    });
+    table.setLocale("fr-fr");
+  });
+
+} );
+
+</script>
+{% endblock script %}
