@@ -6,12 +6,12 @@
 
 {% endblock head %}
 
-{% block page_title %} Tableau de bord {% endblock page_title %}
+{% block page_title %} <i class="nav-icon fas fa-tachometer-alt"></i> Tableau de bord {% endblock page_title %}
 
-{% block breadcrumb %}
+{% block actions %}
 <div class="float-sm-right">
 </div>
-{% endblock breadcrumb %}
+{% endblock actions %}
 
 {% block content %}
 	
@@ -75,14 +75,181 @@
 	</div>
 	</div>
 
+	<div class="row">
+	<div class="col-md-12">
+	<div class="card shadow-sm card-danger card-outline">
+		<div class="card-body">
+		<div class="row border-bottom pb-2">
+			<div class="col-md-4">
+				<fieldset class="border py-2 px-2 mb-1 rounded">
+				<legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
+				  <div class="custom-control custom-switch">
+				    <input type="checkbox" class="custom-control-input" id="periode_complete">
+				    <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
+				  </div>
+				  <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal">Du 12/02/2019 Au 23/07/2019</button>
+				</fieldset>
+				<div class="text-center">
+				<button class="btn btn-sm btn-primary px-3"><i class="fas fa-redo-alt"></i> ACTUALISER</button>
+				</div>
+			</div>
+			<div class="col-md-8 pt-2">
+				<table class="table table-sm table-bordered" style="background-color: #F8F8FF;">
+				  <thead>
+				    <tr>
+				      <th scope="col">Appels</th>
+				      <th scope="col">Nombre</th>
+				      <th scope="col">Durée</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <td>Tous</td>
+				      <td>62458</td>
+				      <td>1242:15:54</td>
+				    </tr>
+				    <tr>
+				      <td>Entrants</td>
+				      <td>37512</td>
+				      <td>875:10:30</td>
+				    </tr>
+				    <tr>
+				      <td>Sortants</td>
+				      <td>24946</td>
+				      <td>367:05:24</td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="row">
+		<div class="col-md-6 border-right">
+			<div id="piechart" style="height: 300px; width: 450px;"></div>	
+		</div>
+		<div class="col-md-6">
+			<div id="barchart" style="height: 300px; width: 450px;"></div>	
+		</div>
+		</div>
+
+		</div>		
+	</div>
+	</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="periode-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Plage de date</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="custom-control custom-switch">
+	          <input type="checkbox" class="custom-control-input" id="periode_complete_modal">
+	          <label class="custom-control-label font-weight-normal" for="periode_complete_modal">Période complète</label>
+	        </div>
+	        <div class="form-group row mt-3">
+	              <label for="plage_de_date" class="col-form-label col-md-4"><small>Plage : </small></label>
+	              <div class="col-md-8">
+	                <select class="custom-select custom-select-sm" id="plage_de_date">
+	                  <option value="0" selected>Libre</option>
+	                  <option value="1">Aujourd'hui</option>
+	                  <option value="2">Hier</option>
+	                  <option value="3">Avant hier</option>
+	                  <option value="4">Semaine courante</option>
+	                  <option value="5">Semaine dernière</option>
+	                  <option value="6">Semaine -2</option>
+	                  <option value="7">Mois courant</option>
+	                  <option value="8">Mois dernier</option>
+	                  <option value="9">Mois -2</option>
+	                  <option value="10">Trimestre courant</option>
+	                  <option value="11">Trimestre dernier</option>
+	                  <option value="12">Trimestre -2</option>
+	                  <option value="13">Année courante</option>
+	                  <option value="14">Année dernière</option>
+	                  <option value="15">Année -2</option>
+	                </select>
+	                </div>
+	                </div>
+	                <div class="form-group row">
+	                  <label for="date_debut" class="col-form-label col-md-4"><small>Du : </small></label>
+	                  <div class="col-md-8">
+	                    <input id="date_debut" type="date" name="date_debut" max="3000-12-31" 
+	                           min="1000-01-01" class="form-control form-control-sm">
+	                  </div>
+	                </div>
+	                <div class="form-group row">
+	                  <label for="date_fin" class="col-form-label col-md-4"><small>Au : </small></label>
+	                  <div class="col-md-8">
+	                    <input id="date_fin" type="date" name="date_fin" max="3000-12-31" 
+	                           min="2000-01-01" class="form-control form-control-sm">
+	                  </div>
+	                </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Annuler</button>
+	        <button type="button" class="btn btn-sm btn-primary">Entregistrer</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
 {% endblock content %}
 
 {% block script %}
 
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
 <script>
 
-	$("#nav-link1").addClass("bg-danger");
+	  $("#nav-link1").addClass("bg-danger");
 
-</script>
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data1 = google.visualization.arrayToDataTable([
+          ['Service', 'Nombre appels'],
+          ['Expéditions Stock', 2105],
+          ['Achats Approvisionnements', 1026],
+          ['Commercial', 9070],
+          ['Informatique', 6415],
+          ['Direction', 3210],
+          ['Support technique', 14621],
+          ['Compta', 10254],
+          ['Chambres', 18542],
+          ['Technique', 4189]
+        ]);
+
+        var options1 = {
+          title: 'Nombre appels par service'
+        };
+
+        var piechart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        piechart.draw(data1, options1);
+
+        var data2 = google.visualization.arrayToDataTable([
+           ['Service', 'Coût'],
+           ['Expéditions Stock', 1530],
+           ['Commercial', 1250],
+           ['Achats Approvisionnements', 1170],
+           ['Technique', 1140],
+           ['Chambres', 920]
+        ]);
+
+        var options2 = {
+        	title: 'Top 5 des coûts par direction'
+        }; 
+
+        var barchart = new google.visualization.ColumnChart(document.getElementById('barchart'));
+        barchart.draw(data2, options2);
+      }
+    </script>
 
 {% endblock script %}

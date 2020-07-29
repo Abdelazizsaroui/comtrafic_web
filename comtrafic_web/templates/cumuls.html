@@ -1,6 +1,6 @@
 {% extends '_base.html' %}
 
-{% block title %} Communications {% endblock title %}
+{% block title %} Cumuls {% endblock title %}
 
 {% block head %}
  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/daterangepicker/daterangepicker.css') }}">
@@ -41,24 +41,170 @@
 
 {% endblock head %}
 
-{% block page_title %} <i class="nav-icon fas fa-phone-square-alt"></i> Communications {% endblock page_title %}
+{% block page_title %} <i class="nav-icon fas fa-chart-bar"></i> Cumuls {% endblock page_title %}
 
 {% block actions %}
 <div class="float-sm-right">
   <div class="pt-2">
     <button class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-search"></i> RECHERCHE</button>
-     <button class="btn btn-sm btn-light border shadow-sm"><i class="fas fa-filter"></i> FILTRES</button>
      <button class="btn btn-sm btn-light text-danger border shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
   </div>
 </div>
 {% endblock actions %}
 
 {% block content %}
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-sm card-danger card-outline">
+        <div class="card-body pb-2">
+          <div class="row">
+            <div class="col-md-4 pt-2">
+              <div class="form-group row">
+                <label class="col-form-label col-md-3"><small>Filtre : </small></label>
+                <div class="col-md-9">
+                  <select class="custom-select custom-select-sm" name="filtre">
+                    <option value="0" selected>Numéro</option>
+                    <option value="1">Service</option>
+                    <option value="2">Abonnés</option>
+                    <option value="3">Zone tarifs</option>
+                    <option value="4">Direction tarifs</option>
+                    <option value="5">PABX</option>
+                    <option value="6">Date</option>
+                    <option value="7">Mois</option>
+                    <option value="8">Jour de la semaine</option>
+                    <option value="9">Jour du mois</option>
+                    <option value="10">Plages horaires quotidiennes</option>
+                    <option value="11">Plages 10 mn quotidiennes</option>
+                    <option value="12">Répartition temporelle / 1 heure</option>
+                    <option value="13">Répartition temporelle / 10 mn</option>
+                    <option value="14">Type appel</option>
+                    <option value="15">Etat appel</option>
+                    <option value="16">Type direction</option>
+                  </select>
+                </div>
+                </div>
+                <div class="form-group row">
+                <label class="col-form-label col-md-3"><small>Graphe : </small></label>
+                <div class="col-md-9">
+                  <select class="custom-select custom-select-sm" name="filtre">
+                    <option value="0" selected>Aucun</option>
+                    <option value="1">Histogramme</option>
+                    <option value="2">Secteurs</option>
+                    <option value="2">Courbes</option>
+                  </select>
+                </div>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="lignes_vides">
+                  <label class="custom-control-label" for="lignes_vides"><small>Lignes vides</small></label>
+                </div>
+            </div>
+            <div class="col-md-4">
+              <fieldset class="border px-2 mb-4 rounded">
+              <legend class="w-auto badge px-2">
+                  <input type="checkbox" name="top">
+                  <span style="font-size: 18px; font-weight: 300;">TOP</span>
+              </legend>
+                <div class="form-group row">
+                <label class="col-form-label col-md-4"><small>Lignes : </small></label>
+                <div class="col-md-8">
+                  <select class="custom-select custom-select-sm" name="top_lignes">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                  </select>
+                </div>
+                </div>
+                <div class="form-group row">
+                <label class="col-form-label col-md-4"><small>Sur : </small></label>
+                <div class="col-md-8">
+                  <select class="custom-select custom-select-sm" name="top_sur">
+                    <option value="0" selected>Nbre appels</option>
+                    <option value="1">Aboutis</option>
+                    <option value="2">Non aboutis</option>
+                    <option value="3">Entrants</option>
+                    <option value="4">Sortants</option>
+                    <option value="5">Internes</option>
+                    <option value="6">Transféré</option>
+                    <option value="7">Direct</option>
+                    <option value="8">Durée</option>
+                    <option value="9">Durée moy.</option>
+                    <option value="10">Dur. sonnerie</option>
+                    <option value="11">Durée son. moy.</option>
+                    <option value="12">Durée ent.</option>
+                    <option value="13">Durée sort.</option>
+                    <option value="14">Taxes</option>
+                    <option value="15">Coût HT</option>
+                    <option value="16">Coût TTC</option>
+                    <option value="17">Coût fact. HT</option>
+                    <option value="18">Coût fact. TTC</option>
+                  </select>
+                </div>
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-4">
+              <fieldset class="border px-2 mb-4 rounded">
+              <legend class="w-auto badge px-2">
+                  <input type="checkbox" name="cumul">
+                  <span style="font-size: 18px; font-weight: 300;">Filtre sur cumul</span>
+              </legend>
+                <div class="form-group row">
+                <label class="col-form-label col-md-4"><small>Lignes : </small></label>
+                <div class="col-md-8">
+                  <select class="custom-select custom-select-sm" name="cumul_sur">
+                    <option value="0" selected>Nbre appels</option>
+                    <option value="1">Aboutis</option>
+                    <option value="2">Non aboutis</option>
+                    <option value="3">Entrants</option>
+                    <option value="4">Sortants</option>
+                    <option value="5">Internes</option>
+                    <option value="6">Transféré</option>
+                    <option value="7">Direct</option>
+                    <option value="8">Durée</option>
+                    <option value="9">Durée moy.</option>
+                    <option value="10">Dur. sonnerie</option>
+                    <option value="11">Durée son. moy.</option>
+                    <option value="12">Durée ent.</option>
+                    <option value="13">Durée sort.</option>
+                    <option value="14">Taxes</option>
+                    <option value="15">Coût HT</option>
+                    <option value="16">Coût TTC</option>
+                    <option value="17">Coût fact. HT</option>
+                    <option value="18">Coût fact. TTC</option>
+                  </select>
+                </div>
+                </div>
+                <div class="form-group row">
+                <label class="col-form-label col-md-4"><small>Filtre : </small></label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control form-control-sm" name="cumul_filtre">
+                </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-md-12">
       <div class="card shadow-sm card-danger card-outline">
+
+        <!-- <div class="card-header pt-3 border-0">
+          <div class="text-right">
+            <button class="btn btn-sm btn-primary"><i class="fas fa-search"></i> RECHERCHE</button>
+             <button class="btn btn-sm btn-light border"><i class="fas fa-filter"></i> FILTRES</button>
+             <button class="btn btn-sm btn-light text-danger border"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+          </div>
+        </div> -->
+
         <div class="card-body pb-1">
+          
           <div class="row">
           <div class="col-md-4">
           <fieldset class="border py-2 px-2 mb-4 rounded">
@@ -242,7 +388,7 @@
     <div class="col-12">
       <div class="card shadow-sm card-danger card-outline">
         <div class="card-body">
-          <div id="com-table" style="border: 1px solid #BBB;" class="rounded">
+          <div id="cumuls-table" style="border: 1px solid #BBB;" class="rounded">
             <div id="skeleton-container">
               <div id="skeleton-animation"></div>
             </div>
@@ -330,14 +476,14 @@
 <script>
 
 $(document).ready( function () {
-  $("#nav-link3").addClass("bg-danger");
+  $("#nav-link4").addClass("bg-danger");
   
   $(document).ajaxComplete( function() {
     $("#skeleton-container").addClass("d-none");
   });
 
-  $.getJSON("com-data", function(data) {
-    var table = new Tabulator("#com-table", {
+  $.getJSON("cumuls-data", function(data) {
+    var table = new Tabulator("#cumuls-table", {
       data:data,           //load row data from array
       height:"500px",
       layout:"fitColumns",      //fit columns to width of table
@@ -364,22 +510,19 @@ $(document).ready( function () {
           },
       },
       columns:[                 //define the table columns
-        {title:"Poste", field:"CO_EXT"},
-        {title:"Date", field:"CO_DATE"},
-        {title:"Numéro", field:"CO_MASKNUM"},
+        {title:"Numéro", field:"CO_NUM"},
+        {title:"Communications", field:"Communications"},
+        {title:"Aboutis", field:"CO_ABOUT"},
+        {title:"Entrants", field:"CO_IN"},
+        {title:"Sortants", field:"CO_OUT"},
         {title:"Durée", field:"CO_DUR"},
-        {title:"Sonnerie", field:"CO_DRING"},
-        {title:"Appel", field:"CO_CALLTYPE"},
-        {title:"Coût", field:"CO_COUTFACT_TTC"},
-        {title:"Type", field:"CO_TYPE"},
-        {title:"Coût HT", field:"CO_COUT_HT"},
-        // add formatterParams:{crossElement:false} to replace false with empty case
-        {title:"Abouti", field:"CO_ABOUT", formatter:"tickCross", formatterParams:{crossElement:false}},
-        {title:"Zone", field:"CO_OPZONE"},
-        {title:"Direction", field:"CO_OPDIR"},
-        {title:"Service", field:"SE_NOM"},
-        {title:"Durée appel", field:"CO_DRTOT"},
-        {title:"Type direct", field:"CO_TYPEDIR"},
+        {title:"Durée moy.", field:"CO_DURM"},
+        {title:"Dur. sonnerie", field:"CO_DRING"},
+        {title:"Durée son. moy.", field:"CO_DRINGM"},
+        {title:"Durée ent.", field:"CO_DRING"},
+        {title:"Durée sort.", field:"CO_DUR_IN"},
+        {title:"Coût TTC", field:"CO_COUT_TTC"},
+        {title:"Coût TTC fac.", field:"CO_COUTFACT_TTC"},
       ],
     });
     table.setLocale("fr-fr");

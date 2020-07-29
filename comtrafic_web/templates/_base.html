@@ -111,7 +111,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-link2">
+            <a href="{{ url_for('supervision') }}" class="nav-link" id="nav-link2">
               <i class="nav-icon fas fa-eye"></i>
               <p>
                 Supervision
@@ -127,7 +127,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-link4">
+            <a href="{{ url_for('cumuls') }}" class="nav-link" id="nav-link4">
               <i class="nav-icon fas fa-chart-bar"></i>
               <p>
                 Cumuls
@@ -135,7 +135,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-link5">
+            <a href="{{ url_for('facturation') }}" class="nav-link" id="nav-link5">
               <i class="nav-icon fas fa-money-bill-alt"></i>
               <p>
                 Facturation
@@ -143,15 +143,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-link6">
+            <a href="{{ url_for('facture_tab') }}" class="nav-link" id="nav-link6">
               <i class="nav-icon fas fa-money-check-alt"></i>
               <p>
-                Facturation en tableau
+                Facture en tableau
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-link7">
+            <a href="{{ url_for('rapports') }}" class="nav-link" id="nav-link7">
               <i class="nav-icon fas fa-print"></i>
               <p>
                 Rapports
@@ -159,7 +159,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-link8">
+            <a href="{{ url_for('annuaires') }}" class="nav-link" id="nav-link8">
               <i class="nav-icon fas fa-folder-open"></i>
               <p>
                 Annuaires
@@ -167,7 +167,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-link9">
+            <a href="{{ url_for('parametrage') }}" class="nav-link" id="nav-link9">
               <i class="nav-icon fas fa-cog"></i>
               <p>
                 Paramétrage
@@ -191,7 +191,7 @@
             <h1 class="m-0 text-dark">{% block page_title %}{% endblock page_title %}</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
-            {% block breadcrumb %}{% endblock breadcrumb %}
+            {% block actions %}{% endblock actions %}
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
