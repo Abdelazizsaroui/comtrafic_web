@@ -1,0 +1,88 @@
+{% extends '_base.html' %}
+
+{% block title %} Tableau de bord {% endblock title %}
+
+{% block head %}
+
+{% endblock head %}
+
+{% block page_title %} Tableau de bord {% endblock page_title %}
+
+{% block breadcrumb %}
+<div class="float-sm-right">
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+	
+	<div class="row">
+	<div class="col-md-12">
+	<div class="card shadow-sm card-danger card-outline">
+	<div class="card-header border-0 row">
+		<p class="col-md-6 lead m-0">Informations sur la base de données</p>
+		<div class="col-md-6 text-center text-muted pt-1"><span class="badge badge-secondary"><i class="fas fa-phone-square-alt"></i> Appels</span><span><small> Le plus ancien: 15/12/2019 12:01:54</small> • <small>Le plus récent: 04/07/2020 10:18:32</small></span></div>
+	</div>
+	<div class="card-body">
+	<div class="row">
+	  <div class="col-12 col-sm-6 col-md-3">
+	    <div class="info-box mb-3" style="background-color: #F8F8FF;">
+	      <span class="info-box-icon bg-info"><i class="fas fa-phone-alt"></i></span>
+
+	      <div class="info-box-content">
+	        <span class="info-box-text">Communications</span>
+	        <span class="info-box-number">
+	          62458
+	        </span>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-12 col-sm-6 col-md-3">
+	    <div class="info-box mb-3" style="background-color: #F8F8FF;">
+	      <span class="info-box-icon bg-success"><i class="fas fa-laptop"></i></span>
+
+	      <div class="info-box-content">
+	        <span class="info-box-text">Postes</span>
+	        <span class="info-box-number">58</span>
+	      </div>
+	    </div>
+	  </div>
+
+	  <div class="clearfix hidden-md-up"></div>
+
+	  <div class="col-12 col-sm-6 col-md-3">
+	    <div class="info-box mb-3" style="background-color: #F8F8FF;">
+	      <span class="info-box-icon bg-danger"><i class="fas fa-map-signs"></i></span>
+
+	      <div class="info-box-content">
+	        <span class="info-box-text">Services</span>
+	        <span class="info-box-number">18</span>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-12 col-sm-6 col-md-3">
+	    <div class="info-box mb-3" style="background-color: #F8F8FF;">
+	      <span class="info-box-icon bg-warning"><i class="fas fa-server"></i></span>
+
+	      <div class="info-box-content">
+	        <span class="info-box-text">PBX</span>
+	        <span class="info-box-number">1</span>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+{% endblock content %}
+
+{% block script %}
+
+<script>
+
+	$("#nav-link1").addClass("bg-danger");
+
+</script>
+
+{% endblock script %}

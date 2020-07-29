@@ -52,15 +52,17 @@
 
   <div class="row">
     <div class="col-md-12">
-      <div class="card shadow-sm border-0">
+      <div class="card shadow-sm card-danger card-outline">
 
-        <div class="card-header border-0">
+        <div class="card-header pt-3 border-0">
           <div class="text-right">
-            <button class="btn btn-sm btn-primary"><i class="fas fa-search"></i> <strong>Recherche</strong></button>
+            <button class="btn btn-sm btn-primary"><i class="fas fa-search"></i> RECHERCHE</button>
+             <button class="btn btn-sm btn-light border"><i class="fas fa-filter"></i> FILTRES</button>
+             <button class="btn btn-sm btn-light text-danger border"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
           </div>
         </div>
 
-        <div class="card-body pt-0">
+        <div class="card-body pt-1 pb-1">
           
           <div class="row">
           <div class="col-md-4">
@@ -70,7 +72,7 @@
               <input type="checkbox" class="custom-control-input" id="periode_complete">
               <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
             </div>
-            <button class="btn btn-block btn-sm btn-outline-secondary my-2">Du 12/02/2019 Au 23/07/2019</button>
+            <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal">Du 12/02/2019 Au 23/07/2019</button>
           </fieldset>
           <div class="py-2">
             <div class="info-box text-center" style="background-color: #F8F8FF;">
@@ -243,13 +245,75 @@
 
   <div class="row">
     <div class="col-12">
-      <div class="card shadow-sm border-0">
+      <div class="card shadow-sm card-danger card-outline">
         <div class="card-body">
-          <div id="example-table" style="border: 1px solid #BBB;" class="rounded">
+          <div id="com-table" style="border: 1px solid #BBB;" class="rounded">
             <div id="skeleton-container">
               <div id="skeleton-animation"></div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="periode-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Plage de date</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="periode_complete_modal">
+            <label class="custom-control-label font-weight-normal" for="periode_complete_modal">Période complète</label>
+          </div>
+          <div class="form-group row mt-3">
+                <label for="plage_de_date" class="col-form-label col-md-4"><small>Plage : </small></label>
+                <div class="col-md-8">
+                  <select class="custom-select custom-select-sm" id="plage_de_date">
+                    <option value="0" selected>Libre</option>
+                    <option value="1">Aujourd'hui</option>
+                    <option value="2">Hier</option>
+                    <option value="3">Avant hier</option>
+                    <option value="4">Semaine courante</option>
+                    <option value="5">Semaine dernière</option>
+                    <option value="6">Semaine -2</option>
+                    <option value="7">Mois courant</option>
+                    <option value="8">Mois dernier</option>
+                    <option value="9">Mois -2</option>
+                    <option value="10">Trimestre courant</option>
+                    <option value="11">Trimestre dernier</option>
+                    <option value="12">Trimestre -2</option>
+                    <option value="13">Année courante</option>
+                    <option value="14">Année dernière</option>
+                    <option value="15">Année -2</option>
+                  </select>
+                  </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="date_debut" class="col-form-label col-md-4"><small>Du : </small></label>
+                    <div class="col-md-8">
+                      <input id="date_debut" type="date" name="date_debut" max="3000-12-31" 
+                             min="1000-01-01" class="form-control form-control-sm">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="date_fin" class="col-form-label col-md-4"><small>Au : </small></label>
+                    <div class="col-md-8">
+                      <input id="date_fin" type="date" name="date_fin" max="3000-12-31" 
+                             min="2000-01-01" class="form-control form-control-sm">
+                    </div>
+                  </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-sm btn-primary">Entregistrer</button>
         </div>
       </div>
     </div>
@@ -272,14 +336,13 @@
 
 $(document).ready( function () {
   $("#nav-link3").addClass("bg-danger");
-  $('#reservation').daterangepicker();
   
   $(document).ajaxComplete( function() {
     $("#skeleton-container").addClass("d-none");
   });
 
-  $.getJSON("data", function(data) {
-    var table = new Tabulator("#example-table", {
+  $.getJSON("com-data", function(data) {
+    var table = new Tabulator("#com-table", {
       data:data,           //load row data from array
       height:"500px",
       layout:"fitColumns",      //fit columns to width of table
@@ -316,7 +379,7 @@ $(document).ready( function () {
         {title:"Type", field:"CO_TYPE"},
         {title:"Coût HT", field:"CO_COUT_HT"},
         // add formatterParams:{crossElement:false} to replace false with empty case
-        {title:"Abouti", field:"CO_ABOUT", formatter:"tickCross"},
+        {title:"Abouti", field:"CO_ABOUT", formatter:"tickCross", formatterParams:{crossElement:false}},
         {title:"Zone", field:"CO_OPZONE"},
         {title:"Direction", field:"CO_OPDIR"},
         {title:"Service", field:"SE_NOM"},
