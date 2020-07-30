@@ -191,7 +191,6 @@
                     <span class="info-box-text">Durée</span>
                     <span class="info-box-number">65:18:20</span>
                   </div>
-                  <!-- /.info-box-content -->
                 </div>
               </div>
               <div class="col-6">
@@ -202,7 +201,6 @@
                     <span class="info-box-text">Sonnerie</span>
                     <span class="info-box-number">02:54:32</span>
                   </div>
-                  <!-- /.info-box-content -->
                 </div>
               </div>
             </div>
@@ -213,7 +211,6 @@
             <fieldset class="border pt-1 pb-3 px-2 rounded">
             <legend class="w-auto badge badge-secondary rounded-pill px-3">Filtrage</legend>
               <div class="row">
-            <!-- /.col -->
             <div class="col-md-6">
               <div class="row mb-2">
                 <div class="col-6">
@@ -298,7 +295,6 @@
           </div>
 
         </div>
-        <!-- ./card-body -->
         <div class="card-footer">
           <div class="row">
             <div class="col-sm-3 col-6">
@@ -306,40 +302,29 @@
                 <h5 class="description-header">$264.84</h5>
                 <span class="description-text">TOTAL TTC</span>
               </div>
-              <!-- /.description-block -->
             </div>
-            <!-- /.col -->
             <div class="col-sm-3 col-6">
               <div class="description-block border-right border-danger">
                 <h5 class="description-header">$210.30</h5>
                 <span class="description-text">TOTAL HT</span>
               </div>
-              <!-- /.description-block -->
             </div>
-            <!-- /.col -->
             <div class="col-sm-3 col-6">
               <div class="description-block border-right border-danger">
                 <h5 class="description-header">$295.16</h5>
                 <span class="description-text">FACTURÉ TTC</span>
               </div>
-              <!-- /.description-block -->
             </div>
-            <!-- /.col -->
             <div class="col-sm-3 col-6">
               <div class="description-block">
                 <h5 class="description-header">$272.25</h5>
                 <span class="description-text">FACTURÉ HT</span>
               </div>
-              <!-- /.description-block -->
             </div>
           </div>
-          <!-- /.row -->
         </div>
-        <!-- /.card-footer -->
       </div>
-      <!-- /.card -->
     </div>
-    <!-- /.col -->
   </div>
 
   <div class="row">
@@ -357,7 +342,6 @@
   </div>
 
 
-  <!-- Modal -->
   <div class="modal fade" id="periode-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
       <div class="modal-content">
@@ -442,12 +426,11 @@ $(document).ready( function () {
 
   $.getJSON("cumuls-data", function(data) {
     var table = new Tabulator("#cumuls-table", {
-      data:data,           //load row data from array
+      data:data,           
       height:"500px",
-      layout:"fitColumns",      //fit columns to width of table
-      tooltips:true,            //show tool tips on cells
-      addRowPos:"top",          //when adding a new row, add it to the top of the table
-      pagination:"local",       //paginate the data
+      layout:"fitColumns",      
+      tooltips:true,            
+      pagination:"local",       
       layout:"fitData",
       paginationSize:25,
       paginationSizeSelector:[25, 50, 100],
@@ -467,7 +450,7 @@ $(document).ready( function () {
               },
           },
       },
-      columns:[                 //define the table columns
+      columns:[                
         {title:"Numéro", field:"CO_NUM"},
         {title:"Communications", field:"Communications"},
         {title:"Aboutis", field:"CO_ABOUT"},
