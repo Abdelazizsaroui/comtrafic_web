@@ -3,42 +3,8 @@
 {% block title %} Cumuls {% endblock title %}
 
 {% block head %}
- <link rel="stylesheet" href="{{ url_for('static', filename='plugins/daterangepicker/daterangepicker.css') }}">
  <link href="https://unpkg.com/tabulator-tables@4.7.2/dist/css/tabulator_simple.min.css" rel="stylesheet">
-
- <style>
-
-   #skeleton-container {
-       height: 500px;
-   }
-
-   @keyframes skeletonShimmer{
-       0%{
-           background-position: 100% 0
-       }
-       100%{
-           background-position: -100% 0
-       }
-   }
-
-   #skeleton-animation {
-       animation-duration: 1s;
-       animation-fill-mode: forwards;
-       animation-iteration-count: infinite;
-       animation-name: skeletonShimmer;
-       animation-timing-function: cubic-bezier(.17,.67,.83,.67);
-       background: #f4f4f4;
-       background: linear-gradient(to right, #f4f4f4 0%, #d8d8d8 50%, #f4f4f4 100%);
-       background-size: 200% 100%;
-       left: 0;
-       top: 0;
-       width: 100%;
-       height: 100%;
-       position: absolute;
-   }
-
- </style>
-
+ <link rel="stylesheet" href="{{ url_for('static', filename='table_loading_skeleton.css') }}">
 {% endblock head %}
 
 {% block page_title %} <i class="nav-icon fas fa-chart-bar"></i> Cumuls {% endblock page_title %}
@@ -103,7 +69,7 @@
             <div class="col-md-4">
               <fieldset class="border px-2 mb-4 rounded">
               <legend class="w-auto badge px-2">
-                  <input type="checkbox" name="top">
+                  <input type="checkbox" name="top" id="top_check">
                   <span style="font-size: 18px; font-weight: 300;">TOP</span>
               </legend>
                 <div class="form-group row">
@@ -148,7 +114,7 @@
             <div class="col-md-4">
               <fieldset class="border px-2 mb-4 rounded">
               <legend class="w-auto badge px-2">
-                  <input type="checkbox" name="cumul">
+                  <input type="checkbox" name="cumul" id="cumul_check">
                   <span style="font-size: 18px; font-weight: 300;">Filtre sur cumul</span>
               </legend>
                 <div class="form-group row">
@@ -180,7 +146,7 @@
                 <div class="form-group row">
                 <label class="col-form-label col-md-4"><small>Filtre : </small></label>
                 <div class="col-md-8">
-                  <input type="text" class="form-control form-control-sm" name="cumul_filtre">
+                  <input type="text" class="form-control form-control-sm" name="cumul_filtre" placeholder="Filtre">
                 </div>
                 </div>
               </fieldset>
@@ -194,14 +160,6 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card shadow-sm card-danger card-outline">
-
-        <!-- <div class="card-header pt-3 border-0">
-          <div class="text-right">
-            <button class="btn btn-sm btn-primary"><i class="fas fa-search"></i> RECHERCHE</button>
-             <button class="btn btn-sm btn-light border"><i class="fas fa-filter"></i> FILTRES</button>
-             <button class="btn btn-sm btn-light text-danger border"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-          </div>
-        </div> -->
 
         <div class="card-body pb-1">
           
@@ -519,13 +477,32 @@ $(document).ready( function () {
         {title:"Durée moy.", field:"CO_DURM"},
         {title:"Dur. sonnerie", field:"CO_DRING"},
         {title:"Durée son. moy.", field:"CO_DRINGM"},
-        {title:"Durée ent.", field:"CO_DRING"},
-        {title:"Durée sort.", field:"CO_DUR_IN"},
+        {title:"Durée ent.", field:"CO_DUR_IN"},
+        {title:"Durée sort.", field:"CO_DUR_OUT"},
         {title:"Coût TTC", field:"CO_COUT_TTC"},
         {title:"Coût TTC fac.", field:"CO_COUTFACT_TTC"},
       ],
     });
     table.setLocale("fr-fr");
+  });
+
+  $('#top_check').parents("fieldset").attr('disabled', 'disabled');
+  $('#cumul_check').parents("fieldset").attr('disabled', 'disabled'); 
+
+  $('#top_check').click(function(){
+      if (this.checked) {
+          $(this).parents("fieldset").removeAttr('disabled');
+      } else {
+          $(this).parents("fieldset").attr('disabled', 'disabled');
+      };
+  });
+
+  $('#cumul_check').click(function(){
+      if (this.checked) {
+          $(this).parents("fieldset").removeAttr('disabled');
+      } else {
+          $(this).parents("fieldset").attr('disabled', 'disabled');
+      };
   });
 
 } );

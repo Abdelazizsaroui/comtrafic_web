@@ -6,14 +6,203 @@
 
 {% endblock head %}
 
-{% block page_title %} <i class="nav-icon fas fa-phone-square-alt"></i> Supervision {% endblock page_title %}
+{% block page_title %} <i class="nav-icon fas fa-eye"></i> Supervision {% endblock page_title %}
 
 {% block actions %}
 <div class="float-sm-right">
+  <div class="pt-2">
+    <button class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-search"></i> RECHERCHE</button>
+     <button class="btn btn-sm btn-light text-danger border shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+  </div>
 </div>
 {% endblock actions %}
 
 {% block content %}
+
+	<div class="row">
+	  <div class="col-md-12">
+	    <div class="card shadow-sm card-danger card-outline">
+	      <div class="card-body pb-2">
+	        <div class="row">
+	          <div class="col-md-4 pt-1">
+	          	<fieldset class="border py-2 px-2 mb-4 rounded">
+	          	<legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
+	          	  <div class="custom-control custom-switch">
+	          	    <input type="checkbox" class="custom-control-input" id="periode_complete">
+	          	    <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
+	          	  </div>
+	          	  <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal">Du 12/02/2019 Au 23/07/2019</button>
+	          	</fieldset>
+	          </div>
+	          <div class="col-md-4">
+	            <fieldset class="border px-2 mb-4 rounded">
+	            <legend class="w-auto badge px-2">
+	                <input type="checkbox" name="cumul" id="cumul_check">
+	                <span style="font-size: 18px; font-weight: 300;">Filtre sur cumul</span>
+	            </legend>
+	              <div class="form-group row">
+	              <label class="col-form-label col-md-4"><small>Lignes : </small></label>
+	              <div class="col-md-8">
+	                <select class="custom-select custom-select-sm" name="cumul_sur">
+	                  <option value="0" selected>Nbre appels</option>
+	                  <option value="1">Aboutis</option>
+	                  <option value="2">Non aboutis</option>
+	                  <option value="3">Entrants</option>
+	                  <option value="4">Sortants</option>
+	                  <option value="5">Internes</option>
+	                  <option value="6">Transféré</option>
+	                  <option value="7">Direct</option>
+	                  <option value="8">Durée</option>
+	                  <option value="9">Durée moy.</option>
+	                  <option value="10">Dur. sonnerie</option>
+	                  <option value="11">Durée son. moy.</option>
+	                  <option value="12">Durée ent.</option>
+	                  <option value="13">Durée sort.</option>
+	                  <option value="14">Taxes</option>
+	                  <option value="15">Coût HT</option>
+	                  <option value="16">Coût TTC</option>
+	                  <option value="17">Coût fact. HT</option>
+	                  <option value="18">Coût fact. TTC</option>
+	                </select>
+	              </div>
+	              </div>
+	              <div class="form-group row">
+	              <label class="col-form-label col-md-4"><small>Filtre : </small></label>
+	              <div class="col-md-8">
+	                <input type="text" class="form-control form-control-sm" name="cumul_filtre">
+	              </div>
+	              </div>
+	            </fieldset>
+	          </div>
+	          <div class="col-md-4 pt-3">
+	          	<div class="form-group row">
+	            <label class="col-form-label col-md-4"><small>Service</small></label>
+	            <div class="col-md-8">
+	            <select class="custom-select mb-2 custom-select-sm">
+	              <option selected disabled>Choisir Service</option>
+	              <option>Expéditions Stock</option>
+	              <option>Achats Approvisionnements</option>
+	              <option>Commercial</option>
+	              <option>Informatique</option>
+	              <option>Direction</option>
+	              <option>Support technique</option>
+	              <option>Compta</option>
+	              <option>Chambres</option>
+	              <option>Technique</option>
+	            </select>
+	            </div>
+	            </div>
+	            <div class="form-group row">
+                <label class="col-form-label col-md-4"><small>Etat de seuil : </small></label>
+                <div class="col-md-8">
+                  <select class="custom-select custom-select-sm" name="filtre">
+                    <option value="0">Tous</option>
+                    <option value="1">Seuil atteint</option>
+                    <option value="2">Seuil non atteint</option>
+                  </select>
+                </div>
+                </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="row">
+	  <div class="col-md-12">
+	    <div class="card shadow-sm card-danger card-outline">
+	      <div class="card-body">
+	        <div class="row">
+	        	{% for el in data %}
+	        	<div class="col-md-6 col-lg-3 p-2">
+	        	<div class="rounded shadow-sm bg-light small border px-2 pt-2">
+	        		<div class="row">
+	        			<div class="col-5">
+	        				<p><strong>Poste : {{el.p}}</strong></p>
+	        				<p><strong>{{el.n}}</strong></p>
+	        			</div>
+	        			<div class="col-7">
+	        				<p class="m-0">Appels : {{el.a}}</p>
+	        				<p class="m-0">Durée : {{el.d}}</p>
+	        				{% if el.p == 912 %}
+	        				<p class="m-0">Coût : {{el.c}} <span class="badge badge-danger rounded -1">100</span></p>
+	        				{% elif el.p == 916 %}
+	        				<p class="m-0">Coût : {{el.c}} <span class="badge badge-success rounded px-1">50</span></p>
+	        				{% else %}
+	        				<p class="m-0">Coût : {{el.c}}</p>
+	        				{% endif %}
+	        			</div>
+	        		</div>
+	        	</div>
+	        	</div>
+	        	{% endfor %}
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="periode-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Plage de date</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="custom-control custom-switch">
+	          <input type="checkbox" class="custom-control-input" id="periode_complete_modal">
+	          <label class="custom-control-label font-weight-normal" for="periode_complete_modal">Période complète</label>
+	        </div>
+	        <div class="form-group row mt-3">
+	              <label for="plage_de_date" class="col-form-label col-md-4"><small>Plage : </small></label>
+	              <div class="col-md-8">
+	                <select class="custom-select custom-select-sm" id="plage_de_date">
+	                  <option value="0" selected>Libre</option>
+	                  <option value="1">Aujourd'hui</option>
+	                  <option value="2">Hier</option>
+	                  <option value="3">Avant hier</option>
+	                  <option value="4">Semaine courante</option>
+	                  <option value="5">Semaine dernière</option>
+	                  <option value="6">Semaine -2</option>
+	                  <option value="7">Mois courant</option>
+	                  <option value="8">Mois dernier</option>
+	                  <option value="9">Mois -2</option>
+	                  <option value="10">Trimestre courant</option>
+	                  <option value="11">Trimestre dernier</option>
+	                  <option value="12">Trimestre -2</option>
+	                  <option value="13">Année courante</option>
+	                  <option value="14">Année dernière</option>
+	                  <option value="15">Année -2</option>
+	                </select>
+	                </div>
+	                </div>
+	                <div class="form-group row">
+	                  <label for="date_debut" class="col-form-label col-md-4"><small>Du : </small></label>
+	                  <div class="col-md-8">
+	                    <input id="date_debut" type="date" name="date_debut" max="3000-12-31" 
+	                           min="1000-01-01" class="form-control form-control-sm">
+	                  </div>
+	                </div>
+	                <div class="form-group row">
+	                  <label for="date_fin" class="col-form-label col-md-4"><small>Au : </small></label>
+	                  <div class="col-md-8">
+	                    <input id="date_fin" type="date" name="date_fin" max="3000-12-31" 
+	                           min="2000-01-01" class="form-control form-control-sm">
+	                  </div>
+	                </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Annuler</button>
+	        <button type="button" class="btn btn-sm btn-primary">Entregistrer</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 {% endblock content %}
 
@@ -21,8 +210,18 @@
 
 	<script>
 
+	$(document).ready( function () {
 		$("#nav-link2").addClass("bg-danger");
+		$('#cumul_check').parents("fieldset").attr('disabled', 'disabled');
+		$('#cumul_check').click(function(){
+		    if (this.checked) {
+		        $(this).parents("fieldset").removeAttr('disabled');
+		    } else {
+		        $(this).parents("fieldset").attr('disabled', 'disabled');
+		    };
+		});
+	});
 
 	</script>
 
-{% block script %}
+{% endblock script %}

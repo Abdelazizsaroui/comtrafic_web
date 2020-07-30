@@ -1,0 +1,28 @@
+#skeleton-container {
+    height: 500px;
+}
+
+@keyframes skeletonShimmer{
+    0%{
+        background-position: 100% 0
+    }
+    100%{
+        background-position: -100% 0
+    }
+}
+
+#skeleton-animation {
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: skeletonShimmer;
+    animation-timing-function: cubic-bezier(.17,.67,.83,.67);
+    background: #f4f4f4;
+    background: linear-gradient(to right, #f4f4f4 0%, #d8d8d8 50%, #f4f4f4 100%);
+    background-size: 200% 100%;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}

@@ -1,6 +1,5 @@
 import requests
-import json
-import datetime
+import time, datetime
 from flask import Response, render_template, url_for, jsonify
 from comtrafic_web import app
 
@@ -19,10 +18,9 @@ def com_data():
 	data = response.json()
 	for el in data:
 		el['CO_DATE'] = el['CO_DATE'][:10] + " " + el['CO_DATE'][11:19]
-		# el['CO_DUR'] = time.strftime("%H:%M:%S", time.gmtime(el['CO_DUR']))
 		el['CO_DUR'] = str(datetime.timedelta(seconds = el['CO_DUR']))
 		el['CO_DRING'] = str(datetime.timedelta(seconds = el['CO_DRING']))
-		el['CO_DRTOT'] = str(datetime.timedelta(seconds = el['CO_DRTOT'])) 
+		el['CO_DRTOT'] = str(datetime.timedelta(seconds = el['CO_DRTOT']))
 	# return Response(data, status=200, mimetype='application/json')
 	return jsonify(data)
 
@@ -34,9 +32,43 @@ def cumuls():
 def cumuls_data():
 	response = requests.get("https://stage.saroui.com/cumuls_data.json")
 	data = response.json()
-	# for el in data:
-	# 	el['CO_DATE'] = el['CO_DATE'][:10] + " " + el['CO_DATE'][11:19]
-	# 	el['CO_DUR'] = str(datetime.timedelta(seconds = el['CO_DUR']))
-	# 	el['CO_DRING'] = str(datetime.timedelta(seconds = el['CO_DRING']))
-	# 	el['CO_DRTOT'] = str(datetime.timedelta(seconds = el['CO_DRTOT'])) 
+	for el in data:
+		el['CO_DUR'] = str(datetime.timedelta(seconds = el['CO_DUR']))
+		el['CO_DURM'] = time.strftime("%H:%M:%S", time.gmtime(el['CO_DURM']))
+		el['CO_DRING'] = str(datetime.timedelta(seconds = el['CO_DRING']))
+		el['CO_DRINGM'] = time.strftime("%H:%M:%S", time.gmtime(el['CO_DRINGM']))
+		try:
+			el['CO_DUR_IN'] = str(datetime.timedelta(seconds = el['CO_DUR_IN']))
+		except:
+			pass
+		try:
+			el['CO_DUR_OUT'] = str(datetime.timedelta(seconds = el['CO_DUR_OUT']))
+		except:
+			pass
 	return jsonify(data)
+
+@app.route("/supervision")
+def supervision():
+	response = requests.get("https://stage.saroui.com/superv.json")
+	data = response.json()
+	return render_template("supervision.html", data=data)
+
+@app.route("/facturation")
+def facturation():
+	return render_template("facturation.html")
+
+@app.route("/facture-tab")
+def facture_tab():
+	return render_template("facture_tab.html")
+
+@app.route("/annuaires")
+def annuaires():
+	return render_template("annuaires.html")
+
+@app.route("/rapports")
+def rapports():
+	return render_template("rapports.html")
+
+@app.route("/parametrage")
+def parametrage():
+	return render_template("parametrage.html")
