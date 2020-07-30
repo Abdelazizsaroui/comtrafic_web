@@ -1,0 +1,20 @@
+### Interface web pour ComTrafic : 
+[https://stage.saroui.com](https://stage.saroui.com)
+ 
+
+**Structure du projet**
+
+ - `comtrafic_web` : le répertoire principal du projet.
+	 - `static` : contient les fichiers statiques (css/js/images ..).
+		 - `dist` : contient les fichiers d'AdminLTE.
+		 - `plugins` : contient les dépendances d'AdminLTE.
+		 - ... et d'autres fichiers.
+	- `templates` : contient les pages de l'interface.
+		- `_base.html` : la page de base, elle est héritée par les autres pages. Elles contient les bloques communs entre toutes les pages.
+		- .. et les autres pages.
+	- `__init__.py` : déclare le répertoire comtrafic_web comme un module python et contient l'initialisation de l'application.
+	- `routes.py` :  contient les traitements et le routage des requêtes 
+- `Procfile` : fichier nécessaire pour le déploiement sur Heroku. Il déclare `run.py` comme l'entrée de l'application pour le serveur web.
+- `requirements.txt` : contient les dépendances du projet.
+- `run.py` : le script pour démarrer l'application.
+
