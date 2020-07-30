@@ -14,7 +14,7 @@ def communications():
 
 @app.route("/com-data")
 def com_data():
-	response = requests.get("https://stage.saroui.com/com_data.json")
+	response = requests.get("https://data.saroui.com/com_data.json")
 	data = response.json()
 	for el in data:
 		el['CO_DATE'] = el['CO_DATE'][:10] + " " + el['CO_DATE'][11:19]
@@ -30,7 +30,7 @@ def cumuls():
 
 @app.route("/cumuls-data")
 def cumuls_data():
-	response = requests.get("https://stage.saroui.com/cumuls_data.json")
+	response = requests.get("https://data.saroui.com/cumuls_data.json")
 	data = response.json()
 	for el in data:
 		el['CO_DUR'] = str(datetime.timedelta(seconds = el['CO_DUR']))
@@ -49,7 +49,7 @@ def cumuls_data():
 
 @app.route("/supervision")
 def supervision():
-	response = requests.get("https://stage.saroui.com/superv.json")
+	response = requests.get("https://data.saroui.com/superv.json")
 	data = response.json()
 	return render_template("supervision.html", data=data)
 
