@@ -63,7 +63,9 @@ def facture_tab():
 
 @app.route("/annuaires")
 def annuaires():
-	return render_template("annuaires.html")
+	response = requests.get("https://data.saroui.com/postes_data.json")
+	data = response.json()
+	return render_template("annuaires.html", data=data)
 
 @app.route("/rapports")
 def rapports():

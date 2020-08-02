@@ -6,7 +6,7 @@
 
 {% endblock head %}
 
-{% block page_title %} <i class="nav-icon fas fa-cog"></i> Paramétrage {% endblock page_title %}
+{% block page_title %} <i class="nav-icon fas fa-cog"></i> Paramétrage <span class="text-danger">/ <span class="text-secondary font-weight-light"> Paramétrages</span> {% endblock page_title %}
 
 {% block actions %}
 <div class="float-sm-right">
@@ -22,6 +22,8 @@
 	<script>
 
 		$("#nav-link9").addClass("bg-danger");
+		$("#nav-link9").parent("li").addClass("menu-open");
+		$("#nav-link9-sub1").addClass("active");
 
 	</script>
 

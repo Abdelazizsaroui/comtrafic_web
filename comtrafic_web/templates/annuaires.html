@@ -6,14 +6,82 @@
 
 {% endblock head %}
 
-{% block page_title %} <i class="nav-icon fas fa-folder-open"></i> Annuaires {% endblock page_title %}
+{% block page_title %} <i class="nav-icon fas fa-folder-open"></i> Annuaires <span class="text-danger">/ <span class="text-secondary font-weight-light"> Annuaire des postes</span> {% endblock page_title %}
 
 {% block actions %}
 <div class="float-sm-right">
+  <div class="pt-2">
+    <button class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus"></i> AJOUTER POSTE</button>
+  </div>
 </div>
 {% endblock actions %}
 
 {% block content %}
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card card-danger card-outline card-tabs">
+			  <div class="card-header p-0 pt-1 border-bottom-0">
+			    <ul class="nav nav-tabs" id="postes-parent" role="tablist">
+			      <li class="nav-item">
+			        <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#postes-parent" role="tab" aria-controls="postes-etablissement" aria-selected="true"><strong>Etablissement <span class="badge badge-secondary">40</span></strong></a>
+			      </li>
+			    </ul>
+			  </div>
+			  <div class="card-body">
+			    <div class="tab-content" id="postes">
+			      <div class="tab-pane fade show active" id="postes-etablissement" role="tabpanel">
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Achats Approvisionnements</span> <span class="badge badge-secondary">2</span></span>
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Commercial</span> <span class="badge badge-secondary">6</span></span>
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Compta</span> <span class="badge badge-secondary">4</span></span>
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Comptabilité</span> <span class="badge badge-secondary">1</span></span>
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Defaut</span> <span class="badge badge-secondary">3</span></span>
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Direction</span> <span class="badge badge-secondary">3</span></span>
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Expéditions Stocks</span> <span class="badge badge-secondary">3</span></span>
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Informatique</span> <span class="badge badge-secondary">2</span></span>
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Support technique</span> <span class="badge badge-secondary">4</span></span>
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Technique</span> <span class="badge badge-secondary">10</span></span>
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Ventes </span> <span class="badge badge-secondary">2</span></span>
+			          <a href="#" class="btn btn-sm btn-outline-primary rounded-pill mb-2"><i class="fas fa-plus"></i> Ajouter</a>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card card-danger card-outline">
+				<div class="card-body">
+					<table class="table table-hover" id="postes-table">
+					  <thead>
+					    <tr>
+					      <th>Poste</th>
+					      <th>Nom</th>
+					      <th>Prénom</th>
+					      <th>Service</th>
+					      <th>Date création</th>
+					      <th>Actions</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  	{% for el in data %}
+					    <tr data-poste="{{el.SE_NOM}}">
+					      <td>{{el.PO_NOM}}</td>
+					      <td>{{el.PO_USERNOM}}</td>
+					      <td>{{el.PO_USERPRENOM}}</td>
+					      <td>{{el.SE_NOM}}</td>
+					      <td>02/08/2020</td>
+					      <td><a type="button" class="text-primary"><i class="fas fa-edit"></i></a><a type="button" class="text-danger ml-3"><i class="fas fa-trash-alt"></i></a></td>
+					    </tr>
+					    {% endfor %}
+					  </tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 
 {% endblock content %}
 
@@ -22,6 +90,20 @@
 	<script>
 
 		$("#nav-link8").addClass("bg-danger");
+		$("#nav-link8").parent("li").addClass("menu-open");
+		$("#nav-link8-sub1").addClass("active");
+
+	$(document).ready(function(){
+		$(".etablissement-poste").click(function() {
+			$(this).toggleClass("border-primary");
+			$(".etablissement-poste").not(this).removeClass("border-primary");
+			var value = $(this).children(".service-name").text();
+			$('tbody tr').show();
+			if ($(this).hasClass("border-primary")){
+				$('tbody tr').not($('tbody tr[data-poste="' + value + '"]')).hide();
+			};
+		});
+	});
 
 	</script>
 

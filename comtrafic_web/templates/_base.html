@@ -142,21 +142,59 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{{ url_for('annuaires') }}" class="nav-link" id="nav-link8">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link" id="nav-link8">
               <i class="nav-icon fas fa-folder-open"></i>
               <p>
                 Annuaires
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url_for('annuaires') }}" class="nav-link" id="nav-link8-sub1">
+                  <p><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg> Annuaires des postes</p>
+                </a>
+              </li>
+            </ul>
           </li>
-          <li class="nav-item">
-            <a href="{{ url_for('parametrage') }}" class="nav-link" id="nav-link9">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link" id="nav-link9">
               <i class="nav-icon fas fa-cog"></i>
               <p>
                 Paramétrage
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url_for('parametrage') }}" class="nav-link" id="nav-link9-sub1">
+                  <p><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg> Paramétrages</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link" id="nav-link9-sub2">
+                  <p><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg> Configuration mails</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" id="nav-link9-sub3">
+                  <p><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg> Tarifs opérateurs</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a href="#" class="nav-link" id="nav-link9-sub4">
+                  <p><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg> Liste des directions</p>
+                </a>
+              </li>
+               <li class="nav-item">
+                <a href="#" class="nav-link" id="nav-link9-sub5">
+                  <p><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg> Droits utilisateurs</p>
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>
