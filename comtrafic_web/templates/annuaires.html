@@ -11,7 +11,7 @@
 {% block actions %}
 <div class="float-sm-right">
   <div class="pt-2">
-    <button class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus"></i> AJOUTER POSTE</button>
+    <button class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#ajouter-poste-modal"><i class="fas fa-plus"></i> AJOUTER POSTE</button>
   </div>
 </div>
 {% endblock actions %}
@@ -24,7 +24,7 @@
 			  <div class="card-header p-0 pt-1 border-bottom-0">
 			    <ul class="nav nav-tabs" id="postes-parent" role="tablist">
 			      <li class="nav-item">
-			        <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#postes-parent" role="tab" aria-controls="postes-etablissement" aria-selected="true"><strong>Etablissement <span class="badge badge-secondary">40</span></strong></a>
+			        <a class="nav-link active" id="etablissement-tab" data-toggle="pill" href="#postes-parent" role="tab" aria-controls="postes-etablissement" aria-selected="true"><strong>Etablissement <span class="badge badge-secondary">40</span></strong></a>
 			      </li>
 			    </ul>
 			  </div>
@@ -41,8 +41,8 @@
 			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Informatique</span> <span class="badge badge-secondary">2</span></span>
 			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Support technique</span> <span class="badge badge-secondary">4</span></span>
 			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Technique</span> <span class="badge badge-secondary">10</span></span>
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Ventes </span> <span class="badge badge-secondary">2</span></span>
-			          <a href="#" class="btn btn-sm btn-outline-primary rounded-pill mb-2"><i class="fas fa-plus"></i> Ajouter</a>
+			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Ventes</span> <span class="badge badge-secondary">2</span></span>
+			          <button type="button" data-toggle="modal" data-target="#ajouter-service-modal" class="btn btn-sm btn-outline-primary rounded-pill mb-2"><i class="fas fa-plus"></i> Ajouter</button>
 			      </div>
 			    </div>
 			  </div>
@@ -53,7 +53,13 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card card-danger card-outline">
-				<div class="card-body">
+				<div class="card-header pb-1 d-flex">
+					<p class="font-weight-light" id="postes-type">Tous les postes</p>
+					<div id="service-actions" class="d-none ml-auto">
+						<a type="button" class="text-primary"><i class="fas fa-edit"></i></a><a type="button" class="text-danger ml-3"><i class="fas fa-trash-alt"></i></a>
+					</div>
+				</div>
+				<div class="card-body pt-0">
 					<table class="table table-hover" id="postes-table">
 					  <thead>
 					    <tr>
@@ -62,7 +68,7 @@
 					      <th>Prénom</th>
 					      <th>Service</th>
 					      <th>Date création</th>
-					      <th>Actions</th>
+					      <th></th>
 					    </tr>
 					  </thead>
 					  <tbody>
@@ -83,6 +89,99 @@
 		</div>
 	</div>
 
+	<div class="modal" id="ajouter-poste-modal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Ajout de poste</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <label><small>Poste</small></label>
+	        <input type="text" name="" class="form-control form-control-sm mb-2">
+	        <label><small>Nom</small></label>
+	        <input type="text" name="" class="form-control form-control-sm mb-2">
+	        <label><small>Prénom</small></label>
+	        <input type="text" name="" class="form-control form-control-sm mb-2">
+	        <label><small>Numéro direct (SDA)</small></label>
+	        <input type="text" name="" class="form-control form-control-sm mb-2">
+	        <label><small>Seuil crédit mens.</small></label>
+	        <input type="number" name="" class="form-control form-control-sm mb-2">
+	        <label><small>Service</small></label>
+	        <select class="custom-select custom-select-sm">
+	        	<option>Achats Approvisionnements</option>
+	        	<option>Commercial</option>
+	        	<option>Compta</option>
+	        	<option>Comptabilité</option>
+	        	<option>Defaut</option>
+	        	<option>Direction</option>
+	        	<option>Expéditions Stocks</option>
+	        	<option>Informatique</option>
+	        	<option>Support technique</option>
+	        	<option>Technique</option>
+	        	<option>Ventes</option>
+	        </select>
+	      </div>
+	      <div class="modal-footer border-0">
+	        <button type="button" class="btn btn-sm btn-primary px-4">OK</button>
+	        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Annuler</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal" id="ajouter-service-modal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-lg" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Ajout de service</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row">
+	      	<div class="col-md-6">
+	        <label><small>Nom</small></label>
+	        <input type="text" name="" class="form-control form-control-sm mb-2">
+	        <label><small>Mails</small></label>
+	        <textarea class="form-control form-control-sm mb-2" rows="2"></textarea>
+	        <label><small>Code interne</small></label>
+	        <input type="text" name="" class="form-control form-control-sm mb-2">
+	        <label><small>Niveau supérieur</small></label>
+	        <select class="custom-select custom-select-sm mb-2">
+	        	<option>Etablissement</option>
+	        </select>
+	        <label><small>Taux TVA</small></label>
+	        <input type="number" name="" class="form-control form-control-sm mb-2">
+	    	</div>
+	    	<div class="col-md-6">
+	        <label><small>Adresse</small></label>
+	        <textarea class="form-control form-control-sm mb-2" rows="3"></textarea>
+	        <label><small>Info. 1</small></label>
+	        <input type="text" name="" class="form-control form-control-sm mb-2">
+	        <label><small>Info. 2</small></label>
+	        <input type="text" name="" class="form-control form-control-sm mb-2">
+	        <label><small>Info. 3</small></label>
+	        <input type="text" name="" class="form-control form-control-sm mb-3">
+	        <div class="custom-control custom-checkbox">
+	          <input type="checkbox" class="custom-control-input" id="service-facturable">
+	          <label class="custom-control-label" for="service-facturable"><small>Facturable</small></label>
+	        </div>
+	       </div>
+	   	   </div>
+	      </div>
+	      <div class="modal-footer border-0">
+	        <button type="button" class="btn btn-sm btn-primary px-4">OK</button>
+	        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Annuler</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
 {% endblock content %}
 
 {% block script %}
@@ -99,9 +198,20 @@
 			$(".etablissement-poste").not(this).removeClass("border-primary");
 			var value = $(this).children(".service-name").text();
 			$('tbody tr').show();
+			$("#postes-type").text("Tous les postes");
+			$("#service-actions").addClass("d-none");
 			if ($(this).hasClass("border-primary")){
 				$('tbody tr').not($('tbody tr[data-poste="' + value + '"]')).hide();
+				$("#postes-type").text(`Service ${value}`);
+				$("#service-actions").removeClass("d-none");
 			};
+		});
+
+		$("#etablissement-tab").click(function() {
+			$(".etablissement-poste").removeClass("border-primary");
+			$('tbody tr').show();
+			$("#postes-type").text("Tous les postes");
+			$("#service-actions").addClass("d-none");
 		});
 	});
 

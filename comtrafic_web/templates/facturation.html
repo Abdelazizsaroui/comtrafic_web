@@ -14,6 +14,110 @@
 {% endblock actions %}
 
 {% block content %}
+	
+	<div class="row">
+		<div class="col-md-12">
+		<div class="card card-danger card-outline card-tabs">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-4">
+						<fieldset class="border py-2 px-2 mb-4 rounded">
+						<legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
+						  <div class="custom-control custom-switch">
+						    <input type="checkbox" class="custom-control-input" id="periode_complete">
+						    <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
+						  </div>
+						  <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal">Du 12/02/2019 Au 23/07/2019</button>
+						</fieldset>
+					</div>
+					<div class="col-md-4 pl-lg-5">
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input" id="check1" checked>
+						  <label class="custom-control-label" for="check1"><small>Affichage des postes</small></label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input" id="check2" checked="">
+						  <label class="custom-control-label" for="check2"><small>Affichage des services</small></label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input" id="check3">
+						  <label class="custom-control-label" for="check3"><small>Saut de page par poste</small></label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input" id="check4" checked="">
+						  <label class="custom-control-label" for="check4"><small>Saut de page par service</small></label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input" id="check5">
+						  <label class="custom-control-label" for="check5"><small>Détail des appels</small></label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input" id="check6" checked>
+						  <label class="custom-control-label" for="check6"><small>Affichage cumul établissement</small></label>
+						</div>
+						<div class="custom-control custom-checkbox">
+						  <input type="checkbox" class="custom-control-input" id="check7">
+						  <label class="custom-control-label" for="check7"><small>Affichage des postes sans com.</small></label>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group row">
+						<label class="col-form-label col-md-3"><small>Service : </small></label>
+						<div class="col-md-9">
+						<select class="custom-select mb-2 custom-select-sm">
+						  <option selected disabled>Choisir Service</option>
+						  <option>Expéditions Stock</option>
+						  <option>Achats Approvisionnements</option>
+						  <option>Commercial</option>
+						  <option>Informatique</option>
+						  <option>Direction</option>
+						  <option>Support technique</option>
+						  <option>Compta</option>
+						  <option>Chambres</option>
+						  <option>Technique</option>
+						</select>
+						</div>
+						</div>
+						<div class="form-group row">
+						<label class="col-form-label col-md-3"><small>Poste : </small></label>
+						<div class="col-md-9">
+						<select class="custom-select custom-select-sm">
+						  <option selected disabled>Choisir Poste</option>
+						  <option>520</option>
+						  <option>521</option>
+						  <option>522</option>
+						  <option>523</option>
+						  <option>524</option>
+						  <option>525</option>
+						  <option>526</option>
+						  <option>527</option>
+						  <option>528</option>
+						  <option>529</option>
+						  <option>530</option>
+						  <option>531</option>
+						  <option>532</option>
+						  <option>533</option>
+						  <option>534</option>
+						  <option>535</option>
+						  <option>536</option>
+						  <option>537</option>
+						  <option>538</option>
+						  <option>539</option>
+						</select>
+						</div>
+						</div>
+						<div class="form-group row">
+						<label class="col-form-label col-md-3"><small>Coût TTC : </small></label>
+						<div class="col-md-9">
+						<input type="text" name="" class="form-control form-control-sm" placeholder="Coût TTC">
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
 
 {% endblock content %}
 
