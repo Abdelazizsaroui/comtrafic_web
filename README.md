@@ -21,7 +21,7 @@
 
 **Installation :**
 
- - (*optionnel*) Configurer et activer un environnement virtuelle de Python (venv, virtualenv .. )
+ - (*optionnel*) Configurer et activer un environnement virtuel de Python (venv, virtualenv .. )
  - Récupérer le dépot du projet :  
  **`$ git clone https://gitlab.com/prost.phil/interface-web-pour-comtrafic`** 
 
