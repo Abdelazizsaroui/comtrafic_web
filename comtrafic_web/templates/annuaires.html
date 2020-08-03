@@ -10,8 +10,11 @@
 
 {% block actions %}
 <div class="float-sm-right">
-  <div class="pt-2">
-    <button class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#ajouter-poste-modal"><i class="fas fa-plus"></i> AJOUTER POSTE</button>
+  <div class="p-1">
+    <a href="#" class="btn btn-sm bg-white shadow-sm"><small><strong>Envoi/Mail</strong></small></a>
+    <a href="#" class="btn btn-sm bg-white shadow-sm"><small><strong>Export</strong></small></a>
+    <a href="#" class="btn btn-sm bg-white shadow-sm"><small><strong>Import</strong></small></a>
+    <a href="#" class="btn btn-sm bg-white shadow-sm"><small><strong>Impression</strong></small></a>
   </div>
 </div>
 {% endblock actions %}
@@ -53,10 +56,18 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card card-danger card-outline">
-				<div class="card-header pb-1 d-flex">
+				<div class="card-header pb-1">
+					<div class="row">
+					<div class="col-md-6 d-flex">
 					<p class="font-weight-light" id="postes-type">Tous les postes</p>
 					<div id="service-actions" class="d-none ml-auto">
 						<a type="button" class="text-primary"><i class="fas fa-edit"></i></a><a type="button" class="text-danger ml-3"><i class="fas fa-trash-alt"></i></a>
+					</div>
+					</div>
+					<div class="col-md-6 text-right">
+					  <a class="text-primary" type="button" data-toggle="modal" data-target="#ajouter-poste-modal"><i class="fas fa-plus"></i> Ajouter Poste</a>
+					</div>
+					
 					</div>
 				</div>
 				<div class="card-body pt-0">
