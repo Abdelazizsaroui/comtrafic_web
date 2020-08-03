@@ -18,3 +18,21 @@
 - `requirements.txt` : contient les dépendances du projet.
 - `run.py` : le script pour démarrer l'application.
 
+
+**Installation :**
+
+ - (*optionnel*) Configurer et activer un environnement virtuelle de Python (venv, virtualenv .. )
+ - Récupérer le dépot du projet :  
+**`$ git clone https://gitlab.com/prost.phil/interface-web-pour-comtrafic`** 
+
+ - Installer les dépendances : 
+**`$ pip install -r requirements.txt`**
+
+ - (*optionnel*) Activer le mode DEBUG de Flask :
+Windows :  **`$ set FLASK_ENV = development`**
+Linux :  **`$ export FLASK_ENV = development`**
+
+ - Lancer le serveur de développement : 
+**`$ python run.py`**
+
+ - L'application est servie sur *localhost:5000*
