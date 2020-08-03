@@ -29,8 +29,8 @@
  **`$ pip install -r requirements.txt`**
 
  - (*optionnel*) Activer le mode DEBUG de Flask :  
- Windows :  **`$ set FLASK_ENV = development`**  
- Linux :  **`$ export FLASK_ENV = development`**
+ Windows :  **`$ set FLASK_ENV=development`**  
+ Linux :  **`$ export FLASK_ENV=development`**
 
  - Lancer le serveur de développement :  
  **`$ python run.py`**
