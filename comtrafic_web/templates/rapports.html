@@ -3,7 +3,11 @@
 {% block title %} Rapports {% endblock title %}
 
 {% block head %}
-
+	<style type="text/css">
+		.rapports-list li:hover {
+			text-decoration: underline;
+		}
+	</style>
 {% endblock head %}
 
 {% block page_title %} <i class="nav-icon fas fa-print"></i> Rapports {% endblock page_title %}
@@ -14,6 +18,61 @@
 {% endblock actions %}
 
 {% block content %}
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card card-danger card-outline card-tabs">
+			  <div class="card-header p-0 pt-1 border-bottom-0">
+			    <ul class="nav nav-tabs" id="rapport-category" role="tablist">
+			      <li class="nav-item">
+			        <a class="nav-link active" id="communications-tab" data-toggle="pill" href="#communications" role="tab"><strong>Communications</strong></a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" id="cumuls-tab" data-toggle="pill" href="#cumuls" role="tab"><strong>Cumuls</strong></a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" id="facturation-communications-tab" data-toggle="pill" href="#facturation-communications" role="tab"><strong>Facturation communications</strong></a>
+			      </li>
+			      <li class="nav-item">
+			        <a class="nav-link" id="facturation-en-tableau-tab" data-toggle="pill" href="#facturation-en-tableau" role="tab"><strong>Facturation en tableau</strong></a>
+			      </li>
+			    </ul>
+			  </div>
+			  <div class="card-body">
+			    <div class="tab-content text-secondary">
+			      <div class="tab-pane fade show active" id="communications" role="tabpanel">
+			      	<ul class="rapports-list">
+			      	<li><a href="#" class="text-dark">Communications vers portables</a></li>
+			      	<li><a href="#" class="text-dark">Communications sortantes, durée > 4mn</a></li>
+			      	<li><a href="#" class="text-dark">Listes de appels perdus</a></li>
+			      	<li><a href="#" class="text-dark">Liste entrants, attente > 10s</a></li>
+			      	<li><a href="#" class="text-dark">Répartition des appels</a></li>
+			      	</ul>
+			      </div>
+			      <div class="tab-pane fade show" id="cumuls" role="tabpanel">
+			      	<ul class="rapports-list">
+			      	<li><a href="#" class="text-dark">Top 5 des portables les plus appelés</a></li>
+			      	<li><a href="#" class="text-dark">Cumuls par numéro sur appels sortants</a></li>
+			      	<li><a href="#" class="text-dark">Top 20 des Num. les plus appelés</a></li>
+			      	<li><a href="#" class="text-dark">Top 20 des Num. les plus coûteux</a></li>
+			      	<li><a href="#" class="text-dark">Répartition des appels</a></li>
+			      	</ul>
+			      </div>
+			      <div class="tab-pane fade show" id="facturation-communications" role="tabpanel">
+			      	<ul class="rapports-list">
+			      	<li><a href="#" class="text-dark">Facturation mois dernier</a></li>
+			      	</ul>
+			      </div>
+			      <div class="tab-pane fade show" id="facturation-en-tableau" role="tabpanel">
+			      	<ul class="rapports-list">
+			      	<li><a href="#" class="text-dark">Facturation mois dernier</a></li>
+			      	</ul>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
 
 {% endblock content %}
 
