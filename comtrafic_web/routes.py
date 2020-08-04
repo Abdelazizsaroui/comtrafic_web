@@ -57,9 +57,9 @@ def supervision():
 def facturation():
 	return render_template("facturation.html")
 
-@app.route("/facture-tab")
-def facture_tab():
-	return render_template("facture_tab.html")
+@app.route("/facture-tableau")
+def facture_tableau():
+	return render_template("facture_tableau.html")
 
 @app.route("/annuaires/annuaire-postes")
 def annuaire_postes():
@@ -74,3 +74,19 @@ def rapports():
 @app.route("/parametrage/parametrages")
 def parametrages():
 	return render_template("parametrage/parametrages.html")
+
+@app.route("/parametrage/config-mails")
+def config_mails():
+	return render_template("parametrage/config_mails.html")
+
+@app.route("/parametrage/tarifs-operateurs")
+def tarifs_operateurs():
+	return render_template("parametrage/tarifs_operateurs.html")
+
+@app.route("/parametrage/liste-directions")
+def liste_directions():
+	return render_template("parametrage/liste_directions.html")
+
+@app.route("/parametrage/droits-utilisateurs")
+def droits_utilisateurs():
+	return render_template("parametrage/droits_utilisateurs.html")
