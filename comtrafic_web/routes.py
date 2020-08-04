@@ -61,16 +61,16 @@ def facturation():
 def facture_tab():
 	return render_template("facture_tab.html")
 
-@app.route("/annuaires")
-def annuaires():
+@app.route("/annuaires/annuaire-postes")
+def annuaire_postes():
 	response = requests.get("https://data.saroui.com/postes_data.json")
 	data = response.json()
-	return render_template("annuaires.html", data=data)
+	return render_template("annuaires/annuaire_postes.html", data=data)
 
 @app.route("/rapports")
 def rapports():
 	return render_template("rapports.html")
 
-@app.route("/parametrage")
-def parametrage():
-	return render_template("parametrage.html")
+@app.route("/parametrage/parametrages")
+def parametrages():
+	return render_template("parametrage/parametrages.html")
