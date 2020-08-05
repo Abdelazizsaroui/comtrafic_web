@@ -20,7 +20,7 @@
 {% block content %}
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-8">
 			<div class="card card-danger card-outline card-tabs">
 			  <div class="card-header p-0 pt-1 border-bottom-0">
 			    <ul class="nav nav-tabs" id="rapport-category" role="tablist">
@@ -71,6 +71,613 @@
 			  </div>
 			</div>
 		</div>
+		<div class="col-md-4">
+			<div class="card card-danger card-outline">
+			<div class="card-header bg-light">
+				<div class="row justify-content-between">
+				<a href="#" class="btn btn-sm bg-white shadow-sm col-md-3" data-toggle="tooltip" title="Créer une copie"><i class="fas fa-copy"></i></a>
+				<a href="#" class="btn btn-sm bg-white shadow-sm col-md-3" data-toggle="tooltip" title="Paramétrage"><i class="fas fa-cog"></i></a>
+				<a href="#" class="btn btn-sm bg-white shadow-sm col-md-3" data-toggle="tooltip" title="Supprimer"><span class="text-danger"><i class="fas fa-trash-alt"></i></span></a>
+				</div>
+			</div>
+			<div class="card-body pt-2">
+				<p class="lead">Editions du rapport</p>
+				<div class="row">
+				<div class="col-md-6 p-1">
+				<a href="#" class="btn btn-success btn-block">Prévisualisation</a>
+				</div>
+				<div class="col-md-6 p-1">
+				<a href="#" class="btn btn-primary btn-block">Impression</a>
+				</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 p-1">
+					<a href="#" class="btn btn-secondary btn-block">Envoi/Mail</a>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card card-danger card-outline">
+				<div id="div-communications">
+				<div class="card-header">
+					<p class="lead m-0"><strong>Communications</strong></p>
+				</div>
+				<div class="card-body pb-5">
+					<div class="row">
+					<div class="col-md-4">
+						<fieldset class="border py-2 px-2 mb-4 rounded">
+						<legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
+						  <div class="custom-control custom-switch">
+						    <input type="checkbox" class="custom-control-input" id="periode_complete">
+						    <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
+						  </div>
+						  <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal">Du 12/02/2019 Au 23/07/2019</button>
+						</fieldset>
+					</div>
+					<div class="col-md-4">
+						<div class="row mb-2">
+						  <div class="col-6">
+						    <label><small>Type d'appels</small></label>
+						    <select class="custom-select custom-select-sm">
+						      <option selected>Tous</option>
+						      <option>Entrants</option>
+						      <option>Sortants</option>
+						    </select>
+						  </div>
+						  <div class="col-6">
+						    <label><small>Etat d'appels</small></label>
+						    <select class="custom-select custom-select-sm">
+						      <option selected>Tous</option>
+						      <option>Aboutis</option>
+						      <option>Non aboutis</option>
+						    </select>
+						  </div>
+						</div>
+						<label><small>Service</small></label>
+						<select class="custom-select mb-2 custom-select-sm">
+						  <option selected disabled>Choisir Service</option>
+						  <option>Expéditions Stock</option>
+						  <option>Achats Approvisionnements</option>
+						  <option>Commercial</option>
+						  <option>Informatique</option>
+						  <option>Direction</option>
+						  <option>Support technique</option>
+						  <option>Compta</option>
+						  <option>Chambres</option>
+						  <option>Technique</option>
+						</select>
+						<label><small>Poste</small></label>
+						<select class="custom-select custom-select-sm mb-2">
+						  <option selected disabled>Choisir Poste</option>
+						  <option>520</option>
+						  <option>521</option>
+						  <option>522</option>
+						  <option>523</option>
+						  <option>524</option>
+						  <option>525</option>
+						  <option>526</option>
+						  <option>527</option>
+						  <option>528</option>
+						  <option>529</option>
+						  <option>530</option>
+						  <option>531</option>
+						  <option>532</option>
+						  <option>533</option>
+						  <option>534</option>
+						  <option>535</option>
+						  <option>536</option>
+						  <option>537</option>
+						  <option>538</option>
+						  <option>539</option>
+						</select>
+						<label><small>Type direc.</small></label>
+						<select class="custom-select custom-select-sm">
+						  <option selected disabled>Choisir Type direc.</option>
+						  <option>I</option>
+						  <option>M</option>
+						  <option>N</option>
+						  <option>S</option>
+						  <option>X</option>
+						</select>
+					</div>
+					<div class="col-md-4">
+						<label><small>Numéro</small></label>
+						<input type="text" name="numero" placeholder="Numéro" class="form-control form-control-sm mb-2">
+						<label><small>Coût TTC</small></label>
+						<input type="text" name="cout_ttc" placeholder="Coût TTC" class="form-control form-control-sm mb-2">
+						<label><small>Sonnerie</small></label>
+						<input type="text" name="sonnerie" placeholder="Sonnerie" class="form-control form-control-sm mb-2">
+						<label><small>Durée</small></label>
+						<input type="text" name="duree" placeholder="Durée" class="form-control form-control-sm">
+					</div>
+					</div>
+				</div>
+				</div>
+				<div id="div-cumuls" class="d-none">
+					<div class="card-header">
+						<p class="lead m-0"><strong>Cumuls</strong></p>
+					</div>
+					<div class="card-body pb-5">
+						<div class="row">
+						  <div class="col-md-4 pt-2">
+						    <div class="form-group row">
+						      <label class="col-form-label col-md-3"><small>Filtre : </small></label>
+						      <div class="col-md-9">
+						        <select class="custom-select custom-select-sm" name="filtre">
+						          <option value="0" selected>Numéro</option>
+						          <option value="1">Service</option>
+						          <option value="2">Abonnés</option>
+						          <option value="3">Zone tarifs</option>
+						          <option value="4">Direction tarifs</option>
+						          <option value="5">PABX</option>
+						          <option value="6">Date</option>
+						          <option value="7">Mois</option>
+						          <option value="8">Jour de la semaine</option>
+						          <option value="9">Jour du mois</option>
+						          <option value="10">Plages horaires quotidiennes</option>
+						          <option value="11">Plages 10 mn quotidiennes</option>
+						          <option value="12">Répartition temporelle / 1 heure</option>
+						          <option value="13">Répartition temporelle / 10 mn</option>
+						          <option value="14">Type appel</option>
+						          <option value="15">Etat appel</option>
+						          <option value="16">Type direction</option>
+						        </select>
+						      </div>
+						      </div>
+						      <div class="form-group row">
+						      <label class="col-form-label col-md-3"><small>Graphe : </small></label>
+						      <div class="col-md-9">
+						        <select class="custom-select custom-select-sm" name="filtre">
+						          <option value="0" selected>Aucun</option>
+						          <option value="1">Histogramme</option>
+						          <option value="2">Secteurs</option>
+						          <option value="2">Courbes</option>
+						        </select>
+						      </div>
+						      </div>
+						      <div class="custom-control custom-checkbox">
+						        <input type="checkbox" class="custom-control-input" id="lignes_vides">
+						        <label class="custom-control-label" for="lignes_vides"><small>Lignes vides</small></label>
+						      </div>
+						  </div>
+						  <div class="col-md-4">
+						    <fieldset class="border px-2 mb-4 rounded">
+						    <legend class="w-auto badge px-2">
+						        <input type="checkbox" name="top" id="top_check">
+						        <span style="font-size: 18px; font-weight: 300;">TOP</span>
+						    </legend>
+						      <div class="form-group row">
+						      <label class="col-form-label col-md-4"><small>Lignes : </small></label>
+						      <div class="col-md-8">
+						        <select class="custom-select custom-select-sm" name="top_lignes">
+						          <option value="5" selected>5</option>
+						          <option value="10">10</option>
+						          <option value="20">20</option>
+						          <option value="50">50</option>
+						        </select>
+						      </div>
+						      </div>
+						      <div class="form-group row">
+						      <label class="col-form-label col-md-4"><small>Sur : </small></label>
+						      <div class="col-md-8">
+						        <select class="custom-select custom-select-sm" name="top_sur">
+						          <option value="0" selected>Nbre appels</option>
+						          <option value="1">Aboutis</option>
+						          <option value="2">Non aboutis</option>
+						          <option value="3">Entrants</option>
+						          <option value="4">Sortants</option>
+						          <option value="5">Internes</option>
+						          <option value="6">Transféré</option>
+						          <option value="7">Direct</option>
+						          <option value="8">Durée</option>
+						          <option value="9">Durée moy.</option>
+						          <option value="10">Dur. sonnerie</option>
+						          <option value="11">Durée son. moy.</option>
+						          <option value="12">Durée ent.</option>
+						          <option value="13">Durée sort.</option>
+						          <option value="14">Taxes</option>
+						          <option value="15">Coût HT</option>
+						          <option value="16">Coût TTC</option>
+						          <option value="17">Coût fact. HT</option>
+						          <option value="18">Coût fact. TTC</option>
+						        </select>
+						      </div>
+						      </div>
+						    </fieldset>
+						  </div>
+						  <div class="col-md-4">
+						    <fieldset class="border px-2 mb-4 rounded">
+						    <legend class="w-auto badge px-2">
+						        <input type="checkbox" name="cumul" id="cumul_check">
+						        <span style="font-size: 18px; font-weight: 300;">Filtre sur cumul</span>
+						    </legend>
+						      <div class="form-group row">
+						      <label class="col-form-label col-md-4"><small>Lignes : </small></label>
+						      <div class="col-md-8">
+						        <select class="custom-select custom-select-sm" name="cumul_sur">
+						          <option value="0" selected>Nbre appels</option>
+						          <option value="1">Aboutis</option>
+						          <option value="2">Non aboutis</option>
+						          <option value="3">Entrants</option>
+						          <option value="4">Sortants</option>
+						          <option value="5">Internes</option>
+						          <option value="6">Transféré</option>
+						          <option value="7">Direct</option>
+						          <option value="8">Durée</option>
+						          <option value="9">Durée moy.</option>
+						          <option value="10">Dur. sonnerie</option>
+						          <option value="11">Durée son. moy.</option>
+						          <option value="12">Durée ent.</option>
+						          <option value="13">Durée sort.</option>
+						          <option value="14">Taxes</option>
+						          <option value="15">Coût HT</option>
+						          <option value="16">Coût TTC</option>
+						          <option value="17">Coût fact. HT</option>
+						          <option value="18">Coût fact. TTC</option>
+						        </select>
+						      </div>
+						      </div>
+						      <div class="form-group row">
+						      <label class="col-form-label col-md-4"><small>Filtre : </small></label>
+						      <div class="col-md-8">
+						        <input type="text" class="form-control form-control-sm" name="cumul_filtre" placeholder="Filtre">
+						      </div>
+						      </div>
+						    </fieldset>
+						  </div>
+						</div>
+						<hr>
+						<div class="row">
+						<div class="col-md-4">
+							<fieldset class="border py-2 px-2 mb-4 rounded">
+							<legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
+							  <div class="custom-control custom-switch">
+							    <input type="checkbox" class="custom-control-input" id="periode_complete">
+							    <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
+							  </div>
+							  <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal">Du 12/02/2019 Au 23/07/2019</button>
+							</fieldset>
+						</div>
+						<div class="col-md-4">
+							<div class="row mb-2">
+							  <div class="col-6">
+							    <label><small>Type d'appels</small></label>
+							    <select class="custom-select custom-select-sm">
+							      <option selected>Tous</option>
+							      <option>Entrants</option>
+							      <option>Sortants</option>
+							    </select>
+							  </div>
+							  <div class="col-6">
+							    <label><small>Etat d'appels</small></label>
+							    <select class="custom-select custom-select-sm">
+							      <option selected>Tous</option>
+							      <option>Aboutis</option>
+							      <option>Non aboutis</option>
+							    </select>
+							  </div>
+							</div>
+							<label><small>Service</small></label>
+							<select class="custom-select mb-2 custom-select-sm">
+							  <option selected disabled>Choisir Service</option>
+							  <option>Expéditions Stock</option>
+							  <option>Achats Approvisionnements</option>
+							  <option>Commercial</option>
+							  <option>Informatique</option>
+							  <option>Direction</option>
+							  <option>Support technique</option>
+							  <option>Compta</option>
+							  <option>Chambres</option>
+							  <option>Technique</option>
+							</select>
+							<label><small>Poste</small></label>
+							<select class="custom-select custom-select-sm mb-2">
+							  <option selected disabled>Choisir Poste</option>
+							  <option>520</option>
+							  <option>521</option>
+							  <option>522</option>
+							  <option>523</option>
+							  <option>524</option>
+							  <option>525</option>
+							  <option>526</option>
+							  <option>527</option>
+							  <option>528</option>
+							  <option>529</option>
+							  <option>530</option>
+							  <option>531</option>
+							  <option>532</option>
+							  <option>533</option>
+							  <option>534</option>
+							  <option>535</option>
+							  <option>536</option>
+							  <option>537</option>
+							  <option>538</option>
+							  <option>539</option>
+							</select>
+							<label><small>Type direc.</small></label>
+							<select class="custom-select custom-select-sm">
+							  <option selected disabled>Choisir Type direc.</option>
+							  <option>I</option>
+							  <option>M</option>
+							  <option>N</option>
+							  <option>S</option>
+							  <option>X</option>
+							</select>
+						</div>
+						<div class="col-md-4">
+							<label><small>Numéro</small></label>
+							<input type="text" name="numero" placeholder="Numéro" class="form-control form-control-sm mb-2">
+							<label><small>Coût TTC</small></label>
+							<input type="text" name="cout_ttc" placeholder="Coût TTC" class="form-control form-control-sm mb-2">
+							<label><small>Sonnerie</small></label>
+							<input type="text" name="sonnerie" placeholder="Sonnerie" class="form-control form-control-sm mb-2">
+							<label><small>Durée</small></label>
+							<input type="text" name="duree" placeholder="Durée" class="form-control form-control-sm">
+						</div>
+						</div>
+					</div>
+				</div>
+				<div id="div-facturation-communications" class="d-none">
+					<div class="card-header">
+						<p class="lead m-0"><strong>Facturation communications</strong></p>
+					</div>
+					<div class="card-body pb-5">
+						<div class="row">
+						<div class="col-md-4">
+							<fieldset class="border py-2 px-2 mb-4 rounded">
+							<legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
+							  <div class="custom-control custom-switch">
+							    <input type="checkbox" class="custom-control-input" id="periode_complete">
+							    <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
+							  </div>
+							  <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal">Du 12/02/2019 Au 23/07/2019</button>
+							</fieldset>
+						</div>
+						<div class="col-md-4 pl-lg-5">
+							<div class="custom-control custom-checkbox">
+							  <input type="checkbox" class="custom-control-input" id="check1" checked>
+							  <label class="custom-control-label" for="check1"><small>Affichage des postes</small></label>
+							</div>
+							<div class="custom-control custom-checkbox">
+							  <input type="checkbox" class="custom-control-input" id="check2" checked="">
+							  <label class="custom-control-label" for="check2"><small>Affichage des services</small></label>
+							</div>
+							<div class="custom-control custom-checkbox">
+							  <input type="checkbox" class="custom-control-input" id="check3">
+							  <label class="custom-control-label" for="check3"><small>Saut de page par poste</small></label>
+							</div>
+							<div class="custom-control custom-checkbox">
+							  <input type="checkbox" class="custom-control-input" id="check4" checked="">
+							  <label class="custom-control-label" for="check4"><small>Saut de page par service</small></label>
+							</div>
+							<div class="custom-control custom-checkbox">
+							  <input type="checkbox" class="custom-control-input" id="check5">
+							  <label class="custom-control-label" for="check5"><small>Détail des appels</small></label>
+							</div>
+							<div class="custom-control custom-checkbox">
+							  <input type="checkbox" class="custom-control-input" id="check6" checked>
+							  <label class="custom-control-label" for="check6"><small>Affichage cumul établissement</small></label>
+							</div>
+							<div class="custom-control custom-checkbox">
+							  <input type="checkbox" class="custom-control-input" id="check7">
+							  <label class="custom-control-label" for="check7"><small>Affichage des postes sans com.</small></label>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group row">
+							<label class="col-form-label col-md-3"><small>Service : </small></label>
+							<div class="col-md-9">
+							<select class="custom-select mb-2 custom-select-sm">
+							  <option selected disabled>Choisir Service</option>
+							  <option>Expéditions Stock</option>
+							  <option>Achats Approvisionnements</option>
+							  <option>Commercial</option>
+							  <option>Informatique</option>
+							  <option>Direction</option>
+							  <option>Support technique</option>
+							  <option>Compta</option>
+							  <option>Chambres</option>
+							  <option>Technique</option>
+							</select>
+							</div>
+							</div>
+							<div class="form-group row">
+							<label class="col-form-label col-md-3"><small>Poste : </small></label>
+							<div class="col-md-9">
+							<select class="custom-select custom-select-sm">
+							  <option selected disabled>Choisir Poste</option>
+							  <option>520</option>
+							  <option>521</option>
+							  <option>522</option>
+							  <option>523</option>
+							  <option>524</option>
+							  <option>525</option>
+							  <option>526</option>
+							  <option>527</option>
+							  <option>528</option>
+							  <option>529</option>
+							  <option>530</option>
+							  <option>531</option>
+							  <option>532</option>
+							  <option>533</option>
+							  <option>534</option>
+							  <option>535</option>
+							  <option>536</option>
+							  <option>537</option>
+							  <option>538</option>
+							  <option>539</option>
+							</select>
+							</div>
+							</div>
+							<div class="form-group row">
+							<label class="col-form-label col-md-3"><small>Coût TTC : </small></label>
+							<div class="col-md-9">
+							<input type="text" name="" class="form-control form-control-sm" placeholder="Coût TTC">
+							</div>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+				<div id="div-facturation-en-tableau" class="d-none">
+					<div class="card-header">
+						<p class="lead m-0"><strong>Facturation en tableau</strong></p>
+					</div>
+					<div class="card-body">
+						<div class="row">
+						<div class="col-md-4">
+							<fieldset class="border py-2 px-2 mb-4 rounded">
+							<legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
+							  <div class="custom-control custom-switch">
+							    <input type="checkbox" class="custom-control-input" id="periode_complete">
+							    <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
+							  </div>
+							  <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal">Du 12/02/2019 Au 23/07/2019</button>
+							</fieldset>
+						</div>
+						<div class="col-md-4">
+							<div class="row mb-3">
+							  <div class="col-6">
+							    <label><small>Type d'appels</small></label>
+							    <select class="custom-select custom-select-sm">
+							      <option selected>Tous</option>
+							      <option>Entrants</option>
+							      <option>Sortants</option>
+							    </select>
+							  </div>
+							  <div class="col-6">
+							    <label><small>Etat d'appels</small></label>
+							    <select class="custom-select custom-select-sm">
+							      <option selected>Tous</option>
+							      <option>Aboutis</option>
+							      <option>Non aboutis</option>
+							    </select>
+							  </div>
+							</div>
+							<div class="form-group row">
+							<label class="col-form-label col-md-3"><small>Coût TTC : </small></label>
+							<div class="col-md-9">
+							<input type="text" name="" class="form-control form-control-sm" placeholder="Coût TTC">
+							</div>
+							</div>
+						</div>
+						<div class="col-md-4 pt-3">
+							<div class="form-group row">
+							<label class="col-form-label col-md-3"><small>Service : </small></label>
+							<div class="col-md-9">
+							<select class="custom-select mb-2 custom-select-sm">
+							  <option selected disabled>Choisir Service</option>
+							  <option>Expéditions Stock</option>
+							  <option>Achats Approvisionnements</option>
+							  <option>Commercial</option>
+							  <option>Informatique</option>
+							  <option>Direction</option>
+							  <option>Support technique</option>
+							  <option>Compta</option>
+							  <option>Chambres</option>
+							  <option>Technique</option>
+							</select>
+							</div>
+							</div>
+							<div class="form-group row">
+							<label class="col-form-label col-md-3"><small>Poste : </small></label>
+							<div class="col-md-9">
+							<select class="custom-select custom-select-sm">
+							  <option selected disabled>Choisir Poste</option>
+							  <option>520</option>
+							  <option>521</option>
+							  <option>522</option>
+							  <option>523</option>
+							  <option>524</option>
+							  <option>525</option>
+							  <option>526</option>
+							  <option>527</option>
+							  <option>528</option>
+							  <option>529</option>
+							  <option>530</option>
+							  <option>531</option>
+							  <option>532</option>
+							  <option>533</option>
+							  <option>534</option>
+							  <option>535</option>
+							  <option>536</option>
+							  <option>537</option>
+							  <option>538</option>
+							  <option>539</option>
+							</select>
+							</div>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="periode-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Plage de date</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="custom-control custom-switch">
+	          <input type="checkbox" class="custom-control-input" id="periode_complete_modal">
+	          <label class="custom-control-label font-weight-normal" for="periode_complete_modal">Période complète</label>
+	        </div>
+	        <div class="form-group row mt-3">
+	              <label for="plage_de_date" class="col-form-label col-md-4"><small>Plage : </small></label>
+	              <div class="col-md-8">
+	                <select class="custom-select custom-select-sm" id="plage_de_date">
+	                  <option value="0" selected>Libre</option>
+	                  <option value="1">Aujourd'hui</option>
+	                  <option value="2">Hier</option>
+	                  <option value="3">Avant hier</option>
+	                  <option value="4">Semaine courante</option>
+	                  <option value="5">Semaine dernière</option>
+	                  <option value="6">Semaine -2</option>
+	                  <option value="7">Mois courant</option>
+	                  <option value="8">Mois dernier</option>
+	                  <option value="9">Mois -2</option>
+	                  <option value="10">Trimestre courant</option>
+	                  <option value="11">Trimestre dernier</option>
+	                  <option value="12">Trimestre -2</option>
+	                  <option value="13">Année courante</option>
+	                  <option value="14">Année dernière</option>
+	                  <option value="15">Année -2</option>
+	                </select>
+	                </div>
+	                </div>
+	                <div class="form-group row">
+	                  <label for="date_debut" class="col-form-label col-md-4"><small>Du : </small></label>
+	                  <div class="col-md-8">
+	                    <input id="date_debut" type="date" name="date_debut" max="3000-12-31" 
+	                           min="1000-01-01" class="form-control form-control-sm">
+	                  </div>
+	                </div>
+	                <div class="form-group row">
+	                  <label for="date_fin" class="col-form-label col-md-4"><small>Au : </small></label>
+	                  <div class="col-md-8">
+	                    <input id="date_fin" type="date" name="date_fin" max="3000-12-31" 
+	                           min="2000-01-01" class="form-control form-control-sm">
+	                  </div>
+	                </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Annuler</button>
+	        <button type="button" class="btn btn-sm btn-primary">Entregistrer</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 {% endblock content %}
@@ -80,6 +687,33 @@
 	<script>
 
 		$("#nav-link7").addClass("bg-danger");
+
+		$(document).ready(function() {
+			$("#cumuls-tab").click(function() {
+				$("#div-communications").addClass("d-none");
+				$("#div-facturation-communications").addClass("d-none");
+				$("#div-facturation-en-tableau").addClass("d-none");
+				$("#div-cumuls").removeClass("d-none");
+			});
+			$("#communications-tab").click(function() {
+				$("#div-cumuls").addClass("d-none");
+				$("#div-facturation-communications").addClass("d-none");
+				$("#div-facturation-en-tableau").addClass("d-none");
+				$("#div-communications").removeClass("d-none");
+			});
+			$("#facturation-communications-tab").click(function() {
+				$("#div-cumuls").addClass("d-none");
+				$("#div-communications").addClass("d-none");
+				$("#div-facturation-en-tableau").addClass("d-none");
+				$("#div-facturation-communications").removeClass("d-none");
+			});
+			$("#facturation-en-tableau-tab").click(function() {
+				$("#div-cumuls").addClass("d-none");
+				$("#div-communications").addClass("d-none");
+				$("#div-facturation-communications").addClass("d-none");
+				$("#div-facturation-en-tableau").removeClass("d-none");
+			});
+		});
 
 	</script>
 
