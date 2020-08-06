@@ -14,6 +14,94 @@
 {% endblock actions %}
 
 {% block content %}
+	
+	<div class="row">
+		<div class="col-md-4">
+		    <div class="card shadow-sm card-danger card-outline">
+		    	<div class="card-header">
+		    		<p class="lead m-0">Configuration serveur SMTP</p>
+		    	</div>
+		    	<div class="card-body">
+		    	  	<label><small>Ad. serveur SMTP</small></label>
+		    	  	<input type="text" class="form-control form-control-sm mb-2" placeholder="Adresse SMTP">
+		    	  	<div class="row mb-2">
+		    	  	<div class="col-sm-6">
+		    	  		<label><small>Port</small></label>
+		    	  		<input type="text" class="form-control form-control-sm" placeholder="Port">
+		    	  	</div>
+		    	  	<div class="col-sm-6">
+		    	  		<label><small>Type authentification</small></label>
+		    	  		<select class="custom-select custom-select-sm">
+		    	  			<option>None</option>
+		    	  			<option>Plain</option>
+		    	  			<option selected>Login</option>
+		    	  			<option>CramMD5</option>
+		    	  			<option>CramSHA1</option>
+		    	  			<option>NTLM</option>
+		    	  			<option>AutoSelect</option>
+		    	  		</select>
+		    	  	</div>
+		    	  	</div>
+		    	  	<label><small>Nom d'utilisateur</small></label>
+		    	  	<input type="text" class="form-control form-control-sm mb-2" placeholder="Nom d'utilisateur">
+		    	  	<label><small>Mot de passe</small></label>
+		    	  	<input type="text" class="form-control form-control-sm" placeholder="Mot de passe">
+		    </div>
+		</div>
+		</div>
+		<div class="col-md-8">
+			<div class="card shadow-sm card-danger card-outline">
+		    	<div class="card-header">
+		    		<div class="text-right">
+		    			<a href="#" class="btn btn-primary btn-sm shadow-sm"><i class="fas fa-paper-plane"></i> <strong>Envoi</strong></a>
+		    			<a href="#" class="btn btn-sm btn-secondary shadow-sm"><strong>Envoi serveur de test</strong></a>
+		    		</div>
+		    	</div>
+		    	<div class="card-body">
+		    			<div class="row">
+		    			<div class="col-md-6">
+		    				<label><small>De</small></label>
+		    				<input type="text" class="form-control form-control-sm mb-2">
+		    				<label><small>Cc</small></label>
+		    				<input type="text" class="form-control form-control-sm mb-2">
+		    			</div>
+		    			<div class="col-md-6">
+		    				<label><small>A</small></label>
+		    				<input type="text" class="form-control form-control-sm mb-2">
+		    				<label><small>Bcc</small></label>
+		    				<input type="text" class="form-control form-control-sm mb-2">
+		    			</div>
+		    			</div>
+		    			<label><small>Sujet</small></label>
+		    			<input type="text" class="form-control form-control-sm mb-2">
+		    			<div class="row mb-2">
+		    			<div class="col-md-8">
+		    				<label><small>Signature</small></label>
+		    				<input type="text" class="form-control form-control-sm">
+		    			</div>
+		    			<div class="col-md-4">
+		    				<label><small>Priorité</small></label>
+		    				<select class="custom-select custom-select-sm">
+		    					<option>Not specified</option>
+		    					<option>Highest</option>
+		    					<option>High</option>
+		    					<option selected>Normal</option>
+		    					<option>Low</option>
+		    					<option>Lowest</option>
+		    				</select>
+		    			</div>
+		    			</div>
+		    			<div class="custom-control custom-checkbox mb-2">
+		    			  <input type="checkbox" class="custom-control-input" id="check-recep">
+		    			  <label class="custom-control-label" for="check-recep"><small>Confirmation recept.</small></label>
+		    			</div>
+		    			<label><small>Message</small></label>
+		    			<textarea class="form-control" rows="5"></textarea>
+		    		</div>
+		    	</div>
+		    </div>
+		</div>
+	</div>
 
 {% endblock content %}
 
