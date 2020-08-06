@@ -10,10 +10,205 @@
 
 {% block actions %}
 <div class="float-sm-right">
+	<a href="#" class="btn btn-success btn-sm shadow-sm mb-n3"><i class="fas fa-check"></i> VALIDER</a>
 </div>
 {% endblock actions %}
 
 {% block content %}
+
+	<div class="row">
+	  <div class="col-md-12">
+	    <div class="card shadow-sm card-danger card-outline">
+	    	<div class="card-body">
+	    		<div>
+	    			<p class="lead font-weight-normal">Fonctions</p>
+	    			<div class="row px-4">
+	    			<div class="col-md-4 border-right">
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Affichage des com. internes</small></label>
+	    				</div>
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Masque les 4 derniers chiffres</small></label>
+	    				</div>
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Nombre de niveaux hiérarchiques :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    			</div>
+	    			<div class="col-md-4 border-right">
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Affichage des com. transferées</small></label>
+	    				</div>
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Nombre de com. stockées :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Poste par défault :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    			</div>
+	    			<div class="col-md-4">
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Génération auto. des postes</small></label>
+	    				</div>
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Nombre de décimales :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    			</div>
+	    			</div>
+	    		</div>
+	    		<hr>
+	    		<div>
+	    			<p class="lead font-weight-normal">Fonctions étendues</p>
+	    			<div class="row px-4">
+	    			<div class="col-md-4 border-right">
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Gestion utilisateurs</small></label>
+	    				</div>
+	    			</div>
+	    			<div class="col-md-4 border-right">
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Gestion des produits et achats</small></label>
+	    				</div>
+	    			</div>
+	    			<div class="col-md-4">
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Valeur crédit mensuel :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    			</div>
+	    			</div>
+	    		</div>
+	    		<hr>
+	    		<div>
+	    			<p class="lead font-weight-normal">Gestion financière</p>
+	    			<div class="row px-4">
+	    			<div class="col-md-4 border-right">
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Coefficient de refacturation :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Calcul coût; 0 : taxe/1 : durée :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    			</div>
+	    			<div class="col-md-4 border-right">
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Valeur de la TVA (en %) :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Devise :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    			</div>
+	    			<div class="col-md-4">
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Coût de l'unité de taxe :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    			</div>	
+	    			</div>
+	    		</div>
+	    		<hr>
+	    		<div>
+	    			<p class="lead font-weight-normal">Gestion résidents</p>
+	    			<div class="row px-4">
+	    			<div class="col-md-4 border-right">
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Mode résidents</small></label>
+	    				</div>
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-9"><small>Identification du client dans le ticket :</small></label>
+	    				<div class="col-md-3">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    			</div>
+	    			<div class="col-md-4 border-right">
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Crédit par défaut :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Gestion SDA pour les clients</small></label>
+	    				</div>
+	    			</div>
+	    			<div class="col-md-4">
+	    				<div class="form-group row mb-2">
+	    				<label class="col-form-label col-md-8"><small>Autorisation mensuelle de crédit :</small></label>
+	    				<div class="col-md-4">
+	    				  <input type="text" class="form-control form-control-sm">
+	    				</div>
+	    				</div>
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Gestion code secret pour les clients</small></label>
+	    				</div>
+	    			</div>
+	    			</div>
+	    		</div>
+	    		<hr>
+	    		<div>
+	    			<p class="lead font-weight-normal">Interfaces</p>
+	    			<div class="row px-4">
+	    			<div class="col-md-4 border-right">
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Recharge du dernier filtre</small></label>
+	    				</div>
+	    			</div>
+	    			<div class="col-md-4 border-right">
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Filtre sur les heures</small></label>
+	    				</div>
+	    			</div>
+	    			<div class="col-md-4">
+	    				<div class="custom-control custom-checkbox mb-2">
+	    				  <input type="checkbox" class="custom-control-input">
+	    				  <label class="custom-control-label"><small>Affichage menu services enrichi</small></label>
+	    				</div>
+	    			</div>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	  </div>
+	</div>
 
 {% endblock content %}
 
