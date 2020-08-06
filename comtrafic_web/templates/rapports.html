@@ -42,29 +42,29 @@
 			    <div class="tab-content text-secondary">
 			      <div class="tab-pane fade show active" id="communications" role="tabpanel">
 			      	<ul class="rapports-list">
-			      	<li><a href="#" class="text-dark">Communications vers portables</a></li>
-			      	<li><a href="#" class="text-dark">Communications sortantes, durée > 4mn</a></li>
-			      	<li><a href="#" class="text-dark">Listes de appels perdus</a></li>
-			      	<li><a href="#" class="text-dark">Liste entrants, attente > 10s</a></li>
-			      	<li><a href="#" class="text-dark">Répartition des appels</a></li>
+			      	<li><a type="button" class="text-dark" id="communications-link1">Communications vers portables (Aboutis, filtre sur numéros)</a></li>
+			      	<li><a type="button" class="text-dark" id="communications-link2">Communications sortantes, durée > 4mn</a></li>
+			      	<li><a type="button" class="text-dark" id="communications-link3" >Listes de appels perdus</a></li>
+			      	<li><a type="button" class="text-dark" id="communications-link4">Liste entrants, attente > 10s</a></li>
+			      	<li><a type="button" class="text-dark" id="communications-link5">Répartition des appels</a></li>
 			      	</ul>
 			      </div>
 			      <div class="tab-pane fade show" id="cumuls" role="tabpanel">
 			      	<ul class="rapports-list">
-			      	<li><a href="#" class="text-dark">Top 5 des portables les plus appelés</a></li>
-			      	<li><a href="#" class="text-dark">Cumuls par numéro sur appels sortants</a></li>
-			      	<li><a href="#" class="text-dark">Top 20 des Num. les plus appelés</a></li>
-			      	<li><a href="#" class="text-dark">Top 20 des Num. les plus coûteux</a></li>
+			      	<li><a type="button" class="text-dark">Top 5 des portables les plus appelés</a></li>
+			      	<li><a type="button" class="text-dark">Cumuls par numéro sur appels sortants</a></li>
+			      	<li><a type="button" class="text-dark">Top 20 des Num. les plus appelés</a></li>
+			      	<li><a type="button" class="text-dark">Top 20 des Num. les plus coûteux</a></li>
 			      	</ul>
 			      </div>
 			      <div class="tab-pane fade show" id="facturation-communications" role="tabpanel">
 			      	<ul class="rapports-list">
-			      	<li><a href="#" class="text-dark">Facturation mois dernier</a></li>
+			      	<li><a type="button" class="text-dark">Facturation mois dernier</a></li>
 			      	</ul>
 			      </div>
 			      <div class="tab-pane fade show" id="facturation-en-tableau" role="tabpanel">
 			      	<ul class="rapports-list">
-			      	<li><a href="#" class="text-dark">Facturation mois dernier</a></li>
+			      	<li><a type="button" class="text-dark">Facturation mois dernier</a></li>
 			      	</ul>
 			      </div>
 			    </div>
@@ -105,7 +105,7 @@
 			<div class="card card-danger card-outline">
 				<div id="div-communications">
 				<div class="card-header">
-					<p class="lead m-0"><strong>Communications</strong></p>
+					<p class="lead m-0 font-weight-normal">Communications</p>
 				</div>
 				<div class="card-body pb-5">
 					<div class="row">
@@ -123,18 +123,18 @@
 						<div class="row mb-2">
 						  <div class="col-6">
 						    <label><small>Type d'appels</small></label>
-						    <select class="custom-select custom-select-sm">
-						      <option selected>Tous</option>
-						      <option>Entrants</option>
-						      <option>Sortants</option>
+						    <select class="custom-select custom-select-sm" id="communications-select1">
+						      <option selected value="0">Tous</option>
+						      <option value="1">Entrants</option>
+						      <option value="2">Sortants</option>
 						    </select>
 						  </div>
 						  <div class="col-6">
 						    <label><small>Etat d'appels</small></label>
-						    <select class="custom-select custom-select-sm">
-						      <option selected>Tous</option>
-						      <option>Aboutis</option>
-						      <option>Non aboutis</option>
+						    <select class="custom-select custom-select-sm" id="communications-select2">
+						      <option selected value="0">Tous</option>
+						      <option value="1">Aboutis</option>
+						      <option value="2">Non aboutis</option>
 						    </select>
 						  </div>
 						</div>
@@ -187,20 +187,20 @@
 					</div>
 					<div class="col-md-4">
 						<label><small>Numéro</small></label>
-						<input type="text" name="numero" placeholder="Numéro" class="form-control form-control-sm mb-2">
+						<input type="text" name="numero" placeholder="Numéro" class="form-control form-control-sm mb-2" id="communications-input1">
 						<label><small>Coût TTC</small></label>
 						<input type="text" name="cout_ttc" placeholder="Coût TTC" class="form-control form-control-sm mb-2">
 						<label><small>Sonnerie</small></label>
-						<input type="text" name="sonnerie" placeholder="Sonnerie" class="form-control form-control-sm mb-2">
+						<input type="text" name="sonnerie" placeholder="Sonnerie" class="form-control form-control-sm mb-2" id="communications-input3">
 						<label><small>Durée</small></label>
-						<input type="text" name="duree" placeholder="Durée" class="form-control form-control-sm">
+						<input type="text" name="duree" placeholder="Durée" class="form-control form-control-sm" id="communications-input4">
 					</div>
 					</div>
 				</div>
 				</div>
 				<div id="div-cumuls" class="d-none">
 					<div class="card-header">
-						<p class="lead m-0"><strong>Cumuls</strong></p>
+						<p class="lead m-0 font-weight-normal">Cumuls</p>
 					</div>
 					<div class="card-body pb-5">
 						<div class="row">
@@ -424,7 +424,7 @@
 				</div>
 				<div id="div-facturation-communications" class="d-none">
 					<div class="card-header">
-						<p class="lead m-0"><strong>Facturation communications</strong></p>
+						<p class="lead m-0 font-weight-normal">Facturation communications</p>
 					</div>
 					<div class="card-body pb-5">
 						<div class="row">
@@ -526,7 +526,7 @@
 				</div>
 				<div id="div-facturation-en-tableau" class="d-none">
 					<div class="card-header">
-						<p class="lead m-0"><strong>Facturation en tableau</strong></p>
+						<p class="lead m-0 font-weight-normal">Facturation en tableau</p>
 					</div>
 					<div class="card-body">
 						<div class="row">
@@ -689,6 +689,25 @@
 		$("#nav-link7").addClass("bg-danger");
 
 		$(document).ready(function() {
+			$('#top_check').parents("fieldset").attr('disabled', 'disabled');
+			$('#cumul_check').parents("fieldset").attr('disabled', 'disabled'); 
+
+			$('#top_check').click(function(){
+			    if (this.checked) {
+			        $(this).parents("fieldset").removeAttr('disabled');
+			    } else {
+			        $(this).parents("fieldset").attr('disabled', 'disabled');
+			    };
+			});
+
+			$('#cumul_check').click(function(){
+			    if (this.checked) {
+			        $(this).parents("fieldset").removeAttr('disabled');
+			    } else {
+			        $(this).parents("fieldset").attr('disabled', 'disabled');
+			    };
+			});
+			
 			$("#cumuls-tab").click(function() {
 				$("#div-communications").addClass("d-none");
 				$("#div-facturation-communications").addClass("d-none");
@@ -700,6 +719,13 @@
 				$("#div-facturation-communications").addClass("d-none");
 				$("#div-facturation-en-tableau").addClass("d-none");
 				$("#div-communications").removeClass("d-none");
+				$("#div-communications").children(".card-header").children("p").text("Communications");
+				$("#communications-select1").val("0");
+				$("#communications-select2").val("0");
+				$("#communications-input1").val("");
+				$("#communications-input4").val("");
+				$("#communications-input3").val("");
+
 			});
 			$("#facturation-communications-tab").click(function() {
 				$("#div-cumuls").addClass("d-none");
@@ -712,6 +738,47 @@
 				$("#div-communications").addClass("d-none");
 				$("#div-facturation-communications").addClass("d-none");
 				$("#div-facturation-en-tableau").removeClass("d-none");
+			});
+
+			$("#communications-link1").click(function() {
+				$("#div-communications").children(".card-header").children("p").text("Communications vers portables (Aboutis, filtre sur numéros)");
+				$("#communications-select1").val("2");
+				$("#communications-select2").val("1");
+				$("#communications-input4").val("");
+				$("#communications-input3").val("");
+				$("#communications-input1").val("06*, 07*")
+			});
+			$("#communications-link2").click(function() {
+				$("#div-communications").children(".card-header").children("p").text("Communications sortantes, durée > 4mn");
+				$("#communications-select1").val("2");
+				$("#communications-select2").val("1");
+				$("#communications-input1").val("");
+				$("#communications-input3").val("");
+				$("#communications-input4").val(">240");
+			});
+			$("#communications-link3").click(function() {
+				$("#div-communications").children(".card-header").children("p").text("Liste des appels perdus");
+				$("#communications-select1").val("1");
+				$("#communications-select2").val("2");
+				$("#communications-input1").val("");
+				$("#communications-input4").val("");
+				$("#communications-input3").val("");
+			});
+			$("#communications-link4").click(function() {
+				$("#div-communications").children(".card-header").children("p").text("Liste entrants, attente > 10s");
+				$("#communications-select1").val("0");
+				$("#communications-select2").val("0");
+				$("#communications-input1").val("");
+				$("#communications-input4").val("");
+				$("#communications-input3").val(">10");
+			});
+			$("#communications-link5").click(function() {
+				$("#div-communications").children(".card-header").children("p").text("Répartition des appels");
+				$("#communications-select1").val("0");
+				$("#communications-select2").val("0");
+				$("#communications-input1").val("");
+				$("#communications-input4").val("");
+				$("#communications-input3").val("");
 			});
 		});
 
