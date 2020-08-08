@@ -51,10 +51,10 @@
 			      </div>
 			      <div class="tab-pane fade show" id="cumuls" role="tabpanel">
 			      	<ul class="rapports-list">
-			      	<li><a type="button" class="text-dark">Top 5 des portables les plus appelés</a></li>
-			      	<li><a type="button" class="text-dark">Cumuls par numéro sur appels sortants</a></li>
-			      	<li><a type="button" class="text-dark">Top 20 des Num. les plus appelés</a></li>
-			      	<li><a type="button" class="text-dark">Top 20 des Num. les plus coûteux</a></li>
+			      	<li><a type="button" class="text-dark" id="cumuls-link1">Top 5 des portables les plus appelés</a></li>
+			      	<li><a type="button" class="text-dark" id="cumuls-link2">Cumuls par numéro sur appels sortants</a></li>
+			      	<li><a type="button" class="text-dark" id="cumuls-link3">Top 20 des Num. les plus appelés</a></li>
+			      	<li><a type="button" class="text-dark" id="cumuls-link4">Top 20 des Num. les plus coûteux</a></li>
 			      	</ul>
 			      </div>
 			      <div class="tab-pane fade show" id="facturation-communications" role="tabpanel">
@@ -123,7 +123,7 @@
 						<div class="row mb-2">
 						  <div class="col-6">
 						    <label><small>Type d'appels</small></label>
-						    <select class="custom-select custom-select-sm" id="communications-select1">
+						    <select class="custom-select custom-select-sm" id="communications-type-appels">
 						      <option selected value="0">Tous</option>
 						      <option value="1">Entrants</option>
 						      <option value="2">Sortants</option>
@@ -131,7 +131,7 @@
 						  </div>
 						  <div class="col-6">
 						    <label><small>Etat d'appels</small></label>
-						    <select class="custom-select custom-select-sm" id="communications-select2">
+						    <select class="custom-select custom-select-sm" id="communications-etat-appels">
 						      <option selected value="0">Tous</option>
 						      <option value="1">Aboutis</option>
 						      <option value="2">Non aboutis</option>
@@ -187,13 +187,13 @@
 					</div>
 					<div class="col-md-4">
 						<label><small>Numéro</small></label>
-						<input type="text" name="numero" placeholder="Numéro" class="form-control form-control-sm mb-2" id="communications-input1">
+						<input type="text" name="numero" placeholder="Numéro" class="form-control form-control-sm mb-2" id="communications-numero">
 						<label><small>Coût TTC</small></label>
 						<input type="text" name="cout_ttc" placeholder="Coût TTC" class="form-control form-control-sm mb-2">
 						<label><small>Sonnerie</small></label>
-						<input type="text" name="sonnerie" placeholder="Sonnerie" class="form-control form-control-sm mb-2" id="communications-input3">
+						<input type="text" name="sonnerie" placeholder="Sonnerie" class="form-control form-control-sm mb-2" id="communications-sonnerie">
 						<label><small>Durée</small></label>
-						<input type="text" name="duree" placeholder="Durée" class="form-control form-control-sm" id="communications-input4">
+						<input type="text" name="duree" placeholder="Durée" class="form-control form-control-sm" id="communications-duree">
 					</div>
 					</div>
 				</div>
@@ -232,7 +232,7 @@
 						      <div class="form-group row">
 						      <label class="col-form-label col-md-3"><small>Graphe : </small></label>
 						      <div class="col-md-9">
-						        <select class="custom-select custom-select-sm" name="filtre">
+						        <select class="custom-select custom-select-sm" name="filtre" id="cumuls-graphe">
 						          <option value="0" selected>Aucun</option>
 						          <option value="1">Histogramme</option>
 						          <option value="2">Secteurs</option>
@@ -254,7 +254,7 @@
 						      <div class="form-group row">
 						      <label class="col-form-label col-md-4"><small>Lignes : </small></label>
 						      <div class="col-md-8">
-						        <select class="custom-select custom-select-sm" name="top_lignes">
+						        <select class="custom-select custom-select-sm" name="top_lignes" id="cumuls-top-lignes">
 						          <option value="5" selected>5</option>
 						          <option value="10">10</option>
 						          <option value="20">20</option>
@@ -265,7 +265,7 @@
 						      <div class="form-group row">
 						      <label class="col-form-label col-md-4"><small>Sur : </small></label>
 						      <div class="col-md-8">
-						        <select class="custom-select custom-select-sm" name="top_sur">
+						        <select class="custom-select custom-select-sm" name="top_sur" id="cumuls-top-sur">
 						          <option value="0" selected>Nbre appels</option>
 						          <option value="1">Aboutis</option>
 						          <option value="2">Non aboutis</option>
@@ -347,15 +347,15 @@
 							<div class="row mb-2">
 							  <div class="col-6">
 							    <label><small>Type d'appels</small></label>
-							    <select class="custom-select custom-select-sm">
-							      <option selected>Tous</option>
-							      <option>Entrants</option>
-							      <option>Sortants</option>
+							    <select class="custom-select custom-select-sm" id="cumuls-type-appels">
+							      <option value="0" selected>Tous</option>
+							      <option value="1">Entrants</option>
+							      <option value="2">Sortants</option>
 							    </select>
 							  </div>
 							  <div class="col-6">
 							    <label><small>Etat d'appels</small></label>
-							    <select class="custom-select custom-select-sm">
+							    <select class="custom-select custom-select-sm" id="cumuls-etat-appels">
 							      <option selected>Tous</option>
 							      <option>Aboutis</option>
 							      <option>Non aboutis</option>
@@ -411,7 +411,7 @@
 						</div>
 						<div class="col-md-4">
 							<label><small>Numéro</small></label>
-							<input type="text" name="numero" placeholder="Numéro" class="form-control form-control-sm mb-2">
+							<input type="text" name="numero" placeholder="Numéro" class="form-control form-control-sm mb-2" id="cumuls-numero">
 							<label><small>Coût TTC</small></label>
 							<input type="text" name="cout_ttc" placeholder="Coût TTC" class="form-control form-control-sm mb-2">
 							<label><small>Sonnerie</small></label>
@@ -713,6 +713,14 @@
 				$("#div-facturation-communications").addClass("d-none");
 				$("#div-facturation-en-tableau").addClass("d-none");
 				$("#div-cumuls").removeClass("d-none");
+				$("#div-cumuls").children(".card-header").children("p").text("Cumuls");
+				$("#top_check").prop('checked', false);
+				$("#top_check").parents("fieldset").attr('disabled', 'disabled');
+				$("#cumuls-top-lignes").val("5");
+				$("#cumuls-top-sur").val("0");
+				$("#cumuls-graphe").val("0");
+				$("#cumuls-type-appels").val("0");
+				$("#cumuls-numero").val("");
 			});
 			$("#communications-tab").click(function() {
 				$("#div-cumuls").addClass("d-none");
@@ -720,11 +728,11 @@
 				$("#div-facturation-en-tableau").addClass("d-none");
 				$("#div-communications").removeClass("d-none");
 				$("#div-communications").children(".card-header").children("p").text("Communications");
-				$("#communications-select1").val("0");
-				$("#communications-select2").val("0");
-				$("#communications-input1").val("");
-				$("#communications-input4").val("");
-				$("#communications-input3").val("");
+				$("#communications-type-appels").val("0");
+				$("#communications-etat-appels").val("0");
+				$("#communications-numero").val("");
+				$("#communications-duree").val("");
+				$("#communications-sonnerie").val("");
 
 			});
 			$("#facturation-communications-tab").click(function() {
@@ -742,43 +750,84 @@
 
 			$("#communications-link1").click(function() {
 				$("#div-communications").children(".card-header").children("p").text("Communications vers portables (Aboutis, filtre sur numéros)");
-				$("#communications-select1").val("2");
-				$("#communications-select2").val("1");
-				$("#communications-input4").val("");
-				$("#communications-input3").val("");
-				$("#communications-input1").val("06*, 07*")
+				$("#communications-type-appels").val("2");
+				$("#communications-etat-appels").val("1");
+				$("#communications-duree").val("");
+				$("#communications-sonnerie").val("");
+				$("#communications-numero").val("06*, 07*")
 			});
 			$("#communications-link2").click(function() {
 				$("#div-communications").children(".card-header").children("p").text("Communications sortantes, durée > 4mn");
-				$("#communications-select1").val("2");
-				$("#communications-select2").val("1");
-				$("#communications-input1").val("");
-				$("#communications-input3").val("");
-				$("#communications-input4").val(">240");
+				$("#communications-type-appels").val("2");
+				$("#communications-etat-appels").val("1");
+				$("#communications-numero").val("");
+				$("#communications-sonnerie").val("");
+				$("#communications-duree").val(">240");
 			});
 			$("#communications-link3").click(function() {
 				$("#div-communications").children(".card-header").children("p").text("Liste des appels perdus");
-				$("#communications-select1").val("1");
-				$("#communications-select2").val("2");
-				$("#communications-input1").val("");
-				$("#communications-input4").val("");
-				$("#communications-input3").val("");
+				$("#communications-type-appels").val("1");
+				$("#communications-etat-appels").val("2");
+				$("#communications-numero").val("");
+				$("#communications-duree").val("");
+				$("#communications-sonnerie").val("");
 			});
 			$("#communications-link4").click(function() {
 				$("#div-communications").children(".card-header").children("p").text("Liste entrants, attente > 10s");
-				$("#communications-select1").val("0");
-				$("#communications-select2").val("0");
-				$("#communications-input1").val("");
-				$("#communications-input4").val("");
-				$("#communications-input3").val(">10");
+				$("#communications-type-appels").val("0");
+				$("#communications-etat-appels").val("0");
+				$("#communications-numero").val("");
+				$("#communications-duree").val("");
+				$("#communications-sonnerie").val(">10");
 			});
 			$("#communications-link5").click(function() {
 				$("#div-communications").children(".card-header").children("p").text("Répartition des appels");
-				$("#communications-select1").val("0");
-				$("#communications-select2").val("0");
-				$("#communications-input1").val("");
-				$("#communications-input4").val("");
-				$("#communications-input3").val("");
+				$("#communications-type-appels").val("0");
+				$("#communications-etat-appels").val("0");
+				$("#communications-numero").val("");
+				$("#communications-duree").val("");
+				$("#communications-sonnerie").val("");
+			});
+
+			$("#cumuls-link1").click(function() {
+				$("#div-cumuls").children(".card-header").children("p").text("Top 5 des portables les plus appelés");
+				$("#top_check").prop('checked', true);
+				$("#top_check").parents("fieldset").removeAttr('disabled');
+				$("#cumuls-top-lignes").val("5");
+				$("#cumuls-top-sur").val("0");
+				$("#cumuls-graphe").val("1");
+				$("#cumuls-type-appels").val("2");
+				$("#cumuls-numero").val("06");
+			});
+			$("#cumuls-link2").click(function() {
+				$("#div-cumuls").children(".card-header").children("p").text("Cumuls par numéro sur appels sortants");
+				$("#top_check").prop('checked', false);
+				$("#top_check").parents("fieldset").attr('disabled', 'disabled');
+				$("#cumuls-top-lignes").val("5");
+				$("#cumuls-top-sur").val("0");
+				$("#cumuls-graphe").val("0");
+				$("#cumuls-type-appels").val("2");
+				$("#cumuls-numero").val("");
+			});
+			$("#cumuls-link3").click(function() {
+				$("#div-cumuls").children(".card-header").children("p").text("Top 20 des Num. les plus appelés");
+				$("#top_check").prop('checked', true);
+				$("#top_check").parents("fieldset").removeAttr('disabled');
+				$("#cumuls-top-lignes").val("20");
+				$("#cumuls-top-sur").val("0");
+				$("#cumuls-graphe").val("1");
+				$("#cumuls-type-appels").val("2");
+				$("#cumuls-numero").val("");
+			});
+			$("#cumuls-link4").click(function() {
+				$("#div-cumuls").children(".card-header").children("p").text("Top 20 des Num. les plus coûteux");
+				$("#top_check").prop('checked', true);
+				$("#top_check").parents("fieldset").removeAttr('disabled');
+				$("#cumuls-top-lignes").val("20");
+				$("#cumuls-top-sur").val("16");
+				$("#cumuls-graphe").val("1");
+				$("#cumuls-type-appels").val("2");
+				$("#cumuls-numero").val("");
 			});
 		});
 
