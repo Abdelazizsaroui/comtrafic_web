@@ -1,6 +1,6 @@
 import requests
 import time, datetime
-from flask import Response, render_template, url_for, jsonify
+from flask import request, render_template, url_for, jsonify
 from comtrafic_web import app
 
 
@@ -14,10 +14,17 @@ def communications():
 
 @app.route("/com-data")
 def com_data():
-	response = requests.get("https://data.saroui.com/com_data.json")
-	data = response.json()
+	if len(request.args) > 0:
+		search_query = ""
+		for el in request.args:
+			search_query += el + "=" + request.args.get(el) + "&"
+		print(search_query)
+		raw_res = requests.get(f"http://161.97.75.12:7071/api/cmd/ED&CO_DATE=43666-43673&{search_query}")
+	else:
+		raw_res = requests.get("http://161.97.75.12:7071/api/cmd/ED&CO_DATE=43666-43673")
+	res = raw_res.json()
+	data = res["Data"]["Data"]
 	for el in data:
-		el['CO_DATE'] = el['CO_DATE'][:10] + " " + el['CO_DATE'][11:19]
 		el['CO_DUR'] = str(datetime.timedelta(seconds = el['CO_DUR']))
 		el['CO_DRING'] = str(datetime.timedelta(seconds = el['CO_DRING']))
 		el['CO_DRTOT'] = str(datetime.timedelta(seconds = el['CO_DRTOT']))

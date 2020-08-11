@@ -25,11 +25,12 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card shadow-sm card-danger card-outline">
+        <form method="GET" id="communications-form">
         <div class="card-header">
           <div class="text-center">
-            <button class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-search"></i> RECHERCHE</button>
-             <button class="btn btn-sm btn-light border shadow-sm"><i class="fas fa-filter"></i> FILTRES</button>
-             <button class="btn btn-sm btn-light text-danger border shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            <button class="btn btn-sm btn-primary shadow-sm" type="submit" id="communications-form-submit"><i class="fas fa-search"></i> RECHERCHE</button>
+             <a class="btn btn-sm btn-light border shadow-sm"><i class="fas fa-filter"></i> FILTRES</a>
+             <a class="btn btn-sm btn-light text-danger border shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></a>
           </div>
         </div>
         <div class="card-body pb-1">
@@ -41,7 +42,7 @@
               <input type="checkbox" class="custom-control-input" id="periode_complete">
               <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
             </div>
-            <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal">Du 12/02/2019 Au 23/07/2019</button>
+            <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal">Du 20/07/2019 Au 26/07/2019</button>
           </fieldset>
           <div class="py-2">
             <div class="info-box text-center" style="background-color: #F8F8FF;">
@@ -49,7 +50,7 @@
 
                   <div class="info-box-content">
                     <span class="info-box-text">Communications</span>
-                    <span class="info-box-number">52641</span>
+                    <span class="info-box-number" id="count_communications"><div class="spinner-grow spinner-grow-sm text-dark"></div></span>
                   </div>
                 </div>
             <div class="row">
@@ -59,7 +60,7 @@
 
                   <div class="info-box-content">
                     <span class="info-box-text">Durée</span>
-                    <span class="info-box-number">65:18:20</span>
+                    <span class="info-box-number" id="count_duree"><div class="spinner-grow spinner-grow-sm text-dark"></div></span>
                   </div>
                 </div>
               </div>
@@ -69,7 +70,7 @@
 
                   <div class="info-box-content">
                     <span class="info-box-text">Sonnerie</span>
-                    <span class="info-box-number">02:54:32</span>
+                    <span class="info-box-number" id="count_sonnerie"><div class="spinner-grow spinner-grow-sm text-dark"></div></span>
                   </div>
                 </div>
               </div>
@@ -86,10 +87,10 @@
               <div class="row mb-2">
                 <div class="col-6">
                   <label><small>Type d'appels</small></label>
-                  <select class="custom-select custom-select-sm">
+                  <select class="custom-select custom-select-sm" name="CO_TYPE">
                     <option selected>Tous</option>
-                    <option>Entrants</option>
-                    <option>Sortants</option>
+                    <option value="0">Entrants</option>
+                    <option value="1,3">Sortants</option>
                   </select>
                 </div>
                 <div class="col-6">
@@ -139,24 +140,24 @@
                 <option>539</option>
               </select>
               <label><small>Type direc.</small></label>
-              <select class="custom-select custom-select-sm">
+              <select class="custom-select custom-select-sm" name="CO_TYPEDIR">
                 <option selected disabled>Choisir Type direc.</option>
-                <option>I</option>
-                <option>M</option>
-                <option>N</option>
-                <option>S</option>
-                <option>X</option>
+                <option value="I">I</option>
+                <option value="M">M</option>
+                <option value="N">N</option>
+                <option value="S">S</option>
+                <option value="X">X</option>
               </select>
             </div>
             <div class="col-md-6">
               <label><small>Numéro</small></label>
-              <input type="text" name="numero" placeholder="Numéro" class="form-control form-control-sm mb-2">
+              <input type="text" name="CO_NUM" placeholder="Numéro" class="form-control form-control-sm mb-2">
               <label><small>Coût TTC</small></label>
-              <input type="text" name="cout_ttc" placeholder="Coût TTC" class="form-control form-control-sm mb-2">
+              <input type="text" name="CO_COUTFACT_TTC" placeholder="Coût TTC" class="form-control form-control-sm mb-2">
               <label><small>Sonnerie</small></label>
-              <input type="text" name="sonnerie" placeholder="Sonnerie" class="form-control form-control-sm mb-2">
+              <input type="text" name="CO_DRING" placeholder="Sonnerie" class="form-control form-control-sm mb-2">
               <label><small>Durée</small></label>
-              <input type="text" name="duree" placeholder="Durée" class="form-control form-control-sm">
+              <input type="text" name="CO_DUR" placeholder="Durée" class="form-control form-control-sm">
               
             </div>
           </div>
@@ -194,6 +195,7 @@
             </div>
           </div>
         </div>
+        </form>
       </div>
     </div>
   </div>
@@ -254,14 +256,14 @@
                     <label for="date_debut" class="col-form-label col-md-4"><small>Du : </small></label>
                     <div class="col-md-8">
                       <input id="date_debut" type="date" name="date_debut" max="3000-12-31" 
-                             min="1000-01-01" class="form-control form-control-sm">
+                             min="1000-01-01" class="form-control form-control-sm" value="2019-07-20">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="date_fin" class="col-form-label col-md-4"><small>Au : </small></label>
                     <div class="col-md-8">
                       <input id="date_fin" type="date" name="date_fin" max="3000-12-31" 
-                             min="2000-01-01" class="form-control form-control-sm">
+                             min="2000-01-01" class="form-control form-control-sm" value="2019-07-26">
                     </div>
                   </div>
         </div>
@@ -282,8 +284,8 @@
 {% endblock sidebar %}
 
 {% block script %}
-<script src="{{ url_for('static', filename='plugins/moment/moment.min.js') }}"></script>
-<script src="{{ url_for('static', filename='plugins/daterangepicker/daterangepicker.js') }}"></script>
+<!-- <script src="{{ url_for('static', filename='plugins/moment/moment.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/daterangepicker/daterangepicker.js') }}"></script> -->
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.7.2/dist/js/tabulator.min.js"></script>
 
 <script>
@@ -295,8 +297,10 @@ $(document).ready( function () {
     $("#skeleton-container").addClass("d-none");
   });
 
+  var table;
+
   $.getJSON("com-data", function(data) {
-    var table = new Tabulator("#com-table", {
+      table = new Tabulator("#com-table", {
       data:data,           
       height:"500px",
       layout:"fitColumns",      
@@ -322,13 +326,13 @@ $(document).ready( function () {
           },
       },
       columns:[                 
-        {title:"Poste", field:"CO_EXT"},
+        {title:"Poste", field:"CO_EXT", bottomCalc:"count"},
         {title:"Date", field:"CO_DATE"},
         {title:"Numéro", field:"CO_MASKNUM"},
-        {title:"Durée", field:"CO_DUR"},
-        {title:"Sonnerie", field:"CO_DRING"},
+        {title:"Durée", field:"CO_DUR", bottomCalc:dureeCalc},
+        {title:"Sonnerie", field:"CO_DRING", bottomCalc:dureeCalc},
         {title:"Appel", field:"CO_CALLTYPE"},
-        {title:"Coût", field:"CO_COUTFACT_TTC"},
+        {title:"Coût", field:"CO_COUTFACT_TTC", bottomCalc:"sum"},
         {title:"Type", field:"CO_TYPE"},
         {title:"Coût HT", field:"CO_COUT_HT"},
         // add formatterParams:{crossElement:false} to replace false with empty case
@@ -336,12 +340,71 @@ $(document).ready( function () {
         {title:"Zone", field:"CO_OPZONE"},
         {title:"Direction", field:"CO_OPDIR"},
         {title:"Service", field:"SE_NOM"},
-        {title:"Durée appel", field:"CO_DRTOT"},
+        {title:"Durée appel", field:"CO_DRTOT", bottomCalc:dureeCalc},
         {title:"Type direct", field:"CO_TYPEDIR"},
       ],
     });
     table.setLocale("fr-fr");
+
+    var calc_arr = table.getCalcResults();
+    $("#count_communications").html(calc_arr.bottom.CO_EXT);
+    $("#count_duree").html(calc_arr.bottom.CO_DUR);
+    $("#count_sonnerie").html(calc_arr.bottom.CO_DRING);
   });
+
+  $("#communications-form").submit(function(event) {
+    $("#communications-form-submit").html('<div class="spinner-border text-light spinner-border-sm"></div>');
+    $("#communications-form-submit").addClass("px-5");
+    $("#count_communications").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#count_duree").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#count_sonnerie").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    var form_arr = $( this ).serializeArray();
+    var form_str = "";
+    $.each(form_arr, function( i, field ) {
+      form_str += field.name + "=" + field.value + "&";
+    });
+    event.preventDefault();
+    $.when(table.replaceData("com-data?" + form_str)).then(function() {
+      $("#communications-form-submit").html('<i class="fas fa-search"></i> RECHERCHE');
+      $("#communications-form-submit").removeClass("px-5");
+      var calc_arr = table.getCalcResults();
+      $("#count_communications").html(calc_arr.bottom.CO_EXT);
+      $("#count_duree").html(calc_arr.bottom.CO_DUR);
+      $("#count_sonnerie").html(calc_arr.bottom.CO_DRING);
+    });
+  });
+
+  var dureeCalc = function(values, data, calcParams){
+    var duree = "";
+    var h = 0;
+    var m = 0;
+    var s = 0;
+    values.forEach(function(value){
+        var value_arr = value.split(":");
+        var v_h = parseInt(value_arr[0]);
+        var v_m = parseInt(value_arr[1]);
+        var v_s = parseInt(value_arr[2]);
+        s += v_s;
+        if (s > 60) {
+          s -= 60;
+          m += 1;
+        };
+        m += v_m;
+        if (m > 60) {
+          m -= 60;
+          h += 1;
+        };
+        h += v_h;
+    });
+    if (m < 10){
+      m = "0" + m.toString();
+    };
+    if (s < 10){
+      s = "0" + s.toString();
+    };
+    duree = h + ":" + m + ":" + s;
+    return duree;
+  };
 
 } );
 
