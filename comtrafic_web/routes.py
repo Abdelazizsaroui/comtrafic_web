@@ -3,6 +3,7 @@ import time, datetime
 from flask import request, render_template, url_for, jsonify
 from comtrafic_web import app
 
+periode = "43666-43673"
 
 @app.route("/")
 def dashboard():
@@ -19,9 +20,9 @@ def com_data():
 		for el in request.args:
 			search_query += el + "=" + request.args.get(el) + "&"
 		print(search_query)
-		raw_res = requests.get(f"http://161.97.75.12:7071/api/cmd/ED&CO_DATE=43666-43673&{search_query}")
+		raw_res = requests.get(f"http://161.97.75.12:7071/api/cmd/ED&CO_DATE={periode}&{search_query}")
 	else:
-		raw_res = requests.get("http://161.97.75.12:7071/api/cmd/ED&CO_DATE=43666-43673")
+		raw_res = requests.get(f"http://161.97.75.12:7071/api/cmd/ED&CO_DATE={periode}")
 	res = raw_res.json()
 	data = res["Data"]["Data"]
 	if data == "":

@@ -19,10 +19,9 @@
         <small><strong>Export</strong></small>
       </button>
       <div class="dropdown-menu">
-        <a class="dropdown-item" type="button" id="download-table-pdf">PDF</a>
-        <a class="dropdown-item" type="button" id="download-table-xlsx">XLSX</a>
-        <a class="dropdown-item" type="button" id="download-table-csv">CSV</a>
-        <a class="dropdown-item" type="button" id="download-table-html">HTML</a>
+        <a class="dropdown-item" type="button" id="download-table-pdf"><i class="fas fa-file-pdf"></i> PDF</a>
+        <a class="dropdown-item" type="button" id="download-table-csv"><i class="fas fa-file-csv"></i> CSV</a>
+        <a class="dropdown-item" type="button" id="download-table-html"><i class="fas fa-file-code"></i> HTML</a>
       </div>
     </div>
     <a type="button" class="btn btn-sm bg-white shadow-sm" id="print-table"><small><strong>Impression</strong></small></a>
@@ -40,11 +39,12 @@
           <div class="text-center">
             <button class="btn btn-sm btn-primary shadow-sm" type="submit" id="communications-form-submit"><i class="fas fa-search"></i> RECHERCHE</button>
              <a class="btn btn-sm btn-light border shadow-sm"><i class="fas fa-filter"></i> FILTRES</a>
-             <a class="btn btn-sm btn-light text-danger border shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></a>
+             <a class="btn btn-sm btn-light text-danger border shadow-sm" id="communications-form-reset"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></a>
           </div>
         </div>
-        <div class="card-body pb-1">
-          <div class="row">
+        <div class="card-body pb-1 pt-1">
+          <small class="text-muted"><i class="fas fa-check text-success"></i> : Filtrage disponible pour ce champ</small>
+          <div class="row mt-3">
           <div class="col-md-4">
           <fieldset class="border py-2 px-2 mb-4 rounded">
           <legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
@@ -92,11 +92,10 @@
             <fieldset class="border pt-1 pb-3 px-2 rounded">
             <legend class="w-auto badge badge-secondary rounded-pill px-3">Filtrage</legend>
               <div class="row">
-            <!-- /.col -->
             <div class="col-md-6">
               <div class="row mb-2">
                 <div class="col-6">
-                  <label><small>Type d'appels</small><span class="text-success">•</span></label>
+                  <label><small>Type d'appels <i class="fas fa-check text-success"></i></small></label>
                   <select class="custom-select custom-select-sm" name="CO_TYPE">
                     <option selected value="">Tous</option>
                     <option value="0">Entrants</option>
@@ -149,7 +148,7 @@
                 <option>538</option>
                 <option>539</option>
               </select>
-              <label><small>Type direc.</small><span class="text-success">•</span></label>
+              <label><small>Type direc. <i class="fas fa-check text-success"></i></small></label>
               <select class="custom-select custom-select-sm" name="CO_TYPEDIR">
                 <option selected value="">Choisir Type direc.</option>
                 <option value="I">I</option>
@@ -160,13 +159,13 @@
               </select>
             </div>
             <div class="col-md-6">
-              <label><small>Numéro</small><span class="text-success">•</span></label>
+              <label><small>Numéro <i class="fas fa-check text-success"></i></small></label>
               <input type="text" name="CO_NUM" placeholder="Numéro" class="form-control form-control-sm mb-2">
-              <label><small>Coût TTC</small><span class="text-success">•</span></label>
+              <label><small>Coût TTC <i class="fas fa-check text-success"></i></small></label>
               <input type="text" name="CO_COUTFACT_TTC" placeholder="Coût TTC" class="form-control form-control-sm mb-2">
-              <label><small>Sonnerie</small><span class="text-success">•</span></label>
+              <label><small>Sonnerie <i class="fas fa-check text-success"></i></small></label>
               <input type="text" name="CO_DRING" placeholder="Sonnerie" class="form-control form-control-sm mb-2">
-              <label><small>Durée</small><span class="text-success">•</span></label>
+              <label><small>Durée <i class="fas fa-check text-success"></i></small></label>
               <input type="text" name="CO_DUR" placeholder="Durée" class="form-control form-control-sm">
               
             </div>
@@ -181,25 +180,25 @@
           <div class="row">
             <div class="col-sm-3 col-6">
               <div class="description-block border-right border-danger">
-                <h5 class="description-header">$264.84</h5>
+                <h5 class="description-header">$ <span class="info-box-number" id="cout_total_ttc"><div class="spinner-grow spinner-grow-sm text-dark"></div></span></h5>
                 <span class="description-text">TOTAL TTC</span>
               </div>
             </div>
             <div class="col-sm-3 col-6">
               <div class="description-block border-right border-danger">
-                <h5 class="description-header">$210.30</h5>
+                <h5 class="description-header">$ <span class="info-box-number" id="cout_total_ht"><div class="spinner-grow spinner-grow-sm text-dark"></div></span></h5>
                 <span class="description-text">TOTAL HT</span>
               </div>
             </div>
             <div class="col-sm-3 col-6">
               <div class="description-block border-right border-danger">
-                <h5 class="description-header">$295.16</h5>
+                <h5 class="description-header">$ <span class="info-box-number" id="cout_facture_ttc"><div class="spinner-grow spinner-grow-sm text-dark"></div></span></h5>
                 <span class="description-text">FACTURÉ TTC</span>
               </div>
             </div>
             <div class="col-sm-3 col-6">
               <div class="description-block">
-                <h5 class="description-header">$272.25</h5>
+                <h5 class="description-header">$ <span class="info-box-number" id="cout_facture_ht"><div class="spinner-grow spinner-grow-sm text-dark"></div></span></h5>
                 <span class="description-text">FACTURÉ HT</span>
               </div>
             </div>
@@ -343,9 +342,9 @@ $(document).ready( function () {
         {title:"Durée", field:"CO_DUR", bottomCalc:dureeCalc},
         {title:"Sonnerie", field:"CO_DRING", bottomCalc:dureeCalc},
         {title:"Appel", field:"CO_CALLTYPE"},
-        {title:"Coût", field:"CO_COUTFACT_TTC", bottomCalc:"sum"},
+        {title:"Coût", field:"CO_COUTFACT_TTC", bottomCalc:"sum", bottomCalcParams:{precision:2,}},
         {title:"Type", field:"CO_TYPE"},
-        {title:"Coût HT", field:"CO_COUT_HT"},
+        {title:"Coût HT", field:"CO_COUT_HT", bottomCalc:"sum", bottomCalcParams:{precision:2,}},
         // add formatterParams:{crossElement:false} to replace false with empty case
         {title:"Abouti", field:"CO_ABOUT", formatter:"tickCross", formatterParams:{crossElement:false}},
         {title:"Zone", field:"CO_OPZONE"},
@@ -361,6 +360,10 @@ $(document).ready( function () {
     $("#count_communications").html(calc_arr.bottom.CO_EXT);
     $("#count_duree").html(calc_arr.bottom.CO_DUR);
     $("#count_sonnerie").html(calc_arr.bottom.CO_DRING);
+    $("#cout_facture_ttc").html(calc_arr.bottom.CO_COUTFACT_TTC);
+    $("#cout_facture_ht").html((calc_arr.bottom.CO_COUTFACT_TTC / 1.2).toFixed(2));
+    $("#cout_total_ht").html(calc_arr.bottom.CO_COUT_HT);
+    $("#cout_total_ttc").html((calc_arr.bottom.CO_COUT_HT * 1.2).toFixed(2));
   });
 
   $("#communications-form").submit(function(event) {
@@ -369,6 +372,10 @@ $(document).ready( function () {
     $("#count_communications").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
     $("#count_duree").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
     $("#count_sonnerie").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#cout_facture_ttc").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#cout_facture_ht").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#cout_total_ht").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#cout_total_ttc").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
     var form_arr = $( this ).serializeArray();
     var form_str = "";
     $.each(form_arr, function( i, field ) {
@@ -382,6 +389,10 @@ $(document).ready( function () {
       $("#count_communications").html(calc_arr.bottom.CO_EXT);
       $("#count_duree").html(calc_arr.bottom.CO_DUR);
       $("#count_sonnerie").html(calc_arr.bottom.CO_DRING);
+      $("#cout_facture_ttc").html(calc_arr.bottom.CO_COUTFACT_TTC);
+      $("#cout_facture_ht").html((calc_arr.bottom.CO_COUTFACT_TTC / 1.2).toFixed(2));
+      $("#cout_total_ht").html(calc_arr.bottom.CO_COUT_HT);
+      $("#cout_total_ttc").html((calc_arr.bottom.CO_COUT_HT * 1.2).toFixed(2));
     });
   });
 
@@ -423,9 +434,6 @@ $(document).ready( function () {
         title:"Communications", 
     });
   });
-  $("#download-table-xlsx").click(function() {
-    table.download("xlsx", "ComTrafic - Communications.xlsx", {sheetName:"Communications"});
-  });
   $("#download-table-csv").click(function() {
     table.download("csv", "ComTrafic - Communications.csv");
   });
@@ -435,6 +443,11 @@ $(document).ready( function () {
   $("#print-table").click(function() {
     table.print(false, true);
   });
+
+  $("#communications-form-reset").click(function(){
+    $("#communications-form")[0].reset();
+  });
+
 } );
 
 </script>
