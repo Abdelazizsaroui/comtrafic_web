@@ -24,10 +24,13 @@ def com_data():
 		raw_res = requests.get("http://161.97.75.12:7071/api/cmd/ED&CO_DATE=43666-43673")
 	res = raw_res.json()
 	data = res["Data"]["Data"]
-	for el in data:
-		el['CO_DUR'] = str(datetime.timedelta(seconds = el['CO_DUR']))
-		el['CO_DRING'] = str(datetime.timedelta(seconds = el['CO_DRING']))
-		el['CO_DRTOT'] = str(datetime.timedelta(seconds = el['CO_DRTOT']))
+	if data == "":
+		data = []
+	else:
+		for el in data:
+			el['CO_DUR'] = str(datetime.timedelta(seconds = el['CO_DUR']))
+			el['CO_DRING'] = str(datetime.timedelta(seconds = el['CO_DRING']))
+			el['CO_DRTOT'] = str(datetime.timedelta(seconds = el['CO_DRTOT']))
 	# return Response(data, status=200, mimetype='application/json')
 	return jsonify(data)
 
