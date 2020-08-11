@@ -9,6 +9,18 @@ periode = "43666-43673"
 def dashboard():
 	return render_template("dashboard.html")
 
+# @app.route("/dashboard-data")
+# def dashboard_data():
+# 	raw_res = requests.get(f"http://161.97.75.12:7071/api/cmd/ED&CO_DATE={periode}")
+# 	res = raw_res.json()
+# 	data = res["Data"]["Data"]
+# 	c_communications = data["Lines"]
+# 	postes = set()
+# 	for item in data:
+# 		postes.add(item['CO_EXT'])
+# 	c_postes = len(postes)
+
+
 @app.route("/communications")
 def communications():
 	return render_template("communications.html")
