@@ -48,11 +48,11 @@
           <fieldset class="border py-2 px-2 mb-4 rounded">
           <legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
             <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="periode_complete">
+              <input type="checkbox" class="custom-control-input" id="periode_complete" checked>
               <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
             </div>
             <input type="text" name="CO_DATE" id="co_about" hidden>
-            <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal" id="date_modal_button">Du 20/07/2019 Au 26/07/2019</button>
+            <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal" id="date_modal_button">Du 2019-07-20 Au 2019-07-26</button>
           </fieldset>
           <div class="py-2">
             <div class="info-box text-center" style="background-color: #F8F8FF;">
@@ -211,8 +211,11 @@
           </button>
         </div>
         <div class="modal-body">
+          <div class="alert alert-info d-none" id="plage_date_alert">
+            <small>Pour le moment, seul le choix libre de la plage de date est disponible</small>
+          </div>
           <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="periode_complete_modal">
+            <input type="checkbox" class="custom-control-input" id="periode_complete_modal" checked>
             <label class="custom-control-label font-weight-normal" for="periode_complete_modal">Période complète</label>
           </div>
           <div class="form-group row mt-3">
@@ -388,20 +391,20 @@
         if (s > 60) {
           s -= 60;
           m += 1;
-        };
+        }
         m += v_m;
         if (m > 60) {
           m -= 60;
           h += 1;
-        };
+        }
         h += v_h;
     });
     if (m < 10){
       m = "0" + m.toString();
-    };
+    }
     if (s < 10){
       s = "0" + s.toString();
-    };
+    }
     duree = h + ":" + m + ":" + s;
     return duree;
   };
@@ -430,6 +433,32 @@
 
   <script>
 
+      $("#date_debut").change(function() {
+        if ($(this).val() == "2019-07-20" && $("#date_fin").val() == "2019-07-26") {
+          $("#periode_complete_modal").prop('checked', true);
+          $("#periode_complete").prop('checked', true);
+        } else {
+          $("#periode_complete_modal").prop('checked', false);
+          $("#periode_complete").prop('checked', false);
+        }
+      });
+
+      $("#date_fin").change(function() {
+        if ($("#date_debut").val() == "2019-07-20" && $(this).val() == "2019-07-26") {
+          $("#periode_complete_modal").prop('checked', true);
+          $("#periode_complete").prop('checked', true);
+        } else {
+          $("#periode_complete_modal").prop('checked', false);
+          $("#periode_complete").prop('checked', false);
+        }
+      });
+
+      $("#plage_de_date").change(function() {
+        $("#plage_date_alert").removeClass("d-none");
+        $("#plage_de_date").val("0");
+        setTimeout(() => { $("#plage_date_alert").addClass("d-none"); }, 3000);
+      });
+
       $("#date_modal_save").click(function() {
         date_debut = $("#date_debut").val();
         date_fin = $("#date_fin").val();
@@ -439,6 +468,32 @@
         date2_days = date2.diff('1899-12-30', 'day') + 1;
         $("#date_modal_button").html("Du " + date_debut + " Au " + date_fin);
         $("#co_about").val(date1_days.toString() + "-" + date2_days.toString());
+        if ($("#date_debut").val() == "2019-07-20" && $("#date_fin").val() == "2019-07-26") {
+          $("#periode_complete").prop('checked', true);
+          $("#periode_complete_modal").prop('checked', true);
+        }
+      });
+
+      $("#periode_complete").click(function() {
+        if (this.checked) {
+          $("#periode_complete_modal").prop('checked', true);
+          $("#date_modal_button").html("Du 2019-07-20 Au 2019-07-26");
+          $("#date_debut").val("2019-07-20");
+          $("#date_fin").val("2019-07-26");
+        } else {
+          $("#periode_complete_modal").prop('checked', false);
+        }
+      });
+
+      $("#periode_complete_modal").click(function() {
+        if (this.checked) {
+          $("#periode_complete").prop('checked', true);
+          $("#date_modal_button").html("Du 2019-07-20 Au 2019-07-26");
+          $("#date_debut").val("2019-07-20");
+          $("#date_fin").val("2019-07-26");
+        } else {
+          $("#periode_complete").prop('checked', false);
+        }
       });
 
   </script>
