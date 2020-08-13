@@ -476,10 +476,8 @@
 
       $("#periode_complete").click(function() {
         if (this.checked) {
-          $("#periode_complete_modal").prop('checked', true);
           $("#date_modal_button").html("Du 2019-07-20 Au 2019-07-26");
-          $("#date_debut").val("2019-07-20");
-          $("#date_fin").val("2019-07-26");
+          $("#communications-form")[0].reset();
         } else {
           $("#periode_complete_modal").prop('checked', false);
         }
@@ -487,10 +485,8 @@
 
       $("#periode_complete_modal").click(function() {
         if (this.checked) {
-          $("#periode_complete").prop('checked', true);
           $("#date_modal_button").html("Du 2019-07-20 Au 2019-07-26");
-          $("#date_debut").val("2019-07-20");
-          $("#date_fin").val("2019-07-26");
+          $("#communications-form")[0].reset();
         } else {
           $("#periode_complete").prop('checked', false);
         }
