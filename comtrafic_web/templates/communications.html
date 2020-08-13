@@ -43,7 +43,6 @@
           </div>
         </div>
         <div class="card-body pb-1 pt-1">
-          <small class="text-muted"><i class="fas fa-check text-success"></i> : Filtrage disponible pour ce champ</small>
           <div class="row mt-3">
           <div class="col-md-4">
           <fieldset class="border py-2 px-2 mb-4 rounded">
@@ -52,7 +51,8 @@
               <input type="checkbox" class="custom-control-input" id="periode_complete">
               <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
             </div>
-            <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal">Du 20/07/2019 Au 26/07/2019</button>
+            <input type="text" name="CO_DATE" id="co_about" hidden>
+            <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal" id="date_modal_button">Du 20/07/2019 Au 26/07/2019</button>
           </fieldset>
           <div class="py-2">
             <div class="info-box text-center" style="background-color: #F8F8FF;">
@@ -95,7 +95,7 @@
             <div class="col-md-6">
               <div class="row mb-2">
                 <div class="col-6">
-                  <label><small>Type d'appels <i class="fas fa-check text-success"></i></small></label>
+                  <label><small>Type d'appels</small></label>
                   <select class="custom-select custom-select-sm" name="CO_TYPE">
                     <option selected value="">Tous</option>
                     <option value="0">Entrants</option>
@@ -104,53 +104,30 @@
                 </div>
                 <div class="col-6">
                   <label><small>Etat d'appels</small></label>
-                  <select class="custom-select custom-select-sm">
-                    <option selected>Tous</option>
-                    <option>Aboutis</option>
-                    <option>Non aboutis</option>
+                  <select class="custom-select custom-select-sm" name="CO_ABOUT">
+                    <option selected value="">Tous</option>
+                    <option value="-1">Aboutis</option>
+                    <option value="0">Non aboutis</option>
                   </select>
                 </div>
               </div>
               <label><small>Service</small></label>
-              <select class="custom-select mb-2 custom-select-sm">
-                <option selected disabled>Choisir Service</option>
-                <option>Expéditions Stock</option>
-                <option>Achats Approvisionnements</option>
-                <option>Commercial</option>
-                <option>Informatique</option>
-                <option>Direction</option>
-                <option>Support technique</option>
-                <option>Compta</option>
-                <option>Chambres</option>
-                <option>Technique</option>
+              <select class="custom-select mb-2 custom-select-sm" name="SE_NOM">
+                <option selected value="">-- Choisir Service --</option>
+                {% for service in services %}
+                  <option value="{{service}}">{{service}}</option>
+                {% endfor %}
               </select>
               <label><small>Poste</small></label>
-              <select class="custom-select custom-select-sm mb-2">
-                <option selected disabled>Choisir Poste</option>
-                <option>520</option>
-                <option>521</option>
-                <option>522</option>
-                <option>523</option>
-                <option>524</option>
-                <option>525</option>
-                <option>526</option>
-                <option>527</option>
-                <option>528</option>
-                <option>529</option>
-                <option>530</option>
-                <option>531</option>
-                <option>532</option>
-                <option>533</option>
-                <option>534</option>
-                <option>535</option>
-                <option>536</option>
-                <option>537</option>
-                <option>538</option>
-                <option>539</option>
+              <select class="custom-select custom-select-sm mb-2" name="CO_EXT">
+                <option selected value="">-- Choisir Poste --</option>
+                {% for poste in postes %}
+                  <option value="{{poste}}">{{poste}}</option>
+                {% endfor %}
               </select>
-              <label><small>Type direc. <i class="fas fa-check text-success"></i></small></label>
+              <label><small>Type direc.</small></label>
               <select class="custom-select custom-select-sm" name="CO_TYPEDIR">
-                <option selected value="">Choisir Type direc.</option>
+                <option selected value="">-- Choisir Type direc. --</option>
                 <option value="I">I</option>
                 <option value="M">M</option>
                 <option value="N">N</option>
@@ -159,13 +136,13 @@
               </select>
             </div>
             <div class="col-md-6">
-              <label><small>Numéro <i class="fas fa-check text-success"></i></small></label>
+              <label><small>Numéro</small></label>
               <input type="text" name="CO_NUM" placeholder="Numéro" class="form-control form-control-sm mb-2">
-              <label><small>Coût TTC <i class="fas fa-check text-success"></i></small></label>
+              <label><small>Coût TTC</small></label>
               <input type="text" name="CO_COUTFACT_TTC" placeholder="Coût TTC" class="form-control form-control-sm mb-2">
-              <label><small>Sonnerie <i class="fas fa-check text-success"></i></small></label>
+              <label><small>Sonnerie</small></label>
               <input type="text" name="CO_DRING" placeholder="Sonnerie" class="form-control form-control-sm mb-2">
-              <label><small>Durée <i class="fas fa-check text-success"></i></small></label>
+              <label><small>Durée</small></label>
               <input type="text" name="CO_DUR" placeholder="Durée" class="form-control form-control-sm">
               
             </div>
@@ -264,21 +241,21 @@
                   <div class="form-group row">
                     <label for="date_debut" class="col-form-label col-md-4"><small>Du : </small></label>
                     <div class="col-md-8">
-                      <input id="date_debut" type="date" name="date_debut" max="3000-12-31" 
-                             min="1000-01-01" class="form-control form-control-sm" value="2019-07-20">
+                      <input id="date_debut" type="date" name="date_debut" max="2019-07-26" 
+                             min="2019-07-20" class="form-control form-control-sm" value="2019-07-20">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="date_fin" class="col-form-label col-md-4"><small>Au : </small></label>
                     <div class="col-md-8">
-                      <input id="date_fin" type="date" name="date_fin" max="3000-12-31" 
-                             min="2000-01-01" class="form-control form-control-sm" value="2019-07-26">
+                      <input id="date_fin" type="date" name="date_fin" max="2019-07-26" 
+                             min="2019-07-20" class="form-control form-control-sm" value="2019-07-26">
                     </div>
                   </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Annuler</button>
-          <button type="button" class="btn btn-sm btn-primary">Entregistrer</button>
+          <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" id="date_modal_save">Entregistrer</button>
         </div>
       </div>
     </div>
@@ -293,11 +270,13 @@
 {% endblock sidebar %}
 
 {% block script %}
-<!-- <script src="{{ url_for('static', filename='plugins/moment/moment.min.js') }}"></script>
-<script src="{{ url_for('static', filename='plugins/daterangepicker/daterangepicker.js') }}"></script> -->
+
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.7.2/dist/js/tabulator.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.0.5/jspdf.plugin.autotable.js"></script>
+<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+<script>dayjs().format()</script>
+
 <script>
 
   $("#nav-link3").addClass("bg-danger");
@@ -452,4 +431,23 @@ $(document).ready( function () {
 } );
 
 </script>
+
+  <script>
+
+    $(document).ready(function() {
+
+      $("#date_modal_save").click(function() {
+        date_debut = $("#date_debut").val();
+        date_fin = $("#date_fin").val();
+        date1 = dayjs(date_debut);
+        date2 = dayjs(date_fin);
+        date1_days = date1.diff('1899-12-30', 'day') + 1;
+        date2_days = date2.diff('1899-12-30', 'day') + 1;
+        $("#date_modal_button").html("Du " + date_debut + " Au " + date_fin);
+        $("#co_about").val(date1_days.toString() + "-" + date2_days.toString());
+      });
+
+    });
+
+  </script>
 {% endblock script %}

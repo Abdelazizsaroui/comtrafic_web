@@ -20,10 +20,13 @@ def dashboard():
 # 		postes.add(item['CO_EXT'])
 # 	c_postes = len(postes)
 
+postes = {'921', '935', '904', '902', '929', '949', '930', '932', '944', '900', '525', '928', '937', '933', '910', '931', '905', '907', '901', '934', '948', '938', '917', '922', '916', '912', '909', '903'}
+
+services = {'Informatique', 'Support technique', 'Direction', 'Expéditions Stock', 'Technique', 'Achats Approvisionnements', 'Service_Defaut', 'Chambres', 'Compta', 'Commercial'}
 
 @app.route("/communications")
 def communications():
-	return render_template("communications.html")
+	return render_template("communications.html", postes=postes, services=services)
 
 @app.route("/com-data")
 def com_data():
