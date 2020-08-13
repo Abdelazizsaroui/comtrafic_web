@@ -280,8 +280,6 @@
 <script>
 
   $("#nav-link3").addClass("bg-danger");
-
-$(document).ready( function () {
   
   $(document).ajaxComplete( function() {
     $("#skeleton-container").addClass("d-none");
@@ -428,13 +426,9 @@ $(document).ready( function () {
     $("#communications-form")[0].reset();
   });
 
-} );
-
 </script>
 
   <script>
-
-    $(document).ready(function() {
 
       $("#date_modal_save").click(function() {
         date_debut = $("#date_debut").val();
@@ -446,8 +440,6 @@ $(document).ready( function () {
         $("#date_modal_button").html("Du " + date_debut + " Au " + date_fin);
         $("#co_about").val(date1_days.toString() + "-" + date2_days.toString());
       });
-
-    });
 
   </script>
 {% endblock script %}
