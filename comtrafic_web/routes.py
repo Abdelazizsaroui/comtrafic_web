@@ -3,23 +3,60 @@ import time, datetime
 from flask import request, render_template, url_for, jsonify
 from comtrafic_web import app
 
+api_url = "http://161.97.75.12:7071/api/cmd/"
 periode = "43666-43673"
 
 @app.route("/")
 def dashboard():
 	return render_template("dashboard.html")
 
-# @app.route("/dashboard-data")
-# def dashboard_data():
-# 	raw_res = requests.get(f"http://161.97.75.12:7071/api/cmd/ED&CO_DATE={periode}")
-# 	res = raw_res.json()
-# 	data = res["Data"]["Data"]
-# 	c_communications = data["Lines"]
-# 	postes = set()
-# 	for item in data:
-# 		postes.add(item['CO_EXT'])
-# 	c_postes = len(postes)
+@app.route("/dashboard-db-info")
+def dashboard_db_info():
+	raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}")
+	res = raw_res.json()
+	c_communications = res['Data']['Lines']
+	data = res['Data']['Data']
+	postes = set()
+	services = set()
+	pbx = set()
+	for item in data:
+		postes.add(item['CO_EXT'])
+		services.add(item['SE_NOM'])
+		pbx.add(item['CO_PBX'])
+	c_postes = len(postes)
+	c_services = len(services)
+	c_pbx = len(pbx)
+	return jsonify({"c_communications":c_communications, "c_postes": c_postes, "c_services": c_services, "c_pbx":c_pbx})
 
+@app.route("/dashboard-data")
+def dashboard_data():
+	raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}")
+	res = raw_res.json()
+	c_all = res['Data']['Lines']
+	data = res['Data']['Data']
+	c_entr = c_sort = 0
+	d_all = d_entr = d_sort = 0;
+	for item in data:
+		if item['CO_TYPE'] == 0:
+			c_entr += 1
+			d_add = item['CO_DUR']
+			d_all += d_add
+			d_entr += d_add
+		elif item['CO_TYPE'] == 1:
+			c_sort += 1
+			d_add = item['CO_DUR']
+			d_all += d_add
+			d_sort += d_add
+	d_all_str = str(datetime.timedelta(seconds = d_all))
+	d_entr_str = str(datetime.timedelta(seconds = d_entr))
+	d_sort_str = str(datetime.timedelta(seconds = d_sort))
+	return jsonify({
+			"all": {"c": c_all, "d": d_all_str},
+			"entr": {"c": c_entr, "d": d_entr_str},
+			"sort": {"c": c_sort, "d": d_sort_str}
+		})
+		
+	
 postes = {'921', '935', '904', '902', '929', '949', '930', '932', '944', '900', '525', '928', '937', '933', '910', '931', '905', '907', '901', '934', '948', '938', '917', '922', '916', '912', '909', '903'}
 
 services = {'Informatique', 'Support technique', 'Direction', 'Expéditions Stock', 'Technique', 'Achats Approvisionnements', 'Service_Defaut', 'Chambres', 'Compta', 'Commercial'}
@@ -35,11 +72,11 @@ def com_data():
 		for el in request.args:
 			search_query += el + "=" + request.args.get(el) + "&"
 		print(search_query)
-		raw_res = requests.get(f"http://161.97.75.12:7071/api/cmd/ED&CO_DATE={periode}&{search_query}")
+		raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}&{search_query}")
 	else:
-		raw_res = requests.get(f"http://161.97.75.12:7071/api/cmd/ED&CO_DATE={periode}")
+		raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}")
 	res = raw_res.json()
-	data = res["Data"]["Data"]
+	data = res['Data']['Data']
 	if data == "":
 		data = []
 	else:

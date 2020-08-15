@@ -20,7 +20,7 @@
 	<div class="card shadow-sm card-danger card-outline">
 	<div class="card-header border-0 row">
 		<p class="col-md-6 lead m-0">Informations sur la base de données</p>
-		<div class="col-md-6 text-center text-muted pt-1"><span class="badge badge-secondary"><i class="fas fa-phone-square-alt"></i> Appels</span><span><small> Le plus ancien: 15/12/2019 12:01:54</small> • <small>Le plus récent: 04/07/2020 10:18:32</small></span></div>
+		<div class="col-md-6 text-center text-muted pt-1"><span class="badge badge-secondary"><i class="fas fa-phone-square-alt"></i> Appels</span><span><small> Le plus ancien: 2019-07-20 03:02:00</small> • <small>Le plus récent: 2019-07-26 19:12:00</small></span></div>
 	</div>
 	<div class="card-body">
 	<div class="row">
@@ -30,8 +30,8 @@
 
 	      <div class="info-box-content">
 	        <span class="info-box-text">Communications</span>
-	        <span class="info-box-number">
-	          62458
+	        <span class="info-box-number" id="c_communications">
+	          <div class="spinner-grow spinner-grow-sm text-info"></div>
 	        </span>
 	      </div>
 	    </div>
@@ -42,7 +42,9 @@
 
 	      <div class="info-box-content">
 	        <span class="info-box-text">Postes</span>
-	        <span class="info-box-number">58</span>
+	        <span class="info-box-number" id="c_postes">
+	        	<div class="spinner-grow spinner-grow-sm text-success"></div>
+	        </span>
 	      </div>
 	    </div>
 	  </div>
@@ -55,7 +57,9 @@
 
 	      <div class="info-box-content">
 	        <span class="info-box-text">Services</span>
-	        <span class="info-box-number">18</span>
+	        <span class="info-box-number" id="c_services">
+	        	<div class="spinner-grow spinner-grow-sm text-danger"></div>
+	        </span>
 	      </div>
 	    </div>
 	  </div>
@@ -65,7 +69,9 @@
 
 	      <div class="info-box-content">
 	        <span class="info-box-text">PBX</span>
-	        <span class="info-box-number">1</span>
+	        <span class="info-box-number" id="c_pbx">
+	        	<div class="spinner-grow spinner-grow-sm text-warning"></div>
+	        </span>
 	      </div>
 	    </div>
 	  </div>
@@ -97,26 +103,26 @@
 				<table class="table table-sm table-bordered" style="background-color: #F8F8FF;">
 				  <thead>
 				    <tr>
-				      <th scope="col">Appels</th>
-				      <th scope="col">Nombre</th>
-				      <th scope="col">Durée</th>
+				      <th scope="col" class="col-4">Appels</th>
+				      <th scope="col" class="col-4">Nombre</th>
+				      <th scope="col" class="col-4">Durée</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 				    <tr>
 				      <td>Tous</td>
-				      <td>62458</td>
-				      <td>1242:15:54</td>
+				      <td id="c_all"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
+				      <td id="d_all"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
 				    </tr>
 				    <tr>
 				      <td>Entrants</td>
-				      <td>37512</td>
-				      <td>875:10:30</td>
+				      <td id="c_entr"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
+				      <td id="d_entr"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
 				    </tr>
 				    <tr>
 				      <td>Sortants</td>
-				      <td>24946</td>
-				      <td>367:05:24</td>
+				      <td id="c_sort"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
+				      <td id="d_sort"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
 				    </tr>
 				  </tbody>
 				</table>
@@ -250,6 +256,26 @@
         var barchart = new google.visualization.ColumnChart(document.getElementById('barchart'));
         barchart.draw(data2, options2);
       }
+    </script>
+
+    <script>
+
+    	$.getJSON("dashboard-db-info", function(data){
+    		$("#c_communications").text(data.c_communications);
+    		$("#c_postes").text(data.c_postes);
+    		$("#c_services").text(data.c_services);
+    		$("#c_pbx").text(data.c_pbx);
+    	});
+
+    	$.getJSON("dashboard-data", function(data){
+    		$("#c_all").text(data.all.c);
+    		$("#d_all").text(data.all.d);
+    		$("#c_entr").text(data.entr.c);
+    		$("#d_entr").text(data.entr.d);
+    		$("#c_sort").text(data.sort.c);
+    		$("#d_sort").text(data.sort.d);
+    	});
+
     </script>
 
 {% endblock script %}
