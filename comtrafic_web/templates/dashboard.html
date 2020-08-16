@@ -139,7 +139,7 @@
 		<div class="col-md-6">
 			<p class="text-center mb-0 mt-4 text-muted"><strong>Top 5 des coûts par direction</strong></p>
 			<div id="barchart" style="height: 300px; width: 450px;">
-				<p><small><small>(Pas encore disponible)</small></small></p>
+				<p><small><small>Chargement..</small></small></p>
 			</div>	
 		</div>
 		</div>
@@ -248,21 +248,22 @@
 
     		  piechart.draw(data1);
 
-    		  var data2 = google.visualization.arrayToDataTable([
-    		     ['Service', 'Coût'],
-    		     ['Expéditions Stock', 1530],
-    		     ['Commercial', 1250],
-    		     ['Achats Approvisionnements', 1170],
-    		     ['Technique', 1140],
-    		     ['Chambres', 920]
-    		  ]);
+    		  var top_couts_arr = [];
+    		  top_couts_arr.push(['Service', 'Coût'])
+    		  data.top_couts.forEach(function(item, index) {
+    		  	top_couts_arr.push([item.service, item.cout]);
+    		  });
+
+    		  // console.log(data.couts);
+
+    		  var data2 = google.visualization.arrayToDataTable(top_couts_arr);
 
     		  // var options2 = {
     		  // 	title: 'Top 5 des coûts par direction'
     		  // }; 
 
-    		  // var barchart = new google.visualization.ColumnChart(document.getElementById('barchart'));
-    		  // barchart.draw(data2);
+    		  var barchart = new google.visualization.ColumnChart(document.getElementById('barchart'));
+    		  barchart.draw(data2);
     		}
     	});
 

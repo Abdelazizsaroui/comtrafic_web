@@ -19,16 +19,22 @@ def dashboard_db_info():
 	data = res['Data']['Data']
 	c = Counter(el['SE_NOM'] for el in data)
 	services = [{'service':key, 'count':value} for key,value in c.items()]
-	c_services = len(c)
+	services_set = set()
 	postes = set()
 	pbx = set()
 	for item in data:
+		services_set.add(item['SE_NOM'])
 		postes.add(item['CO_EXT'])
 		pbx.add(item['CO_PBX'])
+	c_services = len(services_set)
 	c_postes = len(postes)
 	c_pbx = len(pbx)
-
-	return jsonify({"c_communications":c_communications, "c_postes": c_postes, "c_services": c_services, "c_pbx":c_pbx, "services": services})
+	couts_raw = {service:0 for service in services_set}
+	for el in data:
+		couts_raw[el['SE_NOM']] += el['CO_COUTFACT_TTC']
+	couts = {k: v for k, v in sorted(couts_raw.items(), key=lambda item: item[1], reverse=True)}
+	top_couts = [{'service':key, 'cout':value} for key,value in couts.items()][:5]
+	return jsonify({"c_communications":c_communications, "c_postes": c_postes, "c_services": c_services, "c_pbx":c_pbx, "services": services, "top_couts": top_couts})
 
 @app.route("/dashboard-data")
 def dashboard_data():
