@@ -1,5 +1,6 @@
 import requests
 import time, datetime
+from collections import Counter
 from flask import request, render_template, url_for, jsonify
 from comtrafic_web import app
 
@@ -16,17 +17,18 @@ def dashboard_db_info():
 	res = raw_res.json()
 	c_communications = res['Data']['Lines']
 	data = res['Data']['Data']
+	c = Counter(el['SE_NOM'] for el in data)
+	services = [{'service':key, 'count':value} for key,value in c.items()]
+	c_services = len(c)
 	postes = set()
-	services = set()
 	pbx = set()
 	for item in data:
 		postes.add(item['CO_EXT'])
-		services.add(item['SE_NOM'])
 		pbx.add(item['CO_PBX'])
 	c_postes = len(postes)
-	c_services = len(services)
 	c_pbx = len(pbx)
-	return jsonify({"c_communications":c_communications, "c_postes": c_postes, "c_services": c_services, "c_pbx":c_pbx})
+
+	return jsonify({"c_communications":c_communications, "c_postes": c_postes, "c_services": c_services, "c_pbx":c_pbx, "services": services})
 
 @app.route("/dashboard-data")
 def dashboard_data():

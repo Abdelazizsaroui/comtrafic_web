@@ -103,9 +103,9 @@
 				<table class="table table-sm table-bordered" style="background-color: #F8F8FF;">
 				  <thead>
 				    <tr>
-				      <th scope="col" class="col-4">Appels</th>
-				      <th scope="col" class="col-4">Nombre</th>
-				      <th scope="col" class="col-4">Durée</th>
+				      <th scope="col">Appels</th>
+				      <th scope="col">Nombre</th>
+				      <th scope="col">Durée</th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -131,10 +131,16 @@
 
 		<div class="row">
 		<div class="col-md-6 border-right">
-			<div id="piechart" style="height: 300px; width: 450px;"></div>	
+			<p class="text-center mb-0 mt-4 text-muted"><strong>Nombre appels par service</strong></p>
+			<div id="piechart" style="height: 300px; width: 450px;">
+				<p><small><small>Chargement..</small></small></p>
+			</div>	
 		</div>
 		<div class="col-md-6">
-			<div id="barchart" style="height: 300px; width: 450px;"></div>	
+			<p class="text-center mb-0 mt-4 text-muted"><strong>Top 5 des coûts par direction</strong></p>
+			<div id="barchart" style="height: 300px; width: 450px;">
+				<p><small><small>(Pas encore disponible)</small></small></p>
+			</div>	
 		</div>
 		</div>
 
@@ -210,61 +216,54 @@
 
 <script src="https://www.gstatic.com/charts/loader.js"></script>
 
-<script>
-
-	  $("#nav-link1").addClass("bg-danger");
-
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-
-        var data1 = google.visualization.arrayToDataTable([
-          ['Service', 'Nombre appels'],
-          ['Expéditions Stock', 2105],
-          ['Achats Approvisionnements', 1026],
-          ['Commercial', 9070],
-          ['Informatique', 6415],
-          ['Direction', 3210],
-          ['Support technique', 14621],
-          ['Compta', 10254],
-          ['Chambres', 18542],
-          ['Technique', 4189]
-        ]);
-
-        var options1 = {
-          title: 'Nombre appels par service'
-        };
-
-        var piechart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        piechart.draw(data1, options1);
-
-        var data2 = google.visualization.arrayToDataTable([
-           ['Service', 'Coût'],
-           ['Expéditions Stock', 1530],
-           ['Commercial', 1250],
-           ['Achats Approvisionnements', 1170],
-           ['Technique', 1140],
-           ['Chambres', 920]
-        ]);
-
-        var options2 = {
-        	title: 'Top 5 des coûts par direction'
-        }; 
-
-        var barchart = new google.visualization.ColumnChart(document.getElementById('barchart'));
-        barchart.draw(data2, options2);
-      }
-    </script>
 
     <script>
+
+    	$("#nav-link1").addClass("bg-danger");
 
     	$.getJSON("dashboard-db-info", function(data){
     		$("#c_communications").text(data.c_communications);
     		$("#c_postes").text(data.c_postes);
     		$("#c_services").text(data.c_services);
     		$("#c_pbx").text(data.c_pbx);
+
+    		google.charts.load('current', {'packages':['corechart']});
+    		google.charts.setOnLoadCallback(drawChart);
+
+    		function drawChart() {
+
+    		  var services_arr = [];
+    		  services_arr.push(['Service', 'Nombre appels'])
+    		  data.services.forEach(function(item, index) {
+    		  	services_arr.push([item.service, item.count]);
+    		  });
+
+    		  var data1 = google.visualization.arrayToDataTable(services_arr);
+
+    		  // var options1 = {
+    		  //   title: 'Nombre appels par service'
+    		  // };
+
+    		  var piechart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    		  piechart.draw(data1);
+
+    		  var data2 = google.visualization.arrayToDataTable([
+    		     ['Service', 'Coût'],
+    		     ['Expéditions Stock', 1530],
+    		     ['Commercial', 1250],
+    		     ['Achats Approvisionnements', 1170],
+    		     ['Technique', 1140],
+    		     ['Chambres', 920]
+    		  ]);
+
+    		  // var options2 = {
+    		  // 	title: 'Top 5 des coûts par direction'
+    		  // }; 
+
+    		  // var barchart = new google.visualization.ColumnChart(document.getElementById('barchart'));
+    		  // barchart.draw(data2);
+    		}
     	});
 
     	$.getJSON("dashboard-data", function(data){
