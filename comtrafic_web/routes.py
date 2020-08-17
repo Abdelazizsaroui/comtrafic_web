@@ -85,7 +85,7 @@ services = {'Informatique', 'Support technique', 'Direction', 'Expéditions Stoc
 
 @app.route("/communications")
 def communications():
-	return render_template("communications.html", postes=postes, services=services)
+	return render_template("communications.html", etat_api=etat_api(), postes=postes, services=services)
 
 @app.route("/com-data")
 def com_data():
@@ -110,7 +110,7 @@ def com_data():
 
 @app.route("/cumuls")
 def cumuls():
-	return render_template("cumuls.html")
+	return render_template("cumuls.html", etat_api=etat_api())
 
 @app.route("/cumuls-data")
 def cumuls_data():
@@ -135,42 +135,42 @@ def cumuls_data():
 def supervision():
 	response = requests.get("https://data.saroui.com/superv.json")
 	data = response.json()
-	return render_template("supervision.html", data=data)
+	return render_template("supervision.html", etat_api=etat_api(), data=data)
 
 @app.route("/facturation")
 def facturation():
-	return render_template("facturation.html")
+	return render_template("facturation.html", etat_api=etat_api())
 
 @app.route("/facture-tableau")
 def facture_tableau():
-	return render_template("facture_tableau.html")
+	return render_template("facture_tableau.html", etat_api=etat_api())
 
 @app.route("/annuaires/annuaire-postes")
 def annuaire_postes():
 	response = requests.get("https://data.saroui.com/postes_data.json")
 	data = response.json()
-	return render_template("annuaires/annuaire_postes.html", data=data)
+	return render_template("annuaires/annuaire_postes.html", etat_api=etat_api(), data=data)
 
 @app.route("/rapports")
 def rapports():
-	return render_template("rapports.html")
+	return render_template("rapports.html", etat_api=etat_api())
 
 @app.route("/parametrage/parametrages")
 def parametrages():
-	return render_template("parametrage/parametrages.html")
+	return render_template("parametrage/parametrages.html", etat_api=etat_api())
 
 @app.route("/parametrage/config-mails")
 def config_mails():
-	return render_template("parametrage/config_mails.html")
+	return render_template("parametrage/config_mails.html", etat_api=etat_api())
 
 @app.route("/parametrage/tarifs-operateurs")
 def tarifs_operateurs():
-	return render_template("parametrage/tarifs_operateurs.html")
+	return render_template("parametrage/tarifs_operateurs.html", etat_api=etat_api())
 
 @app.route("/parametrage/liste-directions")
 def liste_directions():
-	return render_template("parametrage/liste_directions.html")
+	return render_template("parametrage/liste_directions.html", etat_api=etat_api())
 
 @app.route("/parametrage/droits-utilisateurs")
 def droits_utilisateurs():
-	return render_template("parametrage/droits_utilisateurs.html")
+	return render_template("parametrage/droits_utilisateurs.html", etat_api=etat_api())
