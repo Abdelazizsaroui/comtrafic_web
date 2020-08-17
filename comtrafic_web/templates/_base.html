@@ -222,8 +222,24 @@
     </div>
   </div>
 
-  <aside class="control-sidebar control-sidebar-dark">
-    {% block sidebar %}{% endblock sidebar %}
+  <aside class="control-sidebar control-sidebar-dark py-3">
+    {% block sidebar %}
+    <div class="p-3">
+      {% if etat_api == 1 %}
+      <p>État de l'API : <span class="badge badge-success rounded-pill px-4"><i class="fas fa-check" data-toggle="tooltip" title="La connexion à l'API ComTrafic est réussie"></i></span></p>
+      {% else %}
+      <p>État de l'API : <span class="badge badge-danger rounded-pill px-4"><i class="fas fa-times" data-toggle="tooltip" title="La connexion à l'API ComTrafic n'est pas réussie"></i></span></p>
+      {% endif %}
+      <p>Version de l'API : <strong>v0.1</strong></p>
+      <p>Version de ComTrafic : <strong>v3.4</strong></p>
+    </div>
+    <div class="px-3">
+      <button class="btn btn-block btn-secondary rounded-pill"><strong>Mode Admin</strong></button>
+    </div>
+    <div class="px-3 mt-3">
+      <button class="btn btn-block btn-outline-secondary rounded-pill"><strong>Mode Résidents</strong></button>
+    </div>
+    {% endblock sidebar %}
   </aside>
 
   <footer class="main-footer small">

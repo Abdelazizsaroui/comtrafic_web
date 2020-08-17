@@ -7,9 +7,16 @@ from comtrafic_web import app
 api_url = "http://161.97.75.12:7071/api/cmd/"
 periode = "43666-43673"
 
+def etat_api():
+	try:
+		requests.get("http://161.97.75.12:7071/api/")
+		return 1
+	except:
+		return 0
+
 @app.route("/")
 def dashboard():
-	return render_template("dashboard.html")
+	return render_template("dashboard.html", etat_api=etat_api())
 
 @app.route("/dashboard-db-info")
 def dashboard_db_info():
