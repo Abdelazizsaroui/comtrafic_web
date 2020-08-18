@@ -9,7 +9,7 @@ periode = "43666-43673"
 
 def etat_api():
 	try:
-		requests.get("http://161.97.75.12:7071/api/", timeout=2)
+		requests.get("http://161.97.75.12:7071/api/", timeout=1)
 		return 1
 	except:
 		return 0
@@ -133,8 +133,8 @@ def cumuls_data():
 
 @app.route("/supervision")
 def supervision():
-	# response = requests.get("https://data.saroui.com/superv.json")
-	# data = response.json()
+	response = requests.get("https://data.saroui.com/superv.json")
+	data = response.json()
 	return render_template("supervision.html", etat_api=etat_api(), data=data)
 
 @app.route("/facturation")
