@@ -122,30 +122,10 @@
 	  <div class="col-md-12">
 	    <div class="card shadow-sm card-danger card-outline">
 	      <div class="card-body">
-	        <div class="row">
-	        	{% for el in data %}
-	        	<div class="col-md-6 col-lg-3 p-2">
-	        	<div class="rounded shadow-sm bg-light small border px-2 pt-2">
-	        		<div class="row">
-	        			<div class="col-5">
-	        				<p><strong>Poste : {{el.p}}</strong></p>
-	        				<p><strong>{{el.n}}</strong></p>
-	        			</div>
-	        			<div class="col-7">
-	        				<p class="m-0">Appels : {{el.a}}</p>
-	        				<p class="m-0">Durée : {{el.d}}</p>
-	        				{% if el.p == 912 %}
-	        				<p class="m-0">Coût : {{el.c}} <span class="badge badge-danger rounded -1">100</span></p>
-	        				{% elif el.p == 916 %}
-	        				<p class="m-0">Coût : {{el.c}} <span class="badge badge-success rounded px-1">50</span></p>
-	        				{% else %}
-	        				<p class="m-0">Coût : {{el.c}}</p>
-	        				{% endif %}
-	        			</div>
-	        		</div>
+	        <div class="row" id="postes">
+	        	<div class="text-center">
+	        	<div class="spinner-border spinner-border-lg text-secondary"></div>
 	        	</div>
-	        	</div>
-	        	{% endfor %}
 	        </div>
 	      </div>
 	    </div>
@@ -219,7 +199,6 @@
 
 	<script>
 
-	$(document).ready( function () {
 		$("#nav-link2").addClass("bg-danger");
 		$('#cumul_check').parents("fieldset").attr('disabled', 'disabled');
 		$('#cumul_check').click(function(){
@@ -229,7 +208,17 @@
 		        $(this).parents("fieldset").attr('disabled', 'disabled');
 		    };
 		});
-	});
+
+		$.getJSON('superv-data', function(data) {
+			$("#postes").html("");
+			console.log(data);
+			data.forEach(function(poste, index){
+				console.log(poste);
+				$("#postes").append(
+					'<div class="col-md-6 col-lg-3 p-2"> <div class="rounded shadow-sm bg-light small border px-2 pt-2"> <div class="row"> <div class="col-5"> <p><strong>Poste : '+poste.po_nom+'</strong></p><p><strong>'+poste.po_usernom+'</strong></p></div><div class="col-7"> <p class="m-0">Appels : '+poste.appels+'</p><p class="m-0">Durée : '+poste.duree+'</p><p class="m-0">Coût : '+poste.cout.toFixed(2)+'</p></div></div></div></div>'
+				);
+			});
+		});
 
 	</script>
 
