@@ -27,25 +27,18 @@
 			  <div class="card-header p-0 pt-1 border-bottom-0">
 			    <ul class="nav nav-tabs" id="postes-parent" role="tablist">
 			      <li class="nav-item">
-			        <a class="nav-link active" id="etablissement-tab" data-toggle="pill" href="#postes-parent" role="tab" aria-controls="postes-etablissement" aria-selected="true"><strong>Etablissement <span class="badge badge-secondary">40</span></strong></a>
+			        <a class="nav-link active" id="etablissement-tab" data-toggle="pill" href="#postes-parent" role="tab" aria-controls="postes-etablissement" aria-selected="true"><strong>Etablissement <span class="badge badge-secondary" id="postes_c"></span></strong></a>
 			      </li>
 			    </ul>
 			  </div>
 			  <div class="card-body">
 			    <div class="tab-content" id="postes">
 			      <div class="tab-pane fade show active" id="postes-etablissement" role="tabpanel">
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Achats Approvisionnements</span> <span class="badge badge-secondary">2</span></span>
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Commercial</span> <span class="badge badge-secondary">6</span></span>
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Compta</span> <span class="badge badge-secondary">4</span></span>
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Comptabilité</span> <span class="badge badge-secondary">1</span></span>
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Defaut</span> <span class="badge badge-secondary">3</span></span>
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Direction</span> <span class="badge badge-secondary">3</span></span>
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Expéditions Stocks</span> <span class="badge badge-secondary">3</span></span>
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Informatique</span> <span class="badge badge-secondary">2</span></span>
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Support technique</span> <span class="badge badge-secondary">4</span></span>
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Technique</span> <span class="badge badge-secondary">10</span></span>
-			          <span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">Ventes</span> <span class="badge badge-secondary">2</span></span>
-			          <button type="button" data-toggle="modal" data-target="#ajouter-service-modal" class="btn btn-sm btn-outline-primary rounded-pill mb-2"><i class="fas fa-plus"></i> Ajouter</button>
+			      	<div class="row justify-content-center py-2">
+			      		<div class="col-md-1">
+			      			<span class="spinner-border spinner-border-lg text-secondary"></span>
+			      		</div>
+			      	</div>
 			      </div>
 			    </div>
 			  </div>
@@ -83,16 +76,6 @@
 					    </tr>
 					  </thead>
 					  <tbody>
-					  	{% for el in data %}
-					    <tr data-poste="{{el.SE_NOM}}">
-					      <td>{{el.PO_NOM}}</td>
-					      <td>{{el.PO_USERNOM}}</td>
-					      <td>{{el.PO_USERPRENOM}}</td>
-					      <td>{{el.SE_NOM}}</td>
-					      <td>02/08/2020</td>
-					      <td><a type="button" class="text-primary"><i class="fas fa-edit"></i></a><a type="button" class="text-danger ml-3"><i class="fas fa-trash-alt"></i></a></td>
-					    </tr>
-					    {% endfor %}
 					  </tbody>
 					</table>
 				</div>
@@ -203,8 +186,26 @@
 		$("#nav-link8").parent("li").addClass("menu-open");
 		$("#nav-link8-sub1").addClass("active");
 
-	$(document).ready(function(){
-		$(".etablissement-poste").click(function() {
+		$.getJSON("annuaire-postes-data", function(data) {
+			$("#postes-etablissement").html("");
+			$("#postes_c").text(data.postes_c);
+			data.services.forEach(function(item, index){
+				$("#postes-etablissement").append(
+					'<span class="btn btn-sm btn-light border rounded-pill mb-2 mr-2 etablissement-poste"><span class="service-name">'+item.nom+'</span> <span class="badge badge-secondary">'+item.count+'</span></span>'
+				);
+			});	
+			$("#postes-etablissement").append(
+				'<button type="button" data-toggle="modal" data-target="#ajouter-service-modal" class="btn btn-sm btn-outline-primary rounded-pill mb-2"><i class="fas fa-plus"></i> Ajouter</button>'
+			);
+
+			data.postes.forEach(function(item, index){
+				$("#postes-table").children("tbody").append(
+					'<tr data-poste="'+item.service+'"> <td>'+item.poste+'</td><td>'+item.nom+'</td><td>'+item.prenom+'</td><td>'+item.service+'</td><td>'+item.date+'</td><td><a type="button" class="text-primary"><i class="fas fa-edit"></i></a><a type="button" class="text-danger ml-3"><i class="fas fa-trash-alt"></i></a></td></tr>'
+				);
+			});
+		});
+
+		$("#postes-etablissement").on('click', '.etablissement-poste', function() {
 			$(this).toggleClass("border-primary");
 			$(".etablissement-poste").not(this).removeClass("border-primary");
 			var value = $(this).children(".service-name").text();
@@ -224,7 +225,6 @@
 			$("#postes-type").text("Tous les postes");
 			$("#service-actions").addClass("d-none");
 		});
-	});
 
 	</script>
 
