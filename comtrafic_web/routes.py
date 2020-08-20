@@ -115,6 +115,9 @@ def cumuls():
 @app.route("/cumuls-data")
 def cumuls_data():
 	response = requests.get("https://data.saroui.com/cumuls_data.json")
+	# raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}")
+	# res = raw_res.json()
+	# data = res['Data']['Data']
 	data = response.json()
 	for el in data:
 		el['CO_DUR'] = str(datetime.timedelta(seconds = el['CO_DUR']))
