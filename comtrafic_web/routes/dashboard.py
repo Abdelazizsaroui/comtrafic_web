@@ -26,6 +26,16 @@ def dashboard_db_info():
 	c_pbx = len(pbx)
 	return jsonify({"c_communications":c_communications, "c_postes": c_postes, "c_services": c_services, "c_pbx":c_pbx})
 
+def convert_days(d):
+	if "day" in d:
+		x,y = d.split(',')
+		numb_d = int(x[0])
+		h,m,s = y.split(':')
+		int_h = int(h)
+		int_h += numb_d * 24
+		return str(int_h) + ':' + m + ':' + s
+	return d
+
 @app.route("/dashboard-data")
 def dashboard_data():
 	if len(request.args) > 0:
@@ -57,9 +67,11 @@ def dashboard_data():
 			d_add = item['CO_DUR']
 			d_all += d_add
 			d_sort += d_add
-	d_all_str = str(datetime.timedelta(seconds = d_all))
-	d_entr_str = str(datetime.timedelta(seconds = d_entr))
-	d_sort_str = str(datetime.timedelta(seconds = d_sort))
+			
+	d_all_str = convert_days(str(datetime.timedelta(seconds = d_all))) 
+	d_entr_str = convert_days(str(datetime.timedelta(seconds = d_entr)))
+	d_sort_str = convert_days(str(datetime.timedelta(seconds = d_sort)))
+
 	return jsonify({
 			"all": {"c": c_all, "d": d_all_str},
 			"entr": {"c": c_entr, "d": d_entr_str},
