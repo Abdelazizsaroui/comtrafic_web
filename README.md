@@ -14,7 +14,7 @@
 		- .. et les autres pages.
 	- `__init__.py` : déclare le répertoire comtrafic_web comme un module python et contient l'initialisation de l'application.
 	- `routes` :  contient les fichiers de routage et des traitements en Python.
-	- `docs` : la documentation de l'interface et de déploiement.  
+- `docs` : la documentation de l'interface et de déploiement.  
 - `Procfile` : fichier nécessaire pour le déploiement sur Heroku. Il déclare `run.py` comme l'entrée de l'application pour le serveur web.
 - `requirements.txt` : contient les dépendances du projet.
 - `run.py` : le script pour démarrer l'application.
