@@ -39,7 +39,7 @@
 
  - Linux sur une IaaS (Microsoft Azure) : [http://40.89.168.98](http://40.89.168.98)
  - Linux sur une PaaS (Heroku) : [https://stage.saroui.com](https://stage.saroui.com)
- - Windows : [http://161.97.75.12](http://161.97.75.12) (inactive)
+ - Windows : [http://161.97.75.12](http://161.97.75.12)
 
  Le guide de dépoiement se trouve sur `docs/deploy.html`
 

@@ -18,9 +18,10 @@
 	<hr>
 	<p>Ce guide présente les étapes pour le déploiement de l'interface web de ComTrafic sur 3 environnements différents.</p>
 	<h2>I - Serveur Linux sur une IaaS:</h2>
-	<p>Cette partie concerne le déploiement sur un serveur Linux sur une IaaS (Infrastructure as a Service). Dans une IaaS le founrnisseur Cloud nous fournit juste une infrastructure et on doit tout configurer. Dans ce guide on a utilisé une machine virtuelle Linux Ubuntu 18.04 sur Microsoft Azure.</p>
+	<p>Cette partie concerne le déploiement sur un serveur Linux sur une IaaS (Infrastructure as a Service). Dans une IaaS le fournisseur Cloud nous fournit juste une infrastructure et on doit tout configurer. Dans ce guide on a utilisé une machine virtuelle Linux Ubuntu 18.04 sur Microsoft Azure.</p>
 	<p>Avant de procéder au dépoiement, il faut créer un utilisateur autre que <em>root</em> sur le serveur et avoir le port 80 ouvert (aussi le port 20 si on va se connecter au serveur via SSH). Le nom de l'utilisateur dans ce guide est repéré par UTILISATEUR.</p>
 	<p>On va utiliser <em>NGINX</em> et <em>Gunicorn</em> pour servir le projet.</p>
+	<p>Ce guide est indépendant du fournisseur Cloud qui héberge le serveur.</p>
 
 	<h4>1 - Environnement virtuel de Python:</h4>
 	Avant d'installer et configurer un environnement virtuel de Python, on doit d'abord vérifier que <em>Python 3.6+</em> et <em>Pip</em> sont installés.
@@ -59,7 +60,7 @@
 	<p><em>NGINX</em> permet de traiter les requêtes web et servir les fichiers statiques, mais il ne permet pas de communiquer avec le code Python du projet. Pour cela on va utiliser <em>Gunicorn</em>, il a été déjà installé avec les dépendances.</p>
 	<p>On lance <em>Gunicorn</em> avec la commande: <br> <center><code>gunicorn -w 3 run:app</code></center></p>
 	<p>Le nombre 3 est pour une machine avec un seul coeur, il est préférable de remplacer le nombre 3 selon la machine avec (2 * NOMBRE_DE_COEURS) + 1 <br> Pour savoir le nombre de coeurs du CPU de la machine, on exécute la commande: <br> <center><code>nproc --all</code></center></p>
-	<p>A cet étape, et sans fermer la console dans <em>Gunicorn</em> est lancé, l'interface doit marcher sans problème si on visite l'IP du serveur ou son nom de domaine.</p>
+	<p>A cet étape, et sans fermer la console où <em>Gunicorn</em> est lancé, l'interface doit marcher sans problème si on visite l'IP du serveur ou son nom de domaine.</p>
 	<p>Une dernière chose qui reste à fixer, c'est que si on arrête la console dont réside le processus <em>Gunicorn</em> ou la machine a été redémarré ou une erreur survient on perd l'application. Pour régler ça on va utiliser <em>Supervisor</em>, on l'installe comme suit: <br> <center><code>sudo apt install supervisor</code></center></p>
 	<p>On crée et ouvre le fichier de configuration de <em>Supervisor</em>: <br> <center><code>sudo nano /etc/supervisor/conf.d/comtrafic.conf</code></center></p>
 	<p>On enregistre la configuration suivante dans le fichier:</p>
@@ -76,9 +77,14 @@
 	<p>Puis on redémarre <em>Supervisor</em>: <br> <center><code>sudo supervisorctl reload</code></center></p>
 	<p>Et comme ça l'application doit marcher même si on ferme la console ou redémarre la machine.</p>
 	<br>
+
 	<h2>II - Serveur Linux sur une PaaS:</h2>
-	<small>A ajouter ..</small>
-	<h2>II - Serveur Windows:</h2>
+	<p>Le déploiement sur une PaaS (Plateform as a Service) ne demande pas beaucoup d'efforts car la majorité des configurations sont faites par le fournisseur Cloud, mais en contrepartie il offre moins de flexibilité et de contrôle. Dans ce guide on a déployé l'interface sur <em>Heroku</em>.</p>
+	<p>Tout d'abord, il faut avoir un compte sur <em>Heroku</em>, puis on crée une nouvelle application pour le projet. On peut choisir de déployer le code depuis le dépot du projet sur <em>Github</em> ou utiliser <em>Heroku Git</em> (via <em>Heroku CLI</em>).</p>
+	<p>Les configurations nécessaires sont déjà inclut avec le projet. <em>Procfile</em> déclare l'entrée de l'application pour le serveur web, cela nécessite <em>Gunicorn</em> qui est aussi inclut dans le fichier des dépendances <em>requirements.txt</em> qui est installé automatiquement lorsqu'on charge le code sur <em>Heroku</em>.</p>
+	<p>On peut choisir le déploiment automatique de l'application en liant son dépot sur <em>Github</em> avec <em>Heroku</em>, tel que à chaque fois qu'on pousse le code sur <em>Github</em> une nouvelle version de l'application est déployée.</p>
+
+	<h2>III - Serveur Windows:</h2>
 	<small>A ajouter ..</small>
 
 </body>
