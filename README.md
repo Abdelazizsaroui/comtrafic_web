@@ -41,5 +41,5 @@
  - Linux sur une PaaS (Heroku) : [https://stage.saroui.com](https://stage.saroui.com)
  - Windows : [http://161.97.75.12](http://161.97.75.12) (inactive)
 
- Le guide de dépoiement se trouve sur `docs/deploy.html` (en cours..)
+ Le guide de dépoiement se trouve sur `docs/deploy.html`
 
