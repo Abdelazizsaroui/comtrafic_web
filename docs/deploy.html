@@ -19,7 +19,7 @@
 	<p>Ce guide présente les étapes pour le déploiement de l'interface web de ComTrafic sur 3 environnements différents.</p>
 	<h2>I - Serveur Linux sur une IaaS:</h2>
 	<p>Cette partie concerne le déploiement sur un serveur Linux sur une IaaS (Infrastructure as a Service). Dans une IaaS le fournisseur Cloud nous fournit juste une infrastructure et on doit tout configurer. Dans ce guide on a utilisé une machine virtuelle Linux Ubuntu 18.04 sur Microsoft Azure.</p>
-	<p>Avant de procéder au dépoiement, il faut créer un utilisateur autre que <em>root</em> sur le serveur et avoir le port 80 ouvert (aussi le port 20 si on va se connecter au serveur via SSH). Le nom de l'utilisateur dans ce guide est repéré par UTILISATEUR.</p>
+	<p>Avant de procéder au dépoiement, il faut créer un utilisateur autre que <em>root</em> sur le serveur et avoir le port 80 ouvert (aussi le port 22 si on va se connecter au serveur via SSH). Le nom de l'utilisateur dans ce guide est repéré par UTILISATEUR.</p>
 	<p>On va utiliser <em>NGINX</em> et <em>Gunicorn</em> pour servir le projet.</p>
 	<p>Ce guide est indépendant du fournisseur Cloud qui héberge le serveur.</p>
 
