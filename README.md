@@ -18,6 +18,7 @@
 - `Procfile` : fichier nécessaire pour le déploiement sur Heroku. Il déclare `run.py` comme l'entrée de l'application pour le serveur web.
 - `requirements.txt` : contient les dépendances du projet.
 - `run.py` : le script pour démarrer l'application.
+- `waitress.py` : le script pour lancer l'application avec le serveur Waitress.
 
 
 **Installation (test et dev):**
