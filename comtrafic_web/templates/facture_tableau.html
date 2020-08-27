@@ -126,7 +126,19 @@
 		<div class="col-md-12">
 		<div class="card card-danger card-outline">
 			<div class="card-body">
-				
+				<table class="table table-hover table-sm table-bordered" id="facture-table">
+				  <thead>
+				    <tr>
+				      <th>Label</th>
+				      <th>Somme HT</th>
+				      <th>Somme TTC</th>
+				      <th>Date</th>
+				      <th>Service</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  </tbody>
+				</table>
 			</div>
 		</div>
 		</div>
@@ -199,6 +211,14 @@
 	<script>
 
 		$("#nav-link6").addClass("bg-danger");
+
+		$.getJSON('facture-tableau-data', function(data) {
+			data.forEach(function(item, index){
+				$("#facture-table").children("tbody").append(
+					'<tr> <td>'+item.LABEL+'</td><td>'+item.SUM_HT+'</td><td>'+item.SUM_TTC+'</td><td>'+item.DATE_AC+'</td><td>'+item.SE_NOM+'</td></tr>'
+				);
+			});
+		});
 
 	</script>
 
