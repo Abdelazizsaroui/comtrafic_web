@@ -1,5 +1,5 @@
-from waitress import serve
 from comtrafic_web import app
+from waitress import serve
 
 # Ceci permet de lancer l'application avec le serveur Waitress
 if __name__ == '__main__':
