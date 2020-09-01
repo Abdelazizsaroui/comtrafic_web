@@ -16,7 +16,8 @@ from comtrafic_web.routes import (
 			facture_tableau,
 			communications,
 			cumuls,
-			rapports
+			rapports,
+			test_api
 	)
 from comtrafic_web.routes.annuaires import annuaire_postes
 from comtrafic_web.routes.parametrage import (

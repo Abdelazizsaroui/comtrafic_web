@@ -17,7 +17,7 @@ def facture_tableau_data():
 	else:
 		raw_res = requests.get(f"{api_url}FF&CO_DATE={periode}")
 	res = raw_res.json()
-	data = res['Data']['Data']
+	data = res['Data']
 	if data == "":
 		data = []
 	return jsonify(data)

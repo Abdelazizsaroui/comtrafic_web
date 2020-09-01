@@ -1,6 +1,6 @@
 import requests
 
-api_port = 7072
+api_port = 7071
 api_url = f"http://161.97.75.12:{api_port}/api/cmd/"
 periode = "43666-43673"
 

@@ -11,7 +11,7 @@ def supervision():
 def superv_data():
 	raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}")
 	res = raw_res.json()
-	data = res['Data']['Data']
+	data = res['Data']
 	postes_set = set()
 	for el in data:
 		postes_set.add(el['PO_NOM'])

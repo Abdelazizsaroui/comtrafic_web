@@ -11,7 +11,7 @@ def annuaire_postes():
 def annuaire_postes_data():
 	raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}")
 	res = raw_res.json()
-	data = res['Data']['Data']
+	data = res['Data']
 	services_set = set()
 	for el in data:
 		services_set.add(el['SE_NOM'])
@@ -26,7 +26,7 @@ def annuaire_postes_data():
 			poste = {"poste": el['PO_NOM'], "nom": el['PO_USERNOM'], "prenom": el['PO_USERPRENOM'], "service": el['SE_NOM'], "date": el['PO_DATE']}
 			postes.append(poste)
 	for el in postes:
-		date,_ = el['date'].split(" ")
+		date,_ = el['date'].split("T")
 		el['date'] = date
 	postes_c = len(postes)
 	response = {"services": services, "postes": postes, "postes_c": postes_c}

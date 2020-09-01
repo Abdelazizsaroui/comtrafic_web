@@ -1,4 +1,5 @@
-import requests, datetime 
+import requests, datetime
+import xml.etree.ElementTree as ET
 from flask import render_template, jsonify, request
 from comtrafic_web import app
 from comtrafic_web.routes import api_url, periode, etat_api
@@ -18,6 +19,10 @@ services = {'Informatique', 'Support technique', 'Direction', 'Expéditions Stoc
 def communications():
 	return render_template("communications.html", etat_api=etat_api(), postes=postes, services=services)
 
+@app.route("/communications/_xml_")
+def communications_xml():
+	return render_template("communications_xml.html", etat_api=etat_api(), postes=postes, services=services)
+
 @app.route("/com-data")
 def com_data():
 	if len(request.args) > 0:
@@ -28,7 +33,7 @@ def com_data():
 	else:
 		raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}")
 	res = raw_res.json()
-	data = res['Data']['Data']
+	data = res['Data']
 	if data == "":
 		data = []
 	else:
@@ -36,4 +41,26 @@ def com_data():
 			el['CO_DUR'] = str(datetime.timedelta(seconds = el['CO_DUR']))
 			el['CO_DRING'] = str(datetime.timedelta(seconds = el['CO_DRING']))
 			el['CO_DRTOT'] = str(datetime.timedelta(seconds = el['CO_DRTOT']))
+	return jsonify(data)
+
+@app.route("/com-data-xml")
+def com_data_xml():
+	if len(request.args) > 0:
+		search_query = ""
+		for el in request.args:
+			search_query += el + "=" + request.args.get(el) + "&"
+		raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}&{search_query}&-format=XML")
+	else:
+		raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}&-format=XML")
+	xml_root = ET.fromstring(raw_res.content)
+	lines = xml_root[0][3].text[2:-1]
+	n = int(lines)
+	data = []
+	for i in range(n):
+		data.append(xml_root[2][i].attrib)
+	else:
+		for el in data:
+			el['CO_DUR'] = str(datetime.timedelta(seconds = int(el['CO_DUR'])))
+			el['CO_DRING'] = str(datetime.timedelta(seconds = int(el['CO_DRING'])))
+			el['CO_DRTOT'] = str(datetime.timedelta(seconds = int(el['CO_DRTOT'])))
 	return jsonify(data)
