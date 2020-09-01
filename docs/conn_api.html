@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<title>Comtrafic Web Docs</title>
+
+</head>
+<body>
+<div class="container">
+<div class="row justify-content-center pt-3 pb-5">
+<div class="col-12 col-md-11 col-lg-10">
+
+	<h1>Documentation de l'interfaçage entre l'interface web et l'API de ComTrafic</h1>
+	<hr>
+	<p>Le logiciel ComTrafic dispose d'une API REST fournissant certaines fonctionnalités et interactions avec la base de donnée à partir des commandes et des paramètres. Dans ce document, on présente le code et les étapes de la consommation de l'API ComTrafic par l'interface web. L'API ComtTrafic peut fournir une réponse sous plusieurs formats (JSON, XML, CSV), on s'intéresse dans cette documentation au format JSON.</p>
+	<p>L'interface web est supportée par <em>Flask</em>, un framework de Python, on utilise donc le module <em>requests</em> de Python pour se connecter à l'API au backend pour faire des traitements puis fournir les éléments nécessaires au frontend de l'interface en JSON. Le module <em>requests</em> est déjà installé en installant les dépendances du projet.</p>
+	<p>On va étudier dans cette documentation le cas des pages Communications et Tableau de bord. On va s'intéresser juste au code qui permet l'interfaçage avec l'API.</p>
+
+	<h3 class="mt-5">1 - La page Communications:</h3>
+	<p>Le premier fichier qui concerne la connexion à l'API dans l'application <em>Flask</em> est le fichier <em>__init__.py</em> qui se trouve dans le module <em>routes</em>, il fournit le URL de l'API, son port et sont état pour les fichiers des codes des pages, il fournit aussi la période complète dont on peut extraire les communications.</p>
+	<p>La fonction de l'état de l'API sert à vérifier que l'API est disponible, elle fait un test de connexion qui est considéré échoué si il prend plus d'une seconde. Le test prend juste des millisecondes si il n'y a aucun problème dans le cas d'une connexion réussie.</p>
+	<img src="images/init.png" width="100%" class="mb-4 mt-2">
+	<p>Après que l'application reçoit une requête pour servir la page communication, c'est la fonction <em>communications</em> qui s'occupe de cette requête, elle envoie juste la page statique de l'interface contenant le code HTML, CSS et JS et l'état de l'API. Dans ce cas on envoie aussi la liste des postes et des services codé en dur sur la backend pour charger leurs listes déroulantes corréspondantes, car on a pas encore une solution optimale pour les fournir.</p>
+	<img src="images/communications.png" width="100%" class="mb-4 mt-2">
+	<p>Quand la page <em>communications.html</em> est servie, tous les éléments qui attendent d'être chargés par des données sont en état de chargement. Une requête AJAX est donc envoyé au serveur pour alimenter le tableau et puis faire les calculs des coûts et des durées. Le calcul des coûts et des durées et fait en frontend dans ce cas car le plugin du tableau <em>Tabulator</em> fournit déjà des utilités dans ce sens.</p>
+	<img src="images/com_data_JS.png" width="100%" class="mb-4 mt-2">
+	<p>La fonction qui reçoit la requête envoyée en AJAX est <em>com_data</em>. C'est cette même fonction qui est utilisé pour recevoir les requêtes de recherche, donc elle peut aussi reçevoir des paramêtres qu'elle envoie avec l'URL de l'API pour filtrer la réponse.</p>
+	<p>On convertit la réponse reçu en JSON valide pour le traitement en Python, puit on change le format des durées et on retourne une réponse en JSON. Lorsque le client reçoit la réponse, le tableau est chargé par les données et des calculs sont fait à partir de ses données pour alimenter les éléments des coûts et des durées.</p>
+	<img src="images/com_data.png" width="100%" class="mb-4 mt-2">
+	<p>Une fois la page et les données sont chargés, on a pas besoin de recharger la page à chaque fois une fait uen recherche, la recherche se fait via AJAX et les données du tableau et des autres éléments sont mis à jours.</p>
+	<p>Quand on ajoute des filtres et on clique sur le botton de recherche, tous les éléments qui doivent être à jour en fonction de la recherche sont mis en état de chargement. Puis on extrait les filtres ajoutés, on les reformule et on les ajoute à la requête AJAX qui va être traitée par la fonction <em>com_data</em> en backend, et lorsque la réponse est réçu on recharge le tableau avec les nouvelles données et on refait les calculs.</p>
+	<img src="images/communications_submit.png" width="100%" class="mb-4 mt-2">
+
+	<h3 class="mt-5">2 - La page Tableau de bord:</h3>
+	<p>Le processus d'interfaçage avec l'API est le même pour toute les pages:</p>
+	<ol>
+		<li>Servir la page statique</li>
+		<li>Connexion AJAX au backend de l'interface</li>
+		<li>Connexion à l'API</li>
+		<li>Traitement de la réponse de l'API</li>
+		<li>Retour de réponse et mis à jour de la page</li>
+	</ol>
+	<p>On va aussi voir le cas de la page Tableau de bord car elle contient des cas particuliers ( multiples requêtes AJAX, graphiques ).</p>
+	<p>Tout d'abord, la page statique est servie avec l'état de l'API.</p>
+	<img src="images/dashboard.png" width="100%" class="mb-4 mt-2">
+	<p>Puis une requête AJAX est envoyée depuis le client pour charger la section Informations sur la base de donnée.</p>
+	<img src="images/dashboard_db_info_JS.png" width="100%" class="mb-4 mt-2">
+	<p>Cette requête est donc reçu par la fonction <em>dashboard_db_info</em> au backend. <em>dashboard_db_info</em> envoie de son tour une requête à l'API, puis on extrait les informations souhaités et on retourne une reponse en JSON.</p>
+	<img src="images/dashboard_db_info.png" width="100%" class="mb-4 mt-2">
+	<p>Au moment où une requête AJAX est envoyée pour charger les informations sur la base de donnée, une autre requête est envoyée pour recevoir les données du tableau et des graphiques.</p>
+	<img src="images/dashboard_data_JS.png" width="100%" class="mb-4 mt-2">
+	<p>Cette seconde requête est reçue par la fonction <em>dashboard_data</em>. On fait les traitements et les calculs necessaires sur la réponse de l'API puis en retourne les données du tableau et des graphiques en JSON.</p>
+	<img src="images/dashboard_data.png" width="100%" class="mb-4 mt-2">
+	<p>Une fois la page et les données sont chargés, on peut actualiser le tableau et les graphiques selon une plage de date en choisissant la plage de date souhaité et en cliquant sur le botton <em>Actualiser</em>. Le tableau et les graphiques sont mis donc en état de chargement en attendant la réponse, la requête est reçue par la même fonction <em>dashboard_data</em>, elle joint les paramêtres reçus avec l'URL et lance une requête à l'API et traite la réponse reçue de la même façon que la première fois.</p>
+	<img src="images/dashboard_form.png" width="100%" class="mb-4 mt-2">
+
+</div>
+</div>
+</div>
+</body>
+</html>

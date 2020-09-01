@@ -258,10 +258,6 @@
 
     		  var data1 = google.visualization.arrayToDataTable(services_arr);
 
-    		  // var options1 = {
-    		  //   title: 'Nombre appels par service'
-    		  // };
-
     		  var piechart = new google.visualization.PieChart(document.getElementById('piechart'));
 
     		  piechart.draw(data1);
@@ -272,13 +268,7 @@
     		  	top_couts_arr.push([item.service, item.cout]);
     		  });
 
-    		  // console.log(data.couts);
-
     		  var data2 = google.visualization.arrayToDataTable(top_couts_arr);
-
-    		  // var options2 = {
-    		  // 	title: 'Top 5 des coûts par direction'
-    		  // }; 
 
     		  var barchart = new google.visualization.ColumnChart(document.getElementById('barchart'));
     		  barchart.draw(data2);

@@ -36,5 +36,4 @@ def com_data():
 			el['CO_DUR'] = str(datetime.timedelta(seconds = el['CO_DUR']))
 			el['CO_DRING'] = str(datetime.timedelta(seconds = el['CO_DRING']))
 			el['CO_DRTOT'] = str(datetime.timedelta(seconds = el['CO_DRTOT']))
-	# return Response(data, status=200, mimetype='application/json')
 	return jsonify(data)
