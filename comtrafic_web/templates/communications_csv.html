@@ -1,0 +1,496 @@
+{% extends '_base.html' %}
+
+{% block title %} Communications {% endblock title %}
+
+{% block head %}
+ <link href="https://unpkg.com/tabulator-tables@4.7.2/dist/css/tabulator_simple.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="{{ url_for('static', filename='table_loading_skeleton.css') }}">
+{% endblock head %}
+
+{% block page_title %} <i class="nav-icon fas fa-phone-square-alt"></i> Communications {% endblock page_title %}
+
+{% block actions %}
+<div class="float-sm-right">
+  <div class="p-1">
+    <a href="#" class="btn btn-sm bg-white shadow-sm"><small><strong>Paramétrage</strong></small></a>
+    <a href="#" class="btn btn-sm bg-white shadow-sm"><small><strong>Envoi/Mail</strong></small></a>
+    <div class="btn-group dropleft">
+      <button type="button" class="btn btn-sm bg-white shadow-sm" data-toggle="dropdown">
+        <small><strong>Export</strong></small>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" type="button" id="download-table-pdf"><i class="fas fa-file-pdf"></i> PDF</a>
+        <a class="dropdown-item" type="button" id="download-table-csv"><i class="fas fa-file-csv"></i> CSV</a>
+        <a class="dropdown-item" type="button" id="download-table-html"><i class="fas fa-file-code"></i> HTML</a>
+      </div>
+    </div>
+    <a type="button" class="btn btn-sm bg-white shadow-sm" id="print-table"><small><strong>Impression</strong></small></a>
+  </div>
+</div>
+{% endblock actions %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-sm card-danger card-outline">
+        <form method="GET" id="communications-form">
+        <div class="card-header">
+          <div class="text-center">
+            <button class="btn btn-sm btn-primary shadow-sm" type="submit" id="communications-form-submit"><i class="fas fa-search"></i> RECHERCHE</button>
+             <a class="btn btn-sm btn-light border shadow-sm" id="communications-filtres"><i class="fas fa-filter"></i> FILTRES</a>
+             <a class="btn btn-sm btn-light text-danger border shadow-sm" id="communications-form-reset"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></a>
+          </div>
+        </div>
+        <div class="card-body pb-1 pt-1">
+          <div class="row mt-3">
+          <div class="col-md-4">
+          <fieldset class="border py-2 px-2 mb-4 rounded">
+          <legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="periode_complete" checked>
+              <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
+            </div>
+            <input type="text" name="CO_DATE" id="co_about" hidden>
+            <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal" id="date_modal_button">Du 2019-07-20 Au 2019-07-26</button>
+          </fieldset>
+          <div class="py-2">
+            <div class="info-box text-center" style="background-color: #F8F8FF;">
+                  <span class="info-box-icon text-primary"><i class="fas fa-phone-alt"></i></span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Communications</span>
+                    <span class="info-box-number" id="count_communications"><div class="spinner-grow spinner-grow-sm text-primary"></div></span>
+                  </div>
+                </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="info-box text-center" style="background-color: #F8F8FF;">
+                  <span class="info-box-icon text-warning"><i class="fas fa-stopwatch"></i></span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Durée</span>
+                    <span class="info-box-number" id="count_duree"><div class="spinner-grow spinner-grow-sm text-warning"></div></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="info-box text-center" style="background-color: #F8F8FF;">
+                  <span class="info-box-icon text-success"><i class="fas fa-phone-volume"></i></span>
+
+                  <div class="info-box-content">
+                    <span class="info-box-text">Sonnerie</span>
+                    <span class="info-box-number" id="count_sonnerie"><div class="spinner-grow spinner-grow-sm text-success"></div></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="col-md-8">
+            <fieldset class="border pt-1 pb-3 px-2 rounded">
+            <legend class="w-auto badge badge-secondary rounded-pill px-3">Filtrage</legend>
+              <div class="row">
+            <div class="col-md-6">
+              <div class="row mb-2">
+                <div class="col-6">
+                  <label><small>Type d'appels</small></label>
+                  <select class="custom-select custom-select-sm" name="CO_TYPE">
+                    <option selected value="">Tous</option>
+                    <option value="0">Entrants</option>
+                    <option value="1,3">Sortants</option>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label><small>Etat d'appels</small></label>
+                  <select class="custom-select custom-select-sm" name="CO_ABOUT">
+                    <option selected value="">Tous</option>
+                    <option value="-1">Aboutis</option>
+                    <option value="0">Non aboutis</option>
+                  </select>
+                </div>
+              </div>
+              <label><small>Service</small></label>
+              <select class="custom-select mb-2 custom-select-sm" name="SE_NOM">
+                <option selected value="">-- Choisir Service --</option>
+                {% for service in services %}
+                  <option value="{{service}}">{{service}}</option>
+                {% endfor %}
+              </select>
+              <label><small>Poste</small></label>
+              <select class="custom-select custom-select-sm mb-2" name="CO_EXT">
+                <option selected value="">-- Choisir Poste --</option>
+                {% for poste in postes %}
+                  <option value="{{poste}}">{{poste}}</option>
+                {% endfor %}
+              </select>
+              <label><small>Type direc.</small></label>
+              <select class="custom-select custom-select-sm" name="CO_TYPEDIR">
+                <option selected value="">-- Choisir Type direc. --</option>
+                <option value="I">I</option>
+                <option value="M">M</option>
+                <option value="N">N</option>
+                <option value="S">S</option>
+                <option value="X">X</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label><small>Numéro</small></label>
+              <input type="text" name="CO_NUM" placeholder="Numéro" class="form-control form-control-sm mb-2">
+              <label><small>Coût TTC</small></label>
+              <input type="text" name="CO_COUTFACT_TTC" placeholder="Coût TTC" class="form-control form-control-sm mb-2">
+              <label><small>Sonnerie</small></label>
+              <input type="text" name="CO_DRING" placeholder="Sonnerie" class="form-control form-control-sm mb-2">
+              <label><small>Durée</small></label>
+              <input type="text" name="CO_DUR" placeholder="Durée" class="form-control form-control-sm">
+              
+            </div>
+          </div>
+        </fieldset>
+          </div>
+
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-sm-3 col-6">
+              <div class="description-block border-right border-danger">
+                <h5 class="description-header">$ <span class="info-box-number" id="cout_total_ttc"><div class="spinner-grow spinner-grow-sm text-dark"></div></span></h5>
+                <span class="description-text">TOTAL TTC</span>
+              </div>
+            </div>
+            <div class="col-sm-3 col-6">
+              <div class="description-block border-right border-danger">
+                <h5 class="description-header">$ <span class="info-box-number" id="cout_total_ht"><div class="spinner-grow spinner-grow-sm text-dark"></div></span></h5>
+                <span class="description-text">TOTAL HT</span>
+              </div>
+            </div>
+            <div class="col-sm-3 col-6">
+              <div class="description-block border-right border-danger">
+                <h5 class="description-header">$ <span class="info-box-number" id="cout_facture_ttc"><div class="spinner-grow spinner-grow-sm text-dark"></div></span></h5>
+                <span class="description-text">FACTURÉ TTC</span>
+              </div>
+            </div>
+            <div class="col-sm-3 col-6">
+              <div class="description-block">
+                <h5 class="description-header">$ <span class="info-box-number" id="cout_facture_ht"><div class="spinner-grow spinner-grow-sm text-dark"></div></span></h5>
+                <span class="description-text">FACTURÉ HT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow-sm card-danger card-outline">
+        <div class="card-body">
+          <div id="com-table" style="border: 1px solid #BBB;" class="rounded">
+            <div id="skeleton-container">
+              <div id="skeleton-animation"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="periode-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Plage de date</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-info d-none" id="plage_date_alert">
+            <small>Pour le moment, seul le choix libre de la plage de date est disponible</small>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="periode_complete_modal" checked>
+            <label class="custom-control-label font-weight-normal" for="periode_complete_modal">Période complète</label>
+          </div>
+          <div class="form-group row mt-3">
+                <label for="plage_de_date" class="col-form-label col-md-4"><small>Plage : </small></label>
+                <div class="col-md-8">
+                  <select class="custom-select custom-select-sm" id="plage_de_date">
+                    <option value="0" selected>Libre</option>
+                    <option value="1">Aujourd'hui</option>
+                    <option value="2">Hier</option>
+                    <option value="3">Avant hier</option>
+                    <option value="4">Semaine courante</option>
+                    <option value="5">Semaine dernière</option>
+                    <option value="6">Semaine -2</option>
+                    <option value="7">Mois courant</option>
+                    <option value="8">Mois dernier</option>
+                    <option value="9">Mois -2</option>
+                    <option value="10">Trimestre courant</option>
+                    <option value="11">Trimestre dernier</option>
+                    <option value="12">Trimestre -2</option>
+                    <option value="13">Année courante</option>
+                    <option value="14">Année dernière</option>
+                    <option value="15">Année -2</option>
+                  </select>
+                  </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="date_debut" class="col-form-label col-md-4"><small>Du : </small></label>
+                    <div class="col-md-8">
+                      <input id="date_debut" type="date" name="date_debut" max="2019-07-26" 
+                             min="2019-07-20" class="form-control form-control-sm" value="2019-07-20">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="date_fin" class="col-form-label col-md-4"><small>Au : </small></label>
+                    <div class="col-md-8">
+                      <input id="date_fin" type="date" name="date_fin" max="2019-07-26" 
+                             min="2019-07-20" class="form-control form-control-sm" value="2019-07-26">
+                    </div>
+                  </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-primary px-4" data-dismiss="modal" id="date_modal_save">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block script %}
+
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.7.2/dist/js/tabulator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.0.5/jspdf.plugin.autotable.js"></script>
+<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+<script>dayjs().format()</script>
+
+<script>
+
+  $("#nav-link333").addClass("bg-danger");
+  
+  $(document).ajaxComplete( function() {
+    $("#skeleton-container").addClass("d-none");
+  });
+
+  var table;
+
+  $.getJSON("../com-data-csv", function(data) {
+      table = new Tabulator("#com-table", {
+      data:data,           
+      height:"500px",
+      layout:"fitColumns",      
+      tooltips:true,            
+      pagination:"local",      
+      layout:"fitData",
+      paginationSize:25,
+      paginationSizeSelector:[25, 50, 100],
+      langs:{
+          "fr-fr":{ 
+              "pagination":{
+                  "first":"Premier",
+                  "first_title":"Première Page",
+                  "last":"Dernier",
+                  "last_title":"Dernière Page",
+                  "prev":"Précédent",
+                  "prev_title":"Page Précédente",
+                  "next":"Suivant",
+                  "next_title":"Page Suivante",
+                  "all":"Toute",
+                  "page_size": "Nº lignes par page",
+              },
+          },
+      },
+      columns:[                 
+        {title:"Poste", field:"CO_EXT", bottomCalc:"count"},
+        {title:"Date", field:"CO_DATE"},
+        {title:"Numéro", field:"CO_MASKNUM"},
+        {title:"Durée", field:"CO_DUR", bottomCalc:dureeCalc},
+        {title:"Sonnerie", field:"CO_DRING", bottomCalc:dureeCalc},
+        {title:"Appel", field:"CO_CALLTYPE"},
+        {title:"Coût", field:"CO_COUTFACT_TTC", bottomCalc:"sum", bottomCalcParams:{precision:2,}},
+        {title:"Type", field:"CO_TYPE"},
+        {title:"Coût HT", field:"CO_COUT_HT", bottomCalc:"sum", bottomCalcParams:{precision:2,}},
+        {title:"Abouti", field:"CO_ABOUT", formatter:"tickCross", formatterParams:{crossElement:false}},
+        {title:"Zone", field:"CO_OPZONE"},
+        {title:"Direction", field:"CO_OPDIR"},
+        {title:"Service", field:"SE_NOM"},
+        {title:"Durée appel", field:"CO_DRTOT", bottomCalc:dureeCalc},
+        {title:"Type direct", field:"CO_TYPEDIR"},
+      ],
+    });
+    table.setLocale("fr-fr");
+
+    var calc_arr = table.getCalcResults();
+    $("#count_communications").html(calc_arr.bottom.CO_EXT);
+    $("#count_duree").html(calc_arr.bottom.CO_DUR);
+    $("#count_sonnerie").html(calc_arr.bottom.CO_DRING);
+    $("#cout_facture_ttc").html(calc_arr.bottom.CO_COUTFACT_TTC);
+    $("#cout_facture_ht").html((calc_arr.bottom.CO_COUTFACT_TTC / 1.2).toFixed(2));
+    $("#cout_total_ht").html(calc_arr.bottom.CO_COUT_HT);
+    $("#cout_total_ttc").html((calc_arr.bottom.CO_COUT_HT * 1.2).toFixed(2));
+  });
+
+  $("#communications-form").submit(function(event) {
+    $("#communications-form-submit").html('<div class="spinner-border text-light spinner-border-sm"></div>');
+    $("#communications-form-submit").addClass("px-5");
+    $("#count_communications").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#count_duree").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#count_sonnerie").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#cout_facture_ttc").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#cout_facture_ht").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#cout_total_ht").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    $("#cout_total_ttc").html('<div class="spinner-grow spinner-grow-sm text-dark"></div>');
+    var form_arr = $( this ).serializeArray();
+    var form_str = "";
+    $.each(form_arr, function( i, field ) {
+      form_str += field.name + "=" + field.value + "&";
+    });
+    event.preventDefault();
+    $.when(table.replaceData("../com-data-csv?" + form_str)).then(function() {
+      $("#communications-form-submit").html('<i class="fas fa-search"></i> RECHERCHE');
+      $("#communications-form-submit").removeClass("px-5");
+      var calc_arr = table.getCalcResults();
+      $("#count_communications").html(calc_arr.bottom.CO_EXT);
+      $("#count_duree").html(calc_arr.bottom.CO_DUR);
+      $("#count_sonnerie").html(calc_arr.bottom.CO_DRING);
+      $("#cout_facture_ttc").html(calc_arr.bottom.CO_COUTFACT_TTC);
+      $("#cout_facture_ht").html((calc_arr.bottom.CO_COUTFACT_TTC / 1.2).toFixed(2));
+      $("#cout_total_ht").html(calc_arr.bottom.CO_COUT_HT);
+      $("#cout_total_ttc").html((calc_arr.bottom.CO_COUT_HT * 1.2).toFixed(2));
+    });
+  });
+
+  var dureeCalc = function(values, data, calcParams){
+    var duree = "";
+    var h = 0;
+    var m = 0;
+    var s = 0;
+    values.forEach(function(value){
+        var value_arr = value.split(":");
+        var v_h = parseInt(value_arr[0]);
+        var v_m = parseInt(value_arr[1]);
+        var v_s = parseInt(value_arr[2]);
+        s += v_s;
+        if (s > 60) {
+          s -= 60;
+          m += 1;
+        }
+        m += v_m;
+        if (m > 60) {
+          m -= 60;
+          h += 1;
+        }
+        h += v_h;
+    });
+    if (m < 10){
+      m = "0" + m.toString();
+    }
+    if (s < 10){
+      s = "0" + s.toString();
+    }
+    duree = h + ":" + m + ":" + s;
+    return duree;
+  };
+
+  $("#download-table-pdf").click(function() {
+    table.download("pdf", "ComTrafic - Communications.pdf", {
+        orientation:"landscape", 
+        title:"Communications", 
+    });
+  });
+  $("#download-table-csv").click(function() {
+    table.download("csv", "ComTrafic - Communications.csv");
+  });
+  $("#download-table-html").click(function() {
+    table.download("html", "ComTrafic - Communications.html", {style:true});
+  });
+  $("#print-table").click(function() {
+    table.print(false, true);
+  });
+
+  $("#communications-form-reset").click(function(){
+    $("#communications-form")[0].reset();
+  });
+
+</script>
+
+  <script>
+
+      $("#date_debut").change(function() {
+        if ($(this).val() == "2019-07-20" && $("#date_fin").val() == "2019-07-26") {
+          $("#periode_complete_modal").prop('checked', true);
+          $("#periode_complete").prop('checked', true);
+        } else {
+          $("#periode_complete_modal").prop('checked', false);
+          $("#periode_complete").prop('checked', false);
+        }
+      });
+
+      $("#date_fin").change(function() {
+        if ($("#date_debut").val() == "2019-07-20" && $(this).val() == "2019-07-26") {
+          $("#periode_complete_modal").prop('checked', true);
+          $("#periode_complete").prop('checked', true);
+        } else {
+          $("#periode_complete_modal").prop('checked', false);
+          $("#periode_complete").prop('checked', false);
+        }
+      });
+
+      $("#plage_de_date").change(function() {
+        $("#plage_date_alert").removeClass("d-none");
+        $("#plage_de_date").val("0");
+        setTimeout(() => { $("#plage_date_alert").addClass("d-none"); }, 3000);
+      });
+
+      $("#date_modal_save").click(function() {
+        date_debut = $("#date_debut").val();
+        date_fin = $("#date_fin").val();
+        date1 = dayjs(date_debut);
+        date2 = dayjs(date_fin);
+        date1_days = date1.diff('1899-12-30', 'day') + 1;
+        date2_days = date2.diff('1899-12-30', 'day') + 1;
+        $("#date_modal_button").html("Du " + date_debut + " Au " + date_fin);
+        $("#co_about").val(date1_days.toString() + "-" + date2_days.toString());
+        if ($("#date_debut").val() == "2019-07-20" && $("#date_fin").val() == "2019-07-26") {
+          $("#periode_complete").prop('checked', true);
+          $("#periode_complete_modal").prop('checked', true);
+        }
+      });
+
+      $("#periode_complete").click(function() {
+        if (this.checked) {
+          $("#date_modal_button").html("Du 2019-07-20 Au 2019-07-26");
+          $("#communications-form")[0].reset();
+          $("#date_debut").val("2019-07-20");
+          $("#date_fin").val("2019-07-26");
+        } else {
+          $("#periode_complete_modal").prop('checked', false);
+        }
+      });
+
+      $("#periode_complete_modal").click(function() {
+        if (this.checked) {
+          $("#date_modal_button").html("Du 2019-07-20 Au 2019-07-26");
+          $("#communications-form")[0].reset();
+          $("#date_debut").val("2019-07-20");
+          $("#date_fin").val("2019-07-26");
+        } else {
+          $("#periode_complete").prop('checked', false);
+        }
+      });
+
+      $("#communications-filtres").click(function() {
+          document.getElementById("com-table").requestFullscreen();
+      });
+      
+  </script>
+{% endblock script %}

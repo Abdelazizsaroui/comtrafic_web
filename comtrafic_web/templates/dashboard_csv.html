@@ -1,0 +1,369 @@
+{% extends '_base.html' %}
+
+{% block title %} Tableau de bord {% endblock title %}
+
+{% block head %}
+
+{% endblock head %}
+
+{% block page_title %} <i class="nav-icon fas fa-tachometer-alt"></i> Tableau de bord {% endblock page_title %}
+
+{% block actions %}
+<div class="float-sm-right">
+</div>
+{% endblock actions %}
+
+{% block content %}
+	
+	<div class="row">
+	<div class="col-md-12">
+	<div class="card shadow-sm card-danger card-outline">
+	<div class="card-header border-0 row">
+		<p class="col-md-6 lead m-0">Informations sur la base de données</p>
+		<div class="col-md-6 text-center text-muted pt-1"><span class="badge badge-secondary"><i class="fas fa-phone-square-alt"></i> Appels</span><span><small> Le plus ancien: 2019-07-20 03:02:00</small> • <small>Le plus récent: 2019-07-26 19:12:00</small></span></div>
+	</div>
+	<div class="card-body">
+	<div class="row">
+	  <div class="col-12 col-sm-6 col-md-3">
+	    <div class="info-box mb-3" style="background-color: #F8F8FF;">
+	      <span class="info-box-icon bg-info"><i class="fas fa-phone-alt"></i></span>
+
+	      <div class="info-box-content">
+	        <span class="info-box-text">Communications</span>
+	        <span class="info-box-number" id="c_communications">
+	          <div class="spinner-grow spinner-grow-sm text-info"></div>
+	        </span>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-12 col-sm-6 col-md-3">
+	    <div class="info-box mb-3" style="background-color: #F8F8FF;">
+	      <span class="info-box-icon bg-success"><i class="fas fa-laptop"></i></span>
+
+	      <div class="info-box-content">
+	        <span class="info-box-text">Postes</span>
+	        <span class="info-box-number" id="c_postes">
+	        	<div class="spinner-grow spinner-grow-sm text-success"></div>
+	        </span>
+	      </div>
+	    </div>
+	  </div>
+
+	  <div class="clearfix hidden-md-up"></div>
+
+	  <div class="col-12 col-sm-6 col-md-3">
+	    <div class="info-box mb-3" style="background-color: #F8F8FF;">
+	      <span class="info-box-icon bg-danger"><i class="fas fa-map-signs"></i></span>
+
+	      <div class="info-box-content">
+	        <span class="info-box-text">Services</span>
+	        <span class="info-box-number" id="c_services">
+	        	<div class="spinner-grow spinner-grow-sm text-danger"></div>
+	        </span>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-12 col-sm-6 col-md-3">
+	    <div class="info-box mb-3" style="background-color: #F8F8FF;">
+	      <span class="info-box-icon bg-warning"><i class="fas fa-server"></i></span>
+
+	      <div class="info-box-content">
+	        <span class="info-box-text">PBX</span>
+	        <span class="info-box-number" id="c_pbx">
+	        	<div class="spinner-grow spinner-grow-sm text-warning"></div>
+	        </span>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div class="row">
+	<div class="col-md-12">
+	<div class="card shadow-sm card-danger card-outline">
+		<div class="card-body">
+		<div class="row border-bottom pb-2">
+			<div class="col-md-4">
+				<fieldset class="border py-2 px-2 mb-2 rounded">
+          		<legend class="w-auto badge badge-secondary rounded-pill px-3">Plage de date</legend>
+          		  <div class="custom-control custom-switch">
+          		    <input type="checkbox" class="custom-control-input" id="periode_complete" checked>
+          		    <label class="custom-control-label font-weight-normal" for="periode_complete">Période complète</label>
+          		  </div>
+          		  <input type="text" name="CO_DATE" id="co_about" hidden>
+          		  <button class="btn btn-block btn-sm btn-outline-secondary my-2" type="button" data-toggle="modal" data-target="#periode-modal" id="date_modal_button">Du 2019-07-20 Au 2019-07-26</button>
+          		</fieldset>
+				<div class="text-center">
+				<form id="dashboard-form" method="GET">
+				<input type="text" name="CO_DATE" id="co_date" hidden>
+				<button class="btn btn-sm btn-primary px-2" type="submit" id="actualiser"><i class="fas fa-redo-alt"></i> ACTUALISER</button>
+				</form>
+				</div>
+			</div>
+			<div class="col-md-8 pt-2">
+				<table class="table table-sm table-bordered" style="background-color: #F8F8FF;">
+				  <thead>
+				    <tr>
+				      <th scope="col">Appels</th>
+				      <th scope="col">Nombre</th>
+				      <th scope="col">Durée</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <td>Tous</td>
+				      <td id="c_all"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
+				      <td id="d_all"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
+				    </tr>
+				    <tr>
+				      <td>Entrants</td>
+				      <td id="c_entr"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
+				      <td id="d_entr"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
+				    </tr>
+				    <tr>
+				      <td>Sortants</td>
+				      <td id="c_sort"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
+				      <td id="d_sort"><div class="spinner-grow spinner-grow-sm text-dark"></div></td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="row">
+		<div class="col-md-6 border-right">
+			<p class="text-center mb-0 mt-4 text-muted"><strong>Nombre appels par service</strong></p>
+			<div id="piechart" style="height: 300px; width: 450px;">
+				<p><small><small>Chargement..</small></small></p>
+			</div>	
+		</div>
+		<div class="col-md-6">
+			<p class="text-center mb-0 mt-4 text-muted"><strong>Top 5 des coûts par direction</strong></p>
+			<div id="barchart" style="height: 300px; width: 450px;">
+				<p><small><small>Chargement..</small></small></p>
+			</div>	
+		</div>
+		</div>
+
+		</div>		
+	</div>
+	</div>
+	</div>
+
+
+	<div class="modal" id="periode-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Plage de date</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-info d-none" id="plage_date_alert">
+            <small>Pour le moment, seul le choix libre de la plage de date est disponible</small>
+          </div>
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="periode_complete_modal" checked>
+            <label class="custom-control-label font-weight-normal" for="periode_complete_modal">Période complète</label>
+          </div>
+          <div class="form-group row mt-3">
+                <label for="plage_de_date" class="col-form-label col-md-4"><small>Plage : </small></label>
+                <div class="col-md-8">
+                  <select class="custom-select custom-select-sm" id="plage_de_date">
+                    <option value="0" selected>Libre</option>
+                    <option value="1">Aujourd'hui</option>
+                    <option value="2">Hier</option>
+                    <option value="3">Avant hier</option>
+                    <option value="4">Semaine courante</option>
+                    <option value="5">Semaine dernière</option>
+                    <option value="6">Semaine -2</option>
+                    <option value="7">Mois courant</option>
+                    <option value="8">Mois dernier</option>
+                    <option value="9">Mois -2</option>
+                    <option value="10">Trimestre courant</option>
+                    <option value="11">Trimestre dernier</option>
+                    <option value="12">Trimestre -2</option>
+                    <option value="13">Année courante</option>
+                    <option value="14">Année dernière</option>
+                    <option value="15">Année -2</option>
+                  </select>
+                  </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="date_debut" class="col-form-label col-md-4"><small>Du : </small></label>
+                    <div class="col-md-8">
+                      <input id="date_debut" type="date" name="date_debut" max="2019-07-26" 
+                             min="2019-07-20" class="form-control form-control-sm" value="2019-07-20">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="date_fin" class="col-form-label col-md-4"><small>Au : </small></label>
+                    <div class="col-md-8">
+                      <input id="date_fin" type="date" name="date_fin" max="2019-07-26" 
+                             min="2019-07-20" class="form-control form-control-sm" value="2019-07-26">
+                    </div>
+                  </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-primary px-4" data-dismiss="modal" id="date_modal_save">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block script %}
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+<script>dayjs().format()</script>
+
+    <script>
+
+    	$("#nav-link111").addClass("bg-danger");
+
+    	$.getJSON("dashboard-db-info-csv", function(data){
+    		$("#c_communications").text(data.c_communications);
+    		$("#c_postes").text(data.c_postes);
+    		$("#c_services").text(data.c_services);
+    		$("#c_pbx").text(data.c_pbx);
+    	});
+
+    	function updateDashbord(url) {
+
+    	$.getJSON(url, function(data){
+    		$("#c_all").text(data.all.c);
+    		$("#d_all").text(data.all.d);
+    		$("#c_entr").text(data.entr.c);
+    		$("#d_entr").text(data.entr.d);
+    		$("#c_sort").text(data.sort.c);
+    		$("#d_sort").text(data.sort.d);
+
+    		google.charts.load('current', {'packages':['corechart']});
+    		google.charts.setOnLoadCallback(drawChart);
+
+    		function drawChart() {
+
+    		  var services_arr = [];
+    		  services_arr.push(['Service', 'Nombre appels'])
+    		  data.services.forEach(function(item, index) {
+    		  	services_arr.push([item.service, item.count]);
+    		  });
+
+    		  var data1 = google.visualization.arrayToDataTable(services_arr);
+
+    		  var piechart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    		  piechart.draw(data1);
+
+    		  var top_couts_arr = [];
+    		  top_couts_arr.push(['Service', 'Coût'])
+    		  data.top_couts.forEach(function(item, index) {
+    		  	top_couts_arr.push([item.service, item.cout]);
+    		  });
+
+    		  var data2 = google.visualization.arrayToDataTable(top_couts_arr);
+
+    		  var barchart = new google.visualization.ColumnChart(document.getElementById('barchart'));
+    		  barchart.draw(data2);
+    		}
+        $("#actualiser").removeClass("px-5");
+        $("#actualiser").html('<i class="fas fa-redo-alt"></i> ACTUALISER</button>');
+    	});
+    	}
+
+    	updateDashbord("dashboard-data-csv");
+
+    	$("#dashboard-form").submit(function(event) {
+    		var loading = '<div class="spinner-grow spinner-grow-sm text-dark"></div>';
+        $("#actualiser").addClass("px-5");
+        $("#actualiser").html('<div class="spinner-border text-light spinner-border-sm"></div>');
+    		$("#c_all").html(loading);
+    		$("#d_all").html(loading);
+    		$("#c_entr").html(loading);
+    		$("#d_entr").html(loading);
+    		$("#c_sort").html(loading);
+    		$("#d_sort").html(loading);
+    		$("#piechart").html('<p><small><small>Chargement..</small></small></p>')
+    		$("#barchart").html('<p><small><small>Chargement..</small></small></p>')
+    		event.preventDefault();
+        co_date = $("#co_date").val()
+    		updateDashbord("dashboard-data-csv?CO_DATE=" + co_date);
+    	});
+
+    </script>
+
+    <script>
+
+      $("#date_debut").change(function() {
+        if ($(this).val() == "2019-07-20" && $("#date_fin").val() == "2019-07-26") {
+          $("#periode_complete_modal").prop('checked', true);
+          $("#periode_complete").prop('checked', true);
+        } else {
+          $("#periode_complete_modal").prop('checked', false);
+          $("#periode_complete").prop('checked', false);
+        }
+      });
+
+      $("#date_fin").change(function() {
+        if ($("#date_debut").val() == "2019-07-20" && $(this).val() == "2019-07-26") {
+          $("#periode_complete_modal").prop('checked', true);
+          $("#periode_complete").prop('checked', true);
+        } else {
+          $("#periode_complete_modal").prop('checked', false);
+          $("#periode_complete").prop('checked', false);
+        }
+      });
+
+      $("#plage_de_date").change(function() {
+        $("#plage_date_alert").removeClass("d-none");
+        $("#plage_de_date").val("0");
+        setTimeout(() => { $("#plage_date_alert").addClass("d-none"); }, 3000);
+      });
+
+      $("#date_modal_save").click(function() {
+        date_debut = $("#date_debut").val();
+        date_fin = $("#date_fin").val();
+        date1 = dayjs(date_debut);
+        date2 = dayjs(date_fin);
+        date1_days = date1.diff('1899-12-30', 'day') + 1;
+        date2_days = date2.diff('1899-12-30', 'day') + 1;
+        $("#date_modal_button").html("Du " + date_debut + " Au " + date_fin);
+        $("#co_date").val(date1_days.toString() + "-" + date2_days.toString());
+        if ($("#date_debut").val() == "2019-07-20" && $("#date_fin").val() == "2019-07-26") {
+          $("#periode_complete").prop('checked', true);
+          $("#periode_complete_modal").prop('checked', true);
+        }
+      });
+
+      $("#periode_complete").click(function() {
+        if (this.checked) {
+          $("#date_modal_button").html("Du 2019-07-20 Au 2019-07-26");
+          $("#dashboard-form")[0].reset();
+          $("#date_debut").val("2019-07-20");
+          $("#date_fin").val("2019-07-26");
+        } else {
+          $("#periode_complete_modal").prop('checked', false);
+        }
+      });
+
+      $("#periode_complete_modal").click(function() {
+        if (this.checked) {
+          $("#date_modal_button").html("Du 2019-07-20 Au 2019-07-26");
+          $("#dashboard-form")[0].reset();
+          $("#date_debut").val("2019-07-20");
+          $("#date_fin").val("2019-07-26");
+        } else {
+          $("#periode_complete").prop('checked', false);
+        }
+      });
+
+  </script>
+
+{% endblock script %}

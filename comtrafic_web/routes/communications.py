@@ -1,4 +1,5 @@
 import requests, datetime
+import csv, io
 import xml.etree.ElementTree as ET
 from flask import render_template, jsonify, request
 from comtrafic_web import app
@@ -22,6 +23,10 @@ def communications():
 @app.route("/communications/_xml_")
 def communications_xml():
 	return render_template("communications_xml.html", etat_api=etat_api(), postes=postes, services=services)
+
+@app.route("/communications/_csv_")
+def communications_csv():
+	return render_template("communications_csv.html", etat_api=etat_api(), postes=postes, services=services)
 
 @app.route("/com-data")
 def com_data():
@@ -58,6 +63,27 @@ def com_data_xml():
 	data = []
 	for i in range(n):
 		data.append(xml_root[2][i].attrib)
+	else:
+		for el in data:
+			el['CO_DUR'] = str(datetime.timedelta(seconds = int(el['CO_DUR'])))
+			el['CO_DRING'] = str(datetime.timedelta(seconds = int(el['CO_DRING'])))
+			el['CO_DRTOT'] = str(datetime.timedelta(seconds = int(el['CO_DRTOT'])))
+	return jsonify(data)
+
+@app.route("/com-data-csv")
+def com_data_csv():
+	if len(request.args) > 0:
+		search_query = ""
+		for el in request.args:
+			search_query += el + "=" + request.args.get(el) + "&"
+		raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}&{search_query}&-format=CSV")
+	else:
+		raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}&-format=CSV")
+	_, res = raw_res.text.split("[Datas]\r\n")
+	reader = csv.DictReader(io.StringIO(res))
+	data = []
+	for row in reader:
+		data.append(dict(row))
 	else:
 		for el in data:
 			el['CO_DUR'] = str(datetime.timedelta(seconds = int(el['CO_DUR'])))
