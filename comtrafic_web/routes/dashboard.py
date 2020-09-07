@@ -1,3 +1,7 @@
+# Le backend de la page Tableau de bord
+# La page Tableau de bord existe sur l'interface en 3 versions
+# connectées à l'API en JSON, XML et CSV
+
 import requests, datetime
 import csv, io
 import xml.etree.ElementTree as ET
@@ -6,77 +10,123 @@ from collections import Counter
 from comtrafic_web import app
 from comtrafic_web.routes import etat_api, periode, api_url
 
+# Cette fonction serve la page statique «dashbord.html»
 @app.route("/")
 def dashboard():
 	return render_template("dashboard.html", etat_api=etat_api())
 
+# Cette fonction serve la page statique «dashbord_xml.html»
 @app.route("/_xml_")
 def dashboard_xml():
 	return render_template("dashboard_xml.html", etat_api=etat_api())
 
+# Cette fonction serve la page statique «dashbord_csv.html»
 @app.route("/_csv_")
 def dashboard_csv():
 	return render_template("dashboard_csv.html", etat_api=etat_api())
 
+# Cette fonction fournit les informations sur la base de donnée
+# à la page «dashboard.html»
 @app.route("/dashboard-db-info")
 def dashboard_db_info():
+	# On envoie une requête à l'API pour les données des communications
 	raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}")
+	# Puis On extrait le contenu JSON de la réponse de l'API
 	res = raw_res.json()
+	# On extrait le nombre de communications
 	c_communications = res['Infos']['Lines']
+	# Puis la partie qui contient les données des communications
 	data = res['Data']
+	# On initialise les listes des postes, services et PBX
 	services = set()
 	postes = set()
 	pbx = set()
+	# Puis en fait une boucle sur les données pour populer les listes
 	for item in data:
 		services.add(item['SE_NOM'])
 		postes.add(item['CO_EXT'])
 		pbx.add(item['CO_PBX'])
+	# Puis on compte le nombre de chaque élément
 	c_services = len(services)
 	c_postes = len(postes)
 	c_pbx = len(pbx)
+	# Et on retourne les données en JSON à l'interface
 	return jsonify({"c_communications":c_communications, "c_postes": c_postes, "c_services": c_services, "c_pbx":c_pbx})
 
+# Cette fonction fournit les informations sur la base de donnée
+# à la page «dashboard_xml.html»
 @app.route("/dashboard-db-info-xml")
 def dashboard_db_info_xml():
+	# On envoie une requête à l'API pour les données des communications
 	raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}&-format=XML")
+	# On charge le contenu XML de la réponse sur xml_root
 	xml_root = ET.fromstring(raw_res.content)
+	# Puis on extrait le nombre des lignes des communications
+	# xml_root[0][3] retourne la ligne où se trouve l'information
+	# de nombre des lignes, puis on extrait son text avec text[2:-1]
+	# on peut faire juste xml[0][3].text mais en va avoir une erreur
+	# lorsque on va convertir en entier car ça retourne des "" avec
+	# les chiffres
 	lines = xml_root[0][3].text[2:-1]
 	n = int(lines)
+	# On initialise la réponse qui va être retournée
 	data = []
+	# On joint chaque ligne de communication à la réponse
+	# xml[2][i].attrib retourne un dictionnaire avec les noms 
+	# et les valeurs de chaque champ comme en JSON
 	for i in range(n):
 		data.append(xml_root[2][i].attrib)
+	# On extrait le nombre de communications
 	c_communications = n
+	# On initialise les listes des postes, services et PBX
 	services = set()
 	postes = set()
 	pbx = set()
+	# Puis en fait une boucle sur les données pour populer les listes
 	for item in data:
 		services.add(item['SE_NOM'])
 		postes.add(item['CO_EXT'])
 		pbx.add(item['CO_PBX'])
+	# Puis on compte le nombre de chaque élément
 	c_services = len(services)
 	c_postes = len(postes)
 	c_pbx = len(pbx)
+	# Et on retourne les données en JSON à l'interface
 	return jsonify({"c_communications":c_communications, "c_postes": c_postes, "c_services": c_services, "c_pbx":c_pbx})
 
+# Cette fonction fournit les informations sur la base de donnée
+# à la page «dashboard_csv.html»
 @app.route("/dashboard-db-info-csv")
 def dashboard_db_info_csv():
+	# On envoie une requête à l'API pour les données des communications
 	raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}&-format=CSV")
+	# On prend juste la tranche après [Datas]\r\n de la réponse
+	# C'est cette partie qui contient les enregistrements des communications
+	# ici la variable _ contient la partie qu'on ne va pas utiliser
 	_, res = raw_res.text.split("[Datas]\r\n")
+	# On lit le CSV extrait comme se forme de dictionnaire
 	reader = csv.DictReader(io.StringIO(res))
+	# Puis on initialise la réponse qui va être retournée
 	data = []
+	# On ajoute chaque élément du dictionnaire généré à la réponse
 	for row in reader:
 		data.append(dict(row))
+	# On extrait le nombre de communications
 	c_communications = len(data)
+	# On initialise les listes des postes, services et PBX
 	services = set()
 	postes = set()
 	pbx = set()
+	# Puis en fait une boucle sur les données pour populer les listes
 	for item in data:
 		services.add(item['SE_NOM'])
 		postes.add(item['CO_EXT'])
 		pbx.add(item['CO_PBX'])
+	# Puis on compte le nombre de chaque élément
 	c_services = len(services)
 	c_postes = len(postes)
 	c_pbx = len(pbx)
+	# Et on retourne les données en JSON à l'interface
 	return jsonify({"c_communications":c_communications, "c_postes": c_postes, "c_services": c_services, "c_pbx":c_pbx})
 
 def convert_days(d):
