@@ -129,6 +129,8 @@ def dashboard_db_info_csv():
 	# Et on retourne les données en JSON à l'interface
 	return jsonify({"c_communications":c_communications, "c_postes": c_postes, "c_services": c_services, "c_pbx":c_pbx})
 
+# Cette fonction permet de fixer le format de sortie
+# de datetime.timedelta et éliminer le mot «day»
 def convert_days(d):
 	if "day" in d:
 		x,y = d.split(',')
@@ -139,26 +141,51 @@ def convert_days(d):
 		return str(int_h) + ':' + m + ':' + s
 	return d
 
+# Cette fonction fournit les données des communications pour
+# le tableau et les graphiques de la page «dashboard.html»
 @app.route("/dashboard-data")
 def dashboard_data():
+	# On teste si la requête vient avec des arguments (filtres de recherche)
+	# Dans ce cas le seul argument qu'on peut joindre à la requête
+	# est la plage de date : CO_DATE
+	# La requête vient avec 0 arguments dans 2 cas:
+	# 1 - Lorsque la page se charge
+	# 2 - Lorsque on clique sur «Actualiser» avec la période complète
 	if len(request.args) > 0:
+		# Si on a l'argument CO_DATE, on le joint avec la requête envoyée à l'API
+		# La réponse retournée par défaut est en JSON
 		co_date = request.args.get('CO_DATE') if len(request.args.get('CO_DATE')) else periode
 		raw_res = requests.get(f"{api_url}ED&CO_DATE={co_date}")
 	else:
+		# Sinon on envoie la requête à l'API pour la période complète
 		raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}")
+	# On charge le contenu JSON de la réponse de l'API sur res
 	res = raw_res.json()
+	# On retient le nombre de lignes de communications
 	c_all = res['Infos']['Lines']
+	# Puis la partie Data qui contient les données des communications
 	data = res['Data']
+	# On crée et remplie un compteur des services
+	# çad. le nom de chaque service et son nombre d'apparition
 	c = Counter(el['SE_NOM'] for el in data)
+	# Puis on le convertit en liste de dictionnaires
 	services = [{'service':key, 'count':value} for key,value in c.items()]
+	# On retient aussi juste les noms des services pour les utiliser dans les graphes
 	services_set = {service for service,_ in c.items()}
+	# Et on crée un dictionnaire pour les coûts des services
 	couts_raw = {service:0 for service in services_set}
+	# On fait une boucle sur les données des communications pour remplir
+	# les coûts de services
 	for el in data:
 		couts_raw[el['SE_NOM']] += el['CO_COUTFACT_TTC']
+	# Puis on fait un tri sur les coûts et on retient juste les top 5
 	couts = {k: v for k, v in sorted(couts_raw.items(), key=lambda item: item[1], reverse=True)}
 	top_couts = [{'service':key, 'cout':value} for key,value in couts.items()][:5]
+	# Ici on commence le traitement des données du petit tableau
+	# On initialise les variables
 	c_entr = c_sort = 0
 	d_all = d_entr = d_sort = 0;
+	# Puis on fait uen boucle sur les données des communications calculer les variables
 	for item in data:
 		if item['CO_TYPE'] == 0:
 			c_entr += 1
@@ -171,10 +198,12 @@ def dashboard_data():
 			d_all += d_add
 			d_sort += d_add
 			
+	# On covertit les durées en format : HH:MM:SS
 	d_all_str = convert_days(str(datetime.timedelta(seconds = d_all))) 
 	d_entr_str = convert_days(str(datetime.timedelta(seconds = d_entr)))
 	d_sort_str = convert_days(str(datetime.timedelta(seconds = d_sort)))
 
+	# Puis on retourne les données du tableau et des graphiques en JSON
 	return jsonify({
 			"all": {"c": c_all, "d": d_all_str},
 			"entr": {"c": c_entr, "d": d_entr_str},
@@ -183,30 +212,64 @@ def dashboard_data():
 			"top_couts": top_couts
 		})
 
+# Cette fonction fournit les données des communications pour
+# le tableau et les graphiques de la page «dashboard_xml.html»
 @app.route("/dashboard-data-xml")
 def dashboard_data_xml():
+	# On teste si la requête vient avec des arguments (filtres de recherche)
+	# Dans ce cas le seul argument qu'on peut joindre à la requête
+	# est la plage de date : CO_DATE
+	# La requête vient avec 0 arguments dans 2 cas:
+	# 1 - Lorsque la page se charge
+	# 2 - Lorsque on clique sur «Actualiser» avec la période complète
 	if len(request.args) > 0:
+		# Si on a l'argument CO_DATE, on le joint avec la requête envoyée à l'API
+		# La réponse retournée par défaut est en JSON
 		co_date = request.args.get('CO_DATE') if len(request.args.get('CO_DATE')) else periode
 		raw_res = requests.get(f"{api_url}ED&CO_DATE={co_date}&-format=XML")
 	else:
+		# Sinon on envoie la requête à l'API pour la période complète
 		raw_res = requests.get(f"{api_url}ED&CO_DATE={periode}&-format=XML")
+	# On charge le contenu XML de la réponse sur xml_root
 	xml_root = ET.fromstring(raw_res.content)
+	# Puis on extrait le nombre des lignes des communications
+	# xml_root[0][3] retourne la ligne où se trouve l'information
+	# de nombre des lignes, puis on extrait son text avec text[2:-1]
+	# on peut faire juste xml[0][3].text mais en va avoir une erreur
+	# lorsque on va convertir en entier car ça retourne des "" avec
+	# les chiffres
 	lines = xml_root[0][3].text[2:-1]
 	n = int(lines)
+	# On initialise la liste des données des communications
 	data = []
+	# On joint chaque ligne de communication à la liste
+	# xml[2][i].attrib retourne un dictionnaire avec les noms 
+	# et les valeurs de chaque champ comme en JSON
 	for i in range(n):
 		data.append(xml_root[2][i].attrib)
+	# On retient le nombre de lignes de communications
 	c_all = n
+	# On crée et remplie un compteur des services
+	# çad. le nom de chaque service et son nombre d'apparition
 	c = Counter(el['SE_NOM'] for el in data)
+	# Puis on le convertit en liste de dictionnaires
 	services = [{'service':key, 'count':value} for key,value in c.items()]
+	# On retient aussi juste les noms des services pour les utiliser dans les graphes
 	services_set = {service for service,_ in c.items()}
+	# Et on crée un dictionnaire pour les coûts des services
 	couts_raw = {service:0 for service in services_set}
+	# On fait une boucle sur les données des communications pour remplir
+	# les coûts de services
 	for el in data:
 		couts_raw[el['SE_NOM']] += float(el['CO_COUTFACT_TTC'])
+	# Puis on fait un tri sur les coûts et on retient juste les top 5
 	couts = {k: v for k, v in sorted(couts_raw.items(), key=lambda item: item[1], reverse=True)}
 	top_couts = [{'service':key, 'cout':value} for key,value in couts.items()][:5]
+	# Ici on commence le traitement des données du petit tableau
+	# On initialise les variables
 	c_entr = c_sort = 0
 	d_all = d_entr = d_sort = 0;
+	# Puis on fait uen boucle sur les données des communications calculer les variables
 	for item in data:
 		if item['CO_TYPE'] == '0':
 			c_entr += 1
@@ -218,11 +281,13 @@ def dashboard_data_xml():
 			d_add = int(item['CO_DUR'])
 			d_all += d_add
 			d_sort += d_add
-			
+	
+	# On covertit les durées en format : HH:MM:SS
 	d_all_str = convert_days(str(datetime.timedelta(seconds = d_all))) 
 	d_entr_str = convert_days(str(datetime.timedelta(seconds = d_entr)))
 	d_sort_str = convert_days(str(datetime.timedelta(seconds = d_sort)))
 
+	# Puis on retourne les données du tableau et des graphiques en JSON
 	return jsonify({
 			"all": {"c": c_all, "d": d_all_str},
 			"entr": {"c": c_entr, "d": d_entr_str},
